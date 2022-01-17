@@ -1,0 +1,204 @@
+html body {
+	margin: auto 0;
+}
+
+div {
+	/*box-shadow: 5px 0px 10px orangered;*/
+}
+
+.section {
+	text-align: center;
+}
+/*.section:hover {
+	transform: translate(3px);
+}*/
+
+.title {
+	padding-top: 5%;
+}
+
+.header {
+	background: slategray;
+}
+
+.title-card {
+	background: slateblue;
+}
+
+.highlighter {
+	background: lawngreen;
+}
+
+
+
+footer {
+	background: royalblue;
+}
+/*-----------------------*/
+/*Highlighter/Personal/Professional*/
+
+.cards {
+	/*padding: 20% 0px 20% 0px;*/
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+
+}
+
+.h-card {
+	border: 1px dashed firebrick;
+	padding: 40% 40% 40% 40%;
+}
+
+
+/*-----------------------*/
+/*SKILL ICONS*/
+.skills {
+	background: saddlebrown;
+	width: 100%;
+}
+
+.skill-container {
+	padding: 20px;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+	align-items: center;
+	justify-items: center;
+
+}
+
+
+.icon-container {
+	padding: 10px;
+	width: 25%;
+	heigh: 25%;
+}
+
+.icon-container > img {
+	width: 40%;
+}
+
+/*-----------------------*/
+/*SOCIAL*/
+
+.socials {
+	background: antiquewhite;
+	width: 100%;
+}
+
+.social-container {
+	padding: 20px;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+/*	justify-items: space-evenly;
+	align-items: space-evenly;*/
+
+	}
+
+.social-icon {
+	border-radius: 100px;
+	padding: 40px 0px 0px 0px
+}
+
+
+.social-icon img {
+	transition: all 0.3s ease-in-out;
+	width: 20%;
+	border-radius: 100px;
+	border: 1px solid black;
+}
+
+
+
+.social-icon img:hover{
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+	transform: scale(1);
+	animation: pulse 2s infinite;
+}
+
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+/* COURTESY OF https://www.florin-pop.com/blog/2019/03/css-pulse-effect/ */
+
+
+
+/*----------------------*/
+/* ABOUT SECTION */
+
+.flex-container {
+	display: flex;
+}
+
+.about {
+	font-size: 1em;
+	background: rebeccapurple;
+}
+
+
+
+.about-me {
+	text-align: right;
+	font-size: 1.2em;
+}
+
+
+.flex-container img {
+	max-width: 45%;
+	max-height: 45%;
+	float: right;
+
+
+}
+
+.about-me > p {
+	margin-left: 30%;
+}
+
+@media screen and (min-width: 801px) {
+	.about-me {
+		font-size: 1.6em;
+	}
+	.about-me > p {
+		margin-left: 40%;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.about-me {
+		font-size: 1.25em;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.about-me {
+		font-size: 0.9em;
+	}
+	.about-me > p {
+		margin-left: 30%;
+	}
+}
+
+
+
+
+
+
+
+
