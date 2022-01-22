@@ -14,7 +14,7 @@ div {
 }*/
 
 .title {
-	padding-top: 5%;
+	padding-top: 10%;
 }
 
 .header {
@@ -22,12 +22,42 @@ div {
 }
 
 .title-card {
-	background: slateblue;
+	background: white;
 }
 
 .highlighter {
-	background: lawngreen;
+	background: white;
 }
+
+
+
+/*-----------------------*/
+/*Intro card*/
+.title-card-section {
+	padding-top: 2.5%;
+}
+.title-card {
+	display: flex;
+	flex-flow: column;
+	padding: 20% 20% 20% 20%;
+	background-image: url("Portfolio_Images/olga-safronova-rZE6CMFG7Os-unsplash.jpg");
+	background-size: cover;
+	color: white;
+
+}
+
+#firstname {
+	font-size: 25vw;
+	padding-left: 50%;
+}
+
+#lastname {
+	font-size: 15vw;
+	padding-right: 10%;
+}
+
+
+
 
 
 
@@ -36,6 +66,11 @@ footer {
 }
 /*-----------------------*/
 /*Highlighter/Personal/Professional*/
+.highlighter-title {
+	text-align: left;
+	padding-top: 10%;
+	font-size: 10vw;
+}
 
 .highlighter-flex {
 	display: flex;
@@ -65,6 +100,7 @@ footer {
 }
 
 
+
 .h-card >img {
 	width: 100%;
 	height: 100%;
@@ -89,6 +125,11 @@ footer {
 
 }
 
+.popup:hover ~ img {
+	opacity: 100%;
+}
+
+
 
 .popup:hover > .hide-on-hover {
 	display: none;
@@ -109,11 +150,66 @@ footer {
 
 
 
+/*----------------------*/
+/* ABOUT SECTION */
+
+.flex-container {
+	display: flex;
+}
+
+.about {
+	font-size: 1em;
+	background: white;
+}
+
+
+
+.about-me {
+	text-align: right;
+	font-size: 1.2em;
+}
+
+
+.flex-container img {
+	max-width: 45%;
+	max-height: 45%;
+	float: right;
+
+
+}
+
+.about-me > p {
+	margin-left: 30%;
+}
+
+@media screen and (min-width: 801px) {
+	.about-me {
+		font-size: 1.6em;
+	}
+	.about-me > p {
+		margin-left: 40%;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.about-me {
+		font-size: 1.25em;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.about-me {
+		font-size: 0.9em;
+	}
+	.about-me > p {
+		margin-left: 30%;
+	}
+}
 
 /*-----------------------*/
 /*SKILL ICONS*/
 .skills {
-	background: saddlebrown;
+	background: white;
 	width: 100%;
 }
 
@@ -142,7 +238,7 @@ footer {
 /*SOCIAL*/
 
 .socials {
-	background: antiquewhite;
+	background: white;
 	width: 100%;
 }
 
@@ -198,62 +294,6 @@ footer {
 /* COURTESY OF https://www.florin-pop.com/blog/2019/03/css-pulse-effect/ */
 
 
-
-/*----------------------*/
-/* ABOUT SECTION */
-
-.flex-container {
-	display: flex;
-}
-
-.about {
-	font-size: 1em;
-	background: rebeccapurple;
-}
-
-
-
-.about-me {
-	text-align: right;
-	font-size: 1.2em;
-}
-
-
-.flex-container img {
-	max-width: 45%;
-	max-height: 45%;
-	float: right;
-
-
-}
-
-.about-me > p {
-	margin-left: 30%;
-}
-
-@media screen and (min-width: 801px) {
-	.about-me {
-		font-size: 1.6em;
-	}
-	.about-me > p {
-		margin-left: 40%;
-	}
-}
-
-@media screen and (max-width: 800px) {
-	.about-me {
-		font-size: 1.25em;
-	}
-}
-
-@media screen and (max-width: 600px) {
-	.about-me {
-		font-size: 0.9em;
-	}
-	.about-me > p {
-		margin-left: 30%;
-	}
-}
 
 
 
