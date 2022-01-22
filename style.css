@@ -46,15 +46,16 @@ footer {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 
+
 }
 
 .h-card {
 	border: 1px dashed firebrick;
-/*	padding: 40% 40% 40% 40%;
-*/	display: flex;
-	align-items: center;
+/*	padding: 40% 40% 40% 40%; */
+	/*display: flex;*/
+/*	align-items: center;
 	justify-content: center;
-	background-color: black;
+*/	background-color: black;
 }
 
 .h-card >img {
@@ -66,6 +67,10 @@ footer {
 
 .h-card > img:hover {
 	opacity: 100%;
+}
+
+.popup {
+	color: white;
 }
 
 
