@@ -161,13 +161,11 @@ footer {
 }
 
 .card-underline {
-	display: flex;
-	flex-wrap: wrap-reverse;
 	background: black;
 	margin-top: 2%;
-	margin-left:10%;
+	margin-left: 8%;
+	width: 90%;
 	padding: 1%;
-	width: % ;
 }
 
 
