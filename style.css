@@ -32,6 +32,31 @@ div {
 }
 
 
+.card-underline-right {
+	background: black;
+	margin-top: 2%;
+	margin-left: 8%;
+	width: 90%;
+	padding: 1%;
+}
+
+.card-underline-left {
+	background: black;
+	margin-bottom: 2%;
+	padding: 1%;
+	width: 90% ;
+}
+
+.card-underline-center {
+	background: black;
+	margin: auto;
+	margin-bottom: 6%;
+	padding: 1%;
+	width: 45%;
+	justify-content: center;
+}
+
+
 /*-----------------------*/
 /* Header */
 
@@ -102,12 +127,7 @@ footer {
 	padding-left: 5%;
 }
 
-.title-underline {
-	background: black;
-	margin-bottom: 2%;
-	padding: 1%;
-	width: 90% ;
-}
+
 
 .highlighter-flex {
 	display: flex;
@@ -182,16 +202,10 @@ footer {
 
 .b:hover:after{
 	color: black;
-	content: "Check out Jake's work projects. From data visualization for municipal clients to statistical index creation for global .";
+	content: "Check out Jake's work projects. From data visualization for municipal clients to statistical index creation for global equity analyses.";
 }
 
-.card-underline {
-	background: black;
-	margin-top: 2%;
-	margin-left: 8%;
-	width: 90%;
-	padding: 1%;
-}
+
 
 
 /*----------------------*/
