@@ -1,7 +1,3 @@
-html {
-	scroll-padding-top: 60px ;
-}
-
 html body {
 	margin: auto 0;
 
@@ -38,6 +34,7 @@ div {
 	margin-left: 8%;
 	width: 90%;
 	padding: 1%;
+
 }
 
 .card-underline-left {
@@ -60,6 +57,13 @@ div {
 /*-----------------------*/
 /* Header */
 
+.site-head {
+	width: 100%;
+	background: slategray;
+	box-shadow: 0px 3px 4px #404040;
+	position: relative;
+}
+
 header ul {
 	list-style: none;
 	display: flex;
@@ -71,26 +75,20 @@ header ul li {
 	font-family: "Titillium Web";
 }
 
-
-
-.site-head {
-	width: 100%;
-	background: slategray;
-	position: absolute;
-	box-shadow: 0px 3px 4px #404040
-
+.head-list {
+	margin: 0;
 }
+
+
 
 
 /*-----------------------*/
 /*Intro card*/
-.title-card-section {
-	padding-top: 2.5%;
-}
+
 .title-card {
 	display: flex;
 	flex-flow: column;
-	padding: 8% 8% 8% 8%;
+	padding-top: 3%;
 	background-image: url("Portfolio_Images/olga-safronova-rZE6CMFG7Os-unsplash.jpg");
 	background-size: cover;
 	color: white;
