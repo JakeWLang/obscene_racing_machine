@@ -14,8 +14,6 @@
 	<link href="https://fonts.googleapis.com/css2?family=Raleway&family=Titillium+Web&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.typekit.net/vzy2dov.css">
 
-	<script src='script.js'></script>
-	<script src="https://kit.fontawesome.com/11e827fda6.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -24,9 +22,9 @@
 
 	<header class='site-head'>
 		<ul class='head-list'>
-			<li>Home</li>
-			<li>Personal Work</li>
-			<li>Professional Work</li>
+			<li><a href='index.html'>Home</a></li>
+			<li><a href='personal.html'>Personal Work</a></li>
+			<li><a href='professional.html'>Professional Work</a></li>
 			<li>Contact</li>
 		</ul>
 	</header>
@@ -48,17 +46,20 @@
 
 	<div class='highlighter-flex'>
 	<div class='section highlighter cards'>
-		
-	 	<div class='h-card'> 
+	
+		<a href='personal.html'>
+		 	<div class='h-card'> 
+		 		<img id='pers-photo' src='Portfolio_Images/bigdogplaceholder.png'>
+		 		<div id='popup-a'class='popup a'><span class='hide-on-hover'>Personal</span></div>
+		 	</div>
+	 	</a>
 
-	 		<img src='Portfolio_Images/bigdogplaceholder.png'>
-	 		<div class='popup a'><span class='hide-on-hover'>Personal</span></div>
-	 	</div>
+	 	<a href='professional.html'>
+			<div class='h-card'>
+				<img id='prof-photo' src='Portfolio_Images/smolcatplaceholder.jpeg'><div class='popup b' id='popup-b'><span class='hide-on-hover'>Professional</span></div>
 
-		<div class='h-card'>
-			<img src='Portfolio_Images/smolcatplaceholder.jpeg'><div class='popup b'><span class='hide-on-hover'>Professional</span></div>
-
-		</div>
+			</div>
+		</a>
 
 
 	</div>
@@ -136,6 +137,6 @@
 <!-- Footer -->
 	<footer><a href='tester.html' target='_blank'>Yeet!</a></footer>
 
-
 </body>
 </html>
+<script src='script.js'></script>
