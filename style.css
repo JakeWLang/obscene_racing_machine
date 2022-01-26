@@ -91,14 +91,14 @@ header ul li {
 
 /*-----------------------*/
 /*Intro card*/
-
+/*Insert floating things right to left?*/
 .title-card {
 	display: flex;
 	flex-flow: column;
 	padding: 0.5% 0% 4% 0%;
-	background-image: url("Portfolio_Images/olga-safronova-rZE6CMFG7Os-unsplash.jpg");
-	background-size: cover;
-	color: white;
+	/*background-image: url("Portfolio_Images/olga-safronova-rZE6CMFG7Os-unsplash.jpg");*/
+	/*background-size: cover;*/
+	color: Black;
 
 }
 
