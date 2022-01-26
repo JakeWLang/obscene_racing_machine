@@ -96,8 +96,8 @@ header ul li {
 	display: flex;
 	flex-flow: column;
 	padding: 0.5% 0% 4% 0%;
-	/*background-image: url("Portfolio_Images/olga-safronova-rZE6CMFG7Os-unsplash.jpg");*/
-	/*background-size: cover;*/
+	background-image: url("Portfolio_Images/diogo-nunes-2BAqw7DwMdg-unsplash.jpg");
+	background-size: cover;
 	color: Black;
 
 }
