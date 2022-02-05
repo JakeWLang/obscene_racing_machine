@@ -120,6 +120,10 @@ header ul li {
 footer {
 	background: royalblue;
 }
+
+
+
+
 /*-----------------------*/
 /*Highlighter/Personal/Professional*/
 .highlighter-title {
@@ -188,8 +192,12 @@ footer {
 	align-self: end;
 	justify-self: right;
 
-	background-color: greenyellow;
-	padding: 3% 7.5% 3% 7.5%
+	background-color: white;
+	padding: 3% 7.5% 3% 7.5%;
+	opacity: 100%;
+
+	font-family: 'museo-sans';
+	font-size: 2vw;
 
 /*	transition-property: all;
 	transition-duration: 2s;*/
@@ -236,7 +244,7 @@ footer {
 	/*text-decoration: underline;*/
 	font-weight: 700;
 	padding-top: 10%;
-	padding-bottom: 5%;
+	padding-bottom: 4%;
 	font-size: 8vw;
 	justify-content: center;
 	padding-right: 15%;
@@ -276,14 +284,14 @@ footer {
 
 @media screen and (min-width: 801px) {
 	.about-me {
-		font-size: 1.6em;
+		font-size: 1.4em;
 	}
 	.about-me > p {
-		margin-left: 30%;
+		margin-left: 20%;
 	}
 }
 
-
+/*
 @media screen and (max-width: 800px) {
 	.about-me {
 		font-size: 0.9em;
@@ -291,7 +299,7 @@ footer {
 	.about-me > p {
 		margin-left: 30%;
 	}
-}
+}*/
 
 /*-----------------------*/
 /*SKILL ICONS*/
@@ -318,16 +326,30 @@ footer {
 }
 
 .icon-container > img {
-	width: 40%;
+	width: 70%;
 }
 
 /*-----------------------*/
 /*SOCIAL*/
 
 .socials {
+	text-align: center;
 	background: white;
 	width: 100%;
+	font-family: 'Titillium Web';
+	font-weight: 1000;
+    font-size: 5vw;
 }
+
+.connect-text{
+	padding-top: 4%;
+}
+
+.connect-underline{
+	margin-top: 6%;
+	margin-bottom: 0%;
+}
+
 
 .social-container {
 	padding: 20px;
@@ -379,6 +401,26 @@ footer {
 }
 
 /* COURTESY OF https://www.florin-pop.com/blog/2019/03/css-pulse-effect/ */
+
+
+
+/*************************/
+/* FOOTER */
+
+.index-foot {
+padding: 1% 0% 1% 0%;
+background-color: black;
+}
+
+.index-foot a {
+	font-family: 'Titillium Web';
+	text-decoration: none;
+	color: white;
+	padding-left: 4%;
+}
+
+
+
 
 
 
