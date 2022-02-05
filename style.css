@@ -95,21 +95,25 @@ header ul li {
 .title-card {
 	display: flex;
 	flex-flow: column;
-	padding: 0.5% 0% 4% 0%;
-	background-image: url("Portfolio_Images/diogo-nunes-2BAqw7DwMdg-unsplash.jpg");
+	background-image: url("Portfolio_Images/clement-helardot-95YRwf6CNw8-unsplash.svg");
+	/*Photo by <a href="https://unsplash.com/@clemhlrdt?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Clément Hélardot</a> on <a href="https://unsplash.com/s/photos/coding?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  */
 	background-size: cover;
-	color: Black;
-
+	color: #dadfdb;
+	font-family: 'Titillium Web';
+	padding-bottom: 14%;
 }
 
+
 #firstname {
-	font-size: 25vw;
+	font-size: 18vw;
 	padding-left: 50%;
+
 }
 
 #lastname {
-	font-size: 15vw;
-	padding-right: 10%;
+	font-size: 12vw;
+	padding-right: 0%;
 }
 
 
@@ -326,7 +330,7 @@ footer {
 }
 
 .icon-container > img {
-	width: 70%;
+	width: 80%;
 }
 
 /*-----------------------*/
