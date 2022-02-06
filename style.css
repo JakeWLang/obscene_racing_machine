@@ -95,7 +95,7 @@ header ul li {
 .title-card {
 	display: flex;
 	flex-flow: column;
-	background-image: url("Portfolio_Images/clement-helardot-95YRwf6CNw8-unsplash.svg");
+	background-image: url("Portfolio_Images/clement-helardot-95YRwf6CNw8-unsplash.jpg");
 	/*Photo by <a href="https://unsplash.com/@clemhlrdt?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Clément Hélardot</a> on <a href="https://unsplash.com/s/photos/coding?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
   */
 	background-size: cover;
