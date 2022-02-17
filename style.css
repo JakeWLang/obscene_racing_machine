@@ -247,14 +247,14 @@ footer {
 /* ENTER EXPANDED INFO HERE */
 .a:hover:after{
 	color: black;
-	content: "See Jake's work outside of work: Painting, building, and making fun tools to spice everyday life.";
+	content: "My work outside of work: Painting, building, and making fun tools to spice everyday life.";
 }
 
 
 
 .b:hover:after{
 	color: black;
-	content: "Check out Jake's work projects. From data visualization for municipal clients to statistical index creation for global equity analyses.";
+	content: "My work projects. From data visualization for municipal clients to statistical index creation for global equity analyses.";
 }
 
 
@@ -449,6 +449,34 @@ background-color: black;
 }
 
 
+
+/*********************/
+/* POPUP FORM */
+
+.contact-form{
+	border: 1px solid red;
+	display: flex;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 35%;
+	background-color: ivory;
+	/*padding: 20% 2% 20% 2%;*/
+	/*display: none;*/
+}
+
+.contact-me {
+	/*align-content: flex-start;*/
+	border: 1px dashed pink;
+	padding: 20%;
+}
+
+
+.popup-head {
+	border: 3px dotted green;
+	color: red;
+}
 
 
 
