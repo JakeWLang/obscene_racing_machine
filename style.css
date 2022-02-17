@@ -121,9 +121,9 @@ header ul li {
 .title-card {
 	display: flex;
 	flex-flow: column;
-	background-image: url("Portfolio_Images/clement-helardot-95YRwf6CNw8-unsplash.jpg");
-	/*Photo by <a href="https://unsplash.com/@clemhlrdt?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Clément Hélardot</a> on <a href="https://unsplash.com/s/photos/coding?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-  */
+	background-image: url("Portfolio_Images/arnold-francisca-f77Bh3inUpE-unsplash.jpg");
+/*Photo by <a href="https://unsplash.com/@clark_fransa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Arnold Francisca</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>*/
+  
 	background-size: cover;
 	color: #dadfdb;
 	font-family: 'Titillium Web';
