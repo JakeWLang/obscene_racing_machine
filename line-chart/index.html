@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+
+
+
+    @font-face {
+    font-family: 'ITC Cheltenham Std Bold Condensed';
+    font-style: normal;
+    font-weight: normal;
+    src: local('ITC Cheltenham Std Bold Condensed'), url('itc-cheltenham-std-cufonfonts-webfont/CheltenhamStdBoldCond.woff') format('woff');
+    }
+		.chart-container {
+            max-width: 1050px;
+             /*border: 2px solid red; */
+            margin: 0 auto;
+            /* auto centers the div */
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        svg {
+            /* border: 2px solid purple; */
+            overflow: visible;
+        }
+
+
+        .axis {
+        	font-size: 12px;
+        	color: gray;
+        }
+
+
+        h1 {
+        	font-family: 'ITC Cheltenham Std Bold Condensed';
+        }
+
+     
+
+
+
+	</style>
+	<title>Assignment 3 Question 3</title>
+</head>
+<body>
+
+
+	<div class="chart-container">
+		<h1 class='header'>
+			No. 3: Passing yards
+		</h1>
+
+        <svg width="1050px" height="575px">
+        </svg>
+  <!-- insert the source info here -->
+
+	</div>
+
+
+</body>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<!-- insert personal script below -->
+<script>
+
+	console.log({d3})
+
+	let width = 800;
+	let height = 500;
+	let svg = d3.selectAll('svg')
+
+	d3.csv('stats.csv').then(function (data) {
+
+
+
+		data.forEach(row => {
+			row.year = new Date( row.year +'T00:00')
+			row.yards = +row.yards
+		})
+
+		let margin = {top: 30, right: 10, bottom: 10, left:30}
+
+		// yards by years
+
+		let x = d3.scaleTime()
+			.domain(d3.extent(data.map(function(d) { return d.year})))
+			.range([margin.left, width - margin.right])
+
+		let y = d3.scaleLinear()
+			.domain(d3.extent(data.map(function (d) { return d.yards})))
+			.range([height - margin.bottom, margin.top])
+
+
+		let yAxisSettings = d3.axisRight(y)
+			.tickValues([20000, 40000, 60000, 80000])
+			// tick size is the length of ticks!
+			.tickSize(width - margin.left)
+			.tickFormat(d3.format(','))
+			.tickPadding(10)
+			.tickSizeOuter(0)
+
+
+		let xAxisSettings = d3.axisBottom(x)
+			.ticks(8)
+			.tickSize(10)
+			.tickPadding(4)
+			.tickSizeOuter(0)
+
+		let bg = svg.append('rect')
+			.attr('x', margin.left)
+			.attr('y', 0)
+			.attr('width', width)
+			.attr('height', height)
+			.style('fill', 'white')
+
+
+
+		let xAxisTicks = svg.append('g')
+			.attr('class', 'x axis')
+			.call(xAxisSettings)
+			.attr('transform', `translate(0,${height - margin.bottom})`)
+
+
+		let yAxisTicks = svg.append('g')
+			.attr('class', 'y axis')
+			.call(yAxisSettings)
+			.attr('transform', `translate(${margin.left}, 0)`)
+			.style('stroke-width', 0.35)
+
+
+		let line = d3.line()
+			.x(function (d) { return x(d.year)})
+			.y(function (d) { return y(d.yards)})
+
+
+	
+
+
+		let groupedPlayerData = d3.group(data, d => d.player_name)
+
+		// apply over each player?
+
+		// Now I need to do this to all the players so it's not just their
+		// last year
+		let year20 = new Date(2020, 01, 00)
+
+		// Loops through each player "group", within those groups, to determine
+		// if the player played in 2021, then applies that information across
+		// ALL player entries
+		groupedPlayerData.forEach(player => {
+			// Get the last num for each player
+			let lastEntry = player[player.length - 1]
+			// Checking if the last entry played in 21
+			if (lastEntry.year > year20) {
+				var playerPlay21 = 1
+			} else {
+				var playerPlay21 = 0
+			}
+
+
+			// looping through each player to apply
+			player.forEach(yearPlayed => {
+				yearPlayed.play21 = playerPlay21
+
+			})
+
+		})
+
+		console.log(groupedPlayerData)
+
+
+		// Select only the last data points to add a point
+		lastDataObject = []
+		let lastData = groupedPlayerData.forEach(playerGroup => {
+			
+			// pushing only the last point onto an array
+			let adder = playerGroup[Object.keys(playerGroup)[Object.keys(playerGroup).length - 1]]
+
+			lastDataObject.push(adder)
+
+		})
+
+
+
+		//using the last year of each player's career to log if they played
+		//in 2021
+		lastDataObject.forEach(row => {
+			if (row.year > year20) {
+				row.play21 = 1
+			} else {
+				row.play21 = 0
+			}
+		})
+
+
+
+
+
+		// establishes a cutoff date
+		// it isn't the beginning of 2020 but I'm not mad
+
+
+		let points = svg.append("g")
+            .selectAll(".points")
+            .data(lastDataObject) //attach data to the svg
+            .join("circle")
+            .attr("class", "points") // Give circles a class name.
+            .attr("cx", function (d) { return x(d.year) }) //callback to access the data, position according to x axis
+            .attr("cy", function (d) { return y(d.yards) })  //callback to access the data, position according to y axis
+            .attr("r", d => {
+            	if (d['player_name'] == 'Tom Brady') {
+            		return 5
+            	} else {
+            		return 1.5
+            	}
+            })
+            .style("stroke", d => {
+            	if (d['player_name'] == 'Tom Brady') {
+            		return '#42bcff'
+            	} else if (d['play21'] == 1) {
+            		return '#42bcff'
+            	} else {
+            		return '#dddddd'
+            	}
+            })
+            .style("fill", d => {
+            	if (d['player_name'] == 'Tom Brady') {
+            		return '#42bcff'
+            	} else if (d['play21'] == 1) {
+            		return '#42bcff'
+            	} {
+            		return '#dddddd'
+            	}
+            })
+
+
+
+
+		let playerNames = Array.from(groupedPlayerData.keys())
+
+		let line_path = svg.append('g')
+			.selectAll('.line')
+			.data(groupedPlayerData)
+			.join('path')
+			.attr('class', function(d) {
+				return 'line ' + d[0]
+			} ) // attributes a class name with line and player name for easy ident and css changes (d[0] indexes the key)
+			.attr('d', function(d) {
+				return line(d[1])
+			}) // attributes the data point from the yards key of each observation
+			.style('fill', 'none')
+			.style('stroke', d => {
+				if(d[0] == 'Tom Brady') {
+					return '#42bcff'
+				}  // checks if any entry has play21, probably not efficient but it works
+				else if ( d[1][d[1].length -1 ]['play21'] == 1 ){
+					return '#42bcff'
+				}
+				else if ((['Fran Tarkenton', 'Dan Marino', 'Peyton Manning', 'Dan Fouts', 'Johnny Unitas'].indexOf(d[0]) >= 0)) {
+
+				 	return '#575757'
+				}
+				 	else {
+					return '#dddddd'
+				}
+			})
+			.style('stroke-width', d => {
+				if(d[0] == 'Tom Brady') {
+					return '5px'
+				} else {
+					return '1px'
+				}
+			})
+
+			let baseline = svg.append('line')
+				.attr('x1', margin.left)
+				.attr('x2', width )
+				.attr('y1', y(0))
+				.attr('y2', y(0))
+				.style('stroke', 'black')
+				.style('stroke-width', '2px')
+
+
+			console.log(lastDataObject[0])
+
+			let labels = svg.append('g')
+				.selectAll('text')
+				.data(lastDataObject)
+				.join('text')
+				.attr('x', d => x(d.year))
+				.attr('dy', d => {
+					if (d.player_name == 'Tom Brady') {
+						return -20
+					} else {
+						return 0
+					}
+				})
+				.attr('dx', d => {
+					if (d.player_name == 'Tom Brady') {
+						return -40
+					} else if ((['Fran Tarkenton', 'Dan Marino', 'Peyton Manning', 'Dan Fouts', 'Johnny Unitas'].indexOf(d.player_name) >= 0)) {
+				 		return 5
+				 	}
+					else {
+						return 0
+					}
+				})
+			 	.attr('y', d => y(d.yards))
+			 	// selects a split vers. of a name, only the last name
+			 	// rudimentary, misses two-part names, but gets the job done
+			 	.text(d => d.player_name.split(' ')[1]) 
+			 	.style('fill', d =>{
+				 	if (d.player_name == 'Tom Brady') {
+				 		return 'black'
+				 		// Below, a hacky way of seeing if a string is in an option of strings!
+				 	} else if ((['Fran Tarkenton', 'Dan Marino', 'Peyton Manning', 'Dan Fouts', 'Johnny Unitas'].indexOf(d.player_name) >= 0)) {
+				 		return '#575757'
+				 	} else {
+				 		return 'transparent'
+				 	}
+				 })
+			 	.style('stroke', d => {
+			 		if ((['Fran Tarkenton', 'Dan Marino', 'Peyton Manning', 'Dan Fouts', 'Johnny Unitas'].indexOf(d.player_name) >= 0)) {
+				 		return 'lightgray'
+				 	} else {
+				 		return 'none'
+				 	}
+				 })
+			 	.style('stroke-width', d => {
+			 		if ((['Fran Tarkenton', 'Dan Marino', 'Peyton Manning', 'Dan Fouts', 'Johnny Unitas'].indexOf(d.player_name) >= 0)) {
+				 		return 0.6
+				 	} else {
+				 		return 'none'
+				 	}
+				 })
+			 	.style('font-size', d =>{
+				 	if (d.player_name == 'Tom Brady') {
+				 		return '200%'
+				 	} else {
+				 		return '100%'
+				 	}
+				 })
+			 	.style('font-weight', d =>{
+				 	if (d.player_name == 'Tom Brady') {
+				 		return 800
+				 	} else if ((['Fran Tarkenton', 'Dan Marino', 'Peyton Manning', 'Dan Fouts', 'Johnny Unitas'].indexOf(d.player_name) >= 0)) {
+				 		return 100
+				 	} else {
+				 		return 0
+				 	}
+				 })
+
+		
+			 // Removes the axis line, thank god!
+			 svg.selectAll('.domain')
+			 	.remove()
+
+	})
+
+	
+
+
+
+
+
+
+	</script>
+</html>
