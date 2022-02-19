@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- set styles on the top -->
+    <style>
+        .chart-container {
+            max-width: 1050px;
+            /* border: 2px solid red; */
+            margin: 0 auto;
+            /* auto centers the div */
+            font-family: 'Franklin Gothic Medium', sans-serif;
+            position: relative;
+        }
+
+        svg {
+            /* border: 2px solid purple; */
+            overflow: visible;
+             /*defines some spacing between the top legend and chart*/
+
+        }
+
+        h1 {
+            margin: 0 auto;
+        }
+
+        .x .tick line {
+            stroke: '#333';
+        }
+
+        .y .tick line {
+            stroke: rgba(0, 0, 0, .2);
+        }
+
+        .x .domain {
+            display: none;
+        }
+
+        .y .domain {
+            display: none;
+        }
+
+        .y .tick text {
+            font-size: 13px;
+            fill: rgb(105,105,105);
+            font-weight: 200;
+
+        }
+
+        .x .tick text {
+            font-size: 14px;
+            font-weight: 200;
+            fill: #333;
+        }
+
+        
+
+        .axis-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 200
+        }
+
+        .source {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .x-ticks {
+            color: '#333';
+        }
+
+        .chart-head{
+            position: absolute;
+            display: flex;
+            justify-content: space-between;
+            max-width: 800px;
+            align-items: center;
+            width: 100%;
+
+        }
+
+
+        .legend-container {
+            /*background-color: pink;*/
+            width: auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+
+
+       .legend-element {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 10px;
+       }
+
+
+        .block {
+            padding: 4px;
+            width: 2%;
+            margin-right: 3px;
+        }
+
+        .label {
+            white-space: nowrap;
+            font-size: 13px;
+            color: rgb(51, 51, 51);
+            font-weight: lighter;
+        }
+
+        .year-head {
+            color: rgb(51, 51, 51);
+            font-size: 30px;
+            font-weight: 200;
+        }
+
+
+    
+
+
+    </style>
+</head>
+
+<body>
+    <div class='spacer'></div>
+    
+    <div class="chart-container">
+
+
+        <svg width="1050px" height="575px">
+        </svg>
+  <!-- insert the source info here -->
+
+    </div>
+</body>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<!-- we're using d3 version 6 (the latest version) for all out work -->
+
+<script>
+
+    console.log({ d3 })
+
+    let width = 800;
+    let height = 500;
+
+    let svg = d3.select("body")
+        .select("svg")
+
+    d3.csv("healthcare-disposable-inc.csv").then(function (data) {
+
+
+        let margin = { top: 30, right: 10, bottom: 10, left: 0 };
+
+        let sel_cols = [
+            "Medicaid",
+            "Medicare",
+            "Medicare+Medicaid",
+            "Employer",
+            "Uninsured",
+            "Direct Purchase",
+            "Subsidized Exchange",
+            "CHIP",
+            "Military",
+            "Other"];
+
+        let sel_colors = [
+            "#f44336", // "Medicaid",
+            "#FF9800", // "Medicare",
+            "#FDD835", // "Medicare+Medicaid",
+            "#FFF8E1", // "Employer",
+            "#26A69A", // "Uninsured",
+            "#4DD0E1", // "Direct Purchase",
+            "#F06292", // "Subsidized Exchange",
+            "#5C6BC0", // "CHIP",
+            "#90A4AE", // "Military",
+            "#E0E0E0"  // "Other"
+        ];
+
+        let d2020 = data.filter(d => d.year == 2020);
+        let d2009 = data.filter(d => d.year == 2009);
+
+    //     //https://github.com/d3/d3-shape#stacks
+        let series2020 = d3.stack()
+            .keys(sel_cols)(d2020);
+
+        let series2009 = d3.stack()
+            .keys(sel_cols)(d2009);
+
+
+    //     // https://github.com/d3/d3-scale#ordinal-scales
+
+    let color = d3.scaleOrdinal()
+        .domain(sel_cols)
+        .range(sel_colors);
+
+    let x = d3.scaleLinear()
+        .domain([0,100])
+        .range([margin.left,width]);
+
+    let y = d3.scaleLinear()
+        .domain([0,1])
+        .range([height - margin.bottom, margin.top]);
+
+
+    let area = d3.area()
+        .x(d => x(d.data.Percentile))
+        .y0(d => y(d[0]))
+        .y1(d => y(d[1]));
+
+
+    let xAxisSettings = d3.axisBottom(x)
+        .tickSize(6)
+        .tickPadding(6)
+        .tickValues([5,10,20,30,40,50,60,70,80,90,95])
+        .tickFormat(d3.format(".0f"));
+
+
+
+
+    let xAxis = svg.append('g')
+        .attr('class','x axis')
+        .call(xAxisSettings)
+        .call(g => g.selectAll('.domain').remove())
+        .attr('transform',`translate(0,${height - margin.bottom})`);
+
+
+
+    let yAxisSettings = d3.axisLeft(y)
+        .ticks(5)
+        .tickValues([.2,.4,.6,.8])
+        .tickSize(6)
+        .tickPadding(4)
+        .tickFormat(d3.format('.0%'));
+ 
+    let yAxis = svg.append('g')
+        .attr('class','y axis')
+        // .attr('class','axis-label')
+        .call(yAxisSettings)
+        // remove the y axis bar
+        .call(g => g.selectAll('.domain').remove());
+
+
+    let series = svg.append('g')
+        .selectAll('path') // no paths? D3 adds them
+        .data(series2020) // adds data to paths and defines them
+        .join('path')
+        .attr('class', d => d.key + ' area')
+        .attr('fill', d => color(d.key))
+        .attr('d',area);
+
+    onChartLabels = ['Medicaid', 'Medicare', 'Employer', 'Uninsured', 'Direct Purchase']
+
+
+
+    let directLab = svg.append('text')
+        .attr('class','type-label direct-label')
+        .attr('x',800)
+        .attr('y',60)
+        .text('Direct Purchase')
+        .attr('font-size', 16)
+        .attr('font-weight', 200)
+
+    let uninsuredLab = svg.append('text')
+        .attr('class','type-label uninsured-lab')
+        .attr('x',100)
+        .attr('y',110)
+        .text('Uninsured')
+        .attr('fill','white')
+        .attr('font-size', 20)
+        .attr('font-weight', 200)
+
+
+
+    let employerLab = svg.append('text')
+        .attr('class','type-label employer-lab')
+        .attr('x',620)
+        .attr('y',270)
+        .text('Employer')
+        .attr('font-size', 20)
+        .attr('font-weight', 200)
+
+
+
+    let medicaidLab = svg.append('text')
+        .attr('class','type-label medicaid-lab')
+        .attr('x',60)
+        .attr('y',420)
+        .text('Medicaid')
+        .attr('font-size', 20)
+        .attr('fill','white')
+        .attr('font-weight', 200)
+
+
+
+
+    let medicareLab = svg.append('text')
+        .attr('class','type-label medicare-lab')
+        .attr('x',40)
+        .attr('y',300)
+        .text('Medicare')
+        .attr('font-size', 20)
+        .attr('font-weight', 200)
+
+
+
+    //.year-head is the year
+function breathDown() {
+    d3.select('.year-head')
+        .html('<div>2020</div>')
+
+    directLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('y', 60)
+
+    medicareLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('x', 80)
+        .attr('y', 340)
+
+    medicaidLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('x', 45)
+        .attr('y', 415)
+
+    employerLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('x', 600)
+        .attr('y', 250)
+
+
+    uninsuredLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('x', 25)
+        .attr('y', 150)
+   
+
+    svg.selectAll("path")
+        .data(series2009)
+        .transition()
+        .delay(1000) // Delays the transition so you can get a look at the data
+        .duration(3000) // Begins the transition over 3 seconds
+        .attr("d", area)
+        .on('end', breathUp)
+
+    
+    
+    }
+
+function breathUp() {
+        d3.select('.year-head')
+        .html('<div>2009</div>')
+
+     directLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('y', 63)
+
+    medicareLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('x', 60)
+        .attr('y', 300)
+
+    medicaidLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('x', 40)
+        .attr('y', 420)
+
+    uninsuredLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('x', 100)
+        .attr('y', 110)
+
+    employerLab
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr('x', 620)
+        .attr('y', 270)
+
+    
+
+    svg.selectAll("path")
+        .data(series2020)
+        .transition()
+        .delay(1000)
+        .duration(3000)
+        .attr("d", area)
+        .on('end',breathDown)
+
+
+
+    }
+
+    breathDown()
+
+    
+
+    
+        
+
+    svg.append('text')
+        .attr('class','axis-label')
+        .attr('x',width/2 - 66)
+        .attr('y', height + 40)
+        .text('Income Percentile')
+
+
+
+
+    let chartHead = d3.select('.chart-container').append('div')
+        .attr('class','chart-head')
+        .html('<div class="year-head">2020</div>')
+        .style('color', 'orangered')
+        .style('top', 0) // works since margin left = 0
+
+    let legendContainer = d3.select('.chart-head').append('div')
+        .attr('class', 'legend-container')
+
+
+
+    let disp_cols = [
+        "Medicare+Medicaid",
+        "Subsidized Exchange",
+        "CHIP",
+        "Military",
+        "Other"];
+
+    let disp_colors = [
+        "#FDD835", // "Medicare+Medicaid",
+        "#F06292", // "Subsidized Exchange",
+        "#5C6BC0", // "CHIP",
+        "#90A4AE", // "Military",
+        "#E0E0E0"  // "Other"
+    ];
+  
+    
+    // for each column that needs a label in the legend
+    // create a legend item with box div and name div
+    console.log(color('CHIP'))
+
+    let determineLabel = (label) => {
+        if (label == 'Medicare+Medicaid') {
+            return('Medicare and Medicaid')
+        } else {
+            return(label)
+        }
+    }
+
+
+    disp_cols.forEach(varType => {
+        console.log(varType)
+
+        // append a legend element that contains the
+        // relevant name and box identifier
+        d3.select('.legend-container').append('div')
+            .attr('class', `legend-element ${varType}`)
+            // inserts a block and label inside each legend element :)
+            .html(`<div class='block' style='background-color: ${color(varType)}'></div><div class='label'>${determineLabel(varType)}
+            </div>`)
+
+
+    })
+
+
+
+
+
+
+
+
+
+
+})
+
+    
+
+
+</script>
+
+
+
+
+
+<!-- Parent container needs position relative, child container needs position absolute, and then: BAM, you can move your annotations within the parent container as needed but not everywhere (controls bleed) -->
