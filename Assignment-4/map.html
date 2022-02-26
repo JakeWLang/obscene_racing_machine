@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Homework 4, Parts 1 and 3 </title>
+	<style>
+
+		.chart-container {
+			max-width: 1050px;
+			/*border: 3px solid red;*/
+			margin: 0 auto;
+			font-family: 'Franklin Gothic Medium';
+		}
+
+
+		svg {
+			/*border: 2px solid purple;*/
+			overflow: visible;
+		}
+
+		h1 {
+			/*border: 2px solid green;*/
+		}
+
+		.tooltip {
+			position: absolute;
+			background-color: white;
+			border: 1px solid black;
+			pointer-events: none;
+			width: 240px;
+			opacity: 0;
+			padding: 12px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class='chart-container'>
+		<h1 class='headline'>2018, America in Poverty</h1>
+
+		<svg width='1050px' height='500px'>
+
+		</svg>
+	</div>
+<div class='tooltip'>Yeet</div>
+</body>
+<script src="https://unpkg.com/topojson@3"></script>
+<script src='https://d3js.org/d3.v6.min.js'></script>
+<script>
+
+	console.log(d3)
+
+	Promise.all([
+		d3.json('county_state_covid_pov.json')
+		])
+			.then(ready)
+			.catch((err) => {
+				console.log(err);
+			})
+
+
+	function ready(res) {
+		// loads the raw file from the first slot in the res(ponse)		
+		let raw = res[0]
+
+		// decodes topo to geojson
+		let countyData = topojson.feature(raw, raw.objects.county)
+		let stateData = topojson.feature(raw, raw.objects.cb_2018_us_state_20m)
+		let innerLines = topojson.mesh(raw, raw.objects.cb_2018_us_state_20m, function (a, b) {
+			return a != b;
+		});
+
+		// coding out null values for geometries
+		// specifically, for whatever reason,
+		// NY county and PR since PR has no map point here
+		let nullFilter = (entry) => {
+			if (entry.properties.STUSPS == 'PR') {
+				return false
+			} else if (entry.geometry != null) {
+				return true
+			} else {
+				return false
+			}
+		}
+
+		filterCountyData = countyData.features.filter(nullFilter)
+		filterCountyData.forEach(entry => {
+			entry.properties.GEOID = 'US' + entry.properties.GEOID
+			console.log(entry.properties.GEOID)
+
+		})
+
+
+		geoFilter = { type: 'FeatureCollection',
+					features: filterCountyData}
+
+
+		// Getting to the rest of the work
+
+		let width = 1050;
+		let height = 500;
+
+		let header = d3.select('headline')
+
+		let svg = d3.select('body').select('svg')
+
+		let myProjection = d3.geoAlbersUsa()
+			.fitSize([width, height], geoFilter)
+
+		// path function
+
+		let path = d3.geoPath()
+			.projection(myProjection)
+
+		
+
+
+
+
+		// state background (and any additional data)
+		svg.append('g')
+			.selectAll('.states')
+			.data(stateData.features)
+			.join('path')
+			.attr('d',path)
+			.attr('class', d => d.properties.STUSPS)
+			.style('fill','#eee')
+			.style('stroke', 'none')
+			.style('stroke-width',0)
+			.style('pointer-events', 'none') // makes it so you can't hover-select anything and simplifies mouseover for the future
+
+		// Raw append of the paths since these are just used to define the
+		// states, for now
+		let state = svg.append('path')
+			.attr('d', path(innerLines))
+			// .attr('class', d => d.properties.STUSPS)
+			.style('fill', 'none')
+			.style('stroke', '#333')
+			.style('stroke-width', 1)
+			.style('pointer-events', 'none')
+
+
+		let scaleFunction = d3.scaleSqrt()
+			.domain([])
+			.range([])
+
+		// We use the group command to join MANY paths to be able
+		// to distinguish different counties (which are each
+		// their own separate entity)
+		let county = svg.append('g')
+			.selectAll('.counties')
+			.data(geoFilter.features)
+			.join('circle')
+			.attr('class', d => d.properties.GEOID)
+			.attr('r', d => Math.sqrt(d.properties.pop_18_in_poverty)* 0.05)
+			.attr('cx', d => {
+				// returns the centroids of a multipolygon on the x axis
+				return path.centroid(d)[0]
+			})
+			.attr('cy', d => {
+				// and on the y axis
+				return path.centroid(d)[1]
+			})
+			.style('fill', 'orange')
+			.style('stroke', '0.5px')
+			.style('stroke', 'white')
+
+
+
+		let toolTip = d3.select('.tooltip')
+
+		county.on('mouseover', (event, d) => {
+
+			// uses - to distinguish spaces, making it easier to chop
+			// out county name in the future
+			let geoid = d.properties.GEOID;
+
+			let selPoint = d3.select(`.${geoid}`)
+
+			let lang = 'In ' + d.properties.NAME + ' County, ' + d.properties.STUSPS + ' there are ' + d3.format(',')(d.properties.pop_18_in_poverty) + ' people living in poverty.'
+
+			selPoint
+				.style('fill', 'green')
+				.style('stroke','black')
+				.style('stroke-width', 2)
+
+			toolTip
+				.style('opacity',1)
+				.style('left', event.x - 100 + 'px')
+				.style('top', event.y - 80 + 'px')
+				.html(lang)
+
+
+		})
+
+
+		county.on('mouseout', (event, d) => {
+			let geoid = d.properties.GEOID;
+			let selPoint = d3.select(`.${geoid}`)
+
+			selPoint
+				.style('fill', 'orange')
+				.style('stroke', 'none')
+				.style('stroke-width', 0)
+
+			toolTip
+				.style('opacity', 0)
+
+
+
+		})
+
+
+	}
+
+
+	
+
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
