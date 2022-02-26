@@ -178,7 +178,7 @@
 
 			let selPoint = d3.select(`.${geoid}`)
 
-			let lang = 'In ' + d.properties.NAME + ' County, ' + d.properties.STUSPS + ' there are ' + d3.format(',')(d.properties.pop_18_in_poverty) + ' people living in poverty.'
+			let lang = 'In 2018 in ' + d.properties.NAME + ' County, ' + d.properties.STUSPS + ' there were ' + d3.format(',')(d.properties.pop_18_in_poverty) + ' people living in poverty.'
 
 			selPoint
 				.style('fill', 'green')
