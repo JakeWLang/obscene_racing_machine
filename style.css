@@ -439,6 +439,9 @@ footer {
 .index-foot {
 padding: 1% 0% 1% 0%;
 background-color: black;
+position: absolute;
+bottom: 0px;
+width: 100%;
 }
 
 .index-foot a {
@@ -477,6 +480,35 @@ background-color: black;
 	border: 3px dotted green;
 	color: red;
 }
+
+
+/****************** PROFESSIONAL PAGE *********************/
+
+.prof-intro {
+	font-family: 'Museo Sans';
+	padding-left: 2%;
+}
+.data-viz-hw {
+	font-family: 'Titillium Web';
+	font-weight: 1000;
+	color: black;
+	padding-left: 2%;
+}
+
+.d3hw {
+	font-family: 'Museo Sans';
+	padding-left: 8%;
+	margin-bottom: 29%;
+}
+
+
+
+
+/******************* PERSONAL PAGE **********************/
+/*.personal-filler {
+	margin-bottom: 41%;
+}*/
+
 
 
 
