@@ -30,9 +30,7 @@
 		<br>
 
 
-		<button class='switch-chart'>Press Me</button>
 	</div>
-<a href='test.html'>Go to test</a>
 
 </body>
 <script src="https://d3js.org/d3.v6.min.js"></script>
@@ -69,8 +67,8 @@
 		.attr('transform', `translate(${width/2}, ${height/2})`);
 
 
-	let popData = {'Total Population': 8483267-2718215, 'Population in EDAs':2718215}
-	let evciData = {'Public EVCI':749-90, 'EVCI in EDAs':90}
+	let popData = {'Population 1': 8483267-2718215, 'Population 2':2718215}
+	let evciData = {'Datum 1':749-90, 'Datum 2':90}
 
 	let arcGenerator = d3.arc()
 		.innerRadius(0)
@@ -223,11 +221,9 @@ let uText = svg.selectAll('text')
 
 	function change() {
 			if (svg.classed('pop')) {
-			console.log('pop to evci')
 			svg.classed('pop', false)
 			var state = evciData
 		} else {
-			console.log('evci to pop')
 			svg.classed('pop', true)
 			var state = popData
 		}
@@ -239,7 +235,11 @@ let uText = svg.selectAll('text')
 
 		u = u.data(datadata);
 		// console.log(u)
-		u.transition().duration(1000).attrTween('d', arcTween)
+		u
+			.transition()
+			// .delay(2000)
+			.ease(d3.easeQuadInOut)
+			.duration(1500).attrTween('d', arcTween)
 
 
 		let uText = svg.selectAll('text')
@@ -250,10 +250,13 @@ let uText = svg.selectAll('text')
 
 
 		uText
-			.text(d => d.data[0])
 			.transition()
-			.duration(1000)
+			// .delay(2000)
+			.ease(d3.easeQuadInOut)
+			.duration(1500)
 			.attrTween('transform',labelArcTween)
+			.text(d => d.data[0])
+
 	}
 
 	function arcTween(a) {
@@ -284,8 +287,7 @@ let uText = svg.selectAll('text')
 			// return `translate(${arcGenerator.centroid(i(t))})`
 		}
 	}
-
-	let timer = d3.interval(change, 4000)
+	let timer = d3.interval(change, 3000).delay(1000)
 	// let btn = d3.select('button')
 
 	// btn.on('click', change)

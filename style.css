@@ -436,11 +436,14 @@ footer {
 /*************************/
 /* FOOTER */
 
+.temp-spacer{
+margin-bottom: 50vw;
+}
+
+
 .index-foot {
 padding: 1% 0% 1% 0%;
 background-color: black;
-position: absolute;
-bottom: 0px;
 width: 100%;
 }
 
@@ -450,6 +453,7 @@ width: 100%;
 	color: white;
 	padding-left: 4%;
 }
+
 
 
 
