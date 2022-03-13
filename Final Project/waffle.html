@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> Data Viz '22 Final Assignment Waffle</title>
+	<style>
+		.chart-container {
+			max-width: 1000px;
+			/*border: 2px dotted red;*/
+			margin: 0 auto;
+			padding: 100px;
+
+		}
+		.svg {
+			/*border: 2px solid green;*/
+			/*margin: 0 auto;*/
+
+		}
+
+		.popup {
+			position: absolute;
+			background-color: lightgray;
+			/*border: 1px solid black;*/
+			pointer-events: none;
+			width: 300px;
+			opacity: 0;
+			border-radius: 10px;
+			padding: 4px;
+			font-family: helvetica neue;
+		}
+		.percBox {
+			position: absolute;
+			background-color: lightgray;
+			/*border: 1px solid black;*/
+			pointer-events: none;
+			width: 100px;
+			opacity: 0;
+			border-radius: 10px;
+			padding: 4px;
+			font-family: helvetica neue;
+			textalign: center;
+		}
+		.line {
+			opacity: 0;
+		}
+
+		h1 {
+			max-width: 1000px;
+			font-family: helvetica neue;
+		}
+
+		.chart-head{
+			width: 100%;
+			background-color: purple;
+			position: absolute;
+		}
+
+		a {
+			font-size: 40px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div class='chart-container'>
+		<svg width='500px' height='1000px'></svg>
+	<div class='popup'>popup!</div>
+	<div class='percBox'></div>
+	</div>
+
+	<a href='../fin_proj.html'>Return to Final Project Page</a>
+</body>
+<script src="https://unpkg.com/topojson@3"></script>
+<script src='https://d3js.org/d3.v6.min.js'></script>
+<script>
+	console.log({d3})
+
+	Promise.all([
+		d3.json('waffle_cleaner.json')
+		])
+			.then(ready)
+			.catch((err) => {
+				console.log(err)
+			})
+
+
+	function ready(res) {
+		let raw = res[0];
+		console.log(raw);
+
+		// load topojson file
+		let tracts = topojson.feature(raw, raw.objects.waffle_cleaner);
+
+		// sort by majority
+
+		// sortTracts = sortPolygons(tracts.features)
+
+		// console.log(sortTracts);
+
+		let width = 1000;
+		let height = 1000;
+
+		let widthSquares = 50
+		let heightSquares = 50
+		let squareSize = 12
+		let gap = 1
+
+		let totNoMaj = 287
+		let totWhite = 1038
+		let totBlack = 365
+		let totAsian = 7
+		let totHisp = 286
+
+		let evNoMaj = 287 - 225
+		let evWhite = 1038 - 793
+		let evBlack = 365 - 346
+		let evAsian = 1
+		let evHisp = 286 - 262
+
+
+
+
+		let popup = d3.select('.popup')
+		let percBox = d3.select('.percBox')
+
+		let svg = d3.select('body').select('svg')
+
+		
+
+
+		
+		// defining a list of majorities to code by,
+		// with or without EVCI
+
+		majorities = ['whiteEV','whiteNo',
+					    'blackEV','blackNo',
+						'asianEV', 'asianNo',
+						'hispaEV', 'hispaNo',
+						'0EV', '0No']
+
+
+		colors = ['rgb(54, 185, 255)', 'rgb(188, 238, 255)',
+					'rgb(77, 255, 61)', 'rgb(210, 255, 200)',
+					'rgb(208, 90, 255)', 'rgb(239, 214, 255)',
+					'rgb(247, 145, 37)', 'rgb(250, 213, 174)',
+					'rgb(122, 119, 112)', 'rgb(214, 211, 201)']
+
+		//color function
+		let color = d3.scaleOrdinal()
+	        .domain(majorities)
+	        .range(colors)		
+
+
+		
+
+		let squares = svg
+			.attr('width', width)
+			.attr('height', height)
+			.append('g')
+			.selectAll('div')
+			.data(tracts.features)
+			.enter()
+			.append('rect')
+			.attr('class', d => {
+				let geoid = 'us' + d.properties.GEOID
+				let majority = d.properties.ev_majorit
+
+				if (majority == '0No') {
+					majority = 'noMajNo'
+				} else if (majority == '0EV') {
+					majority = 'noMajEV'
+				}
+
+				let comboClass = geoid + ' ' + majority
+				return comboClass
+
+			})
+			.attr('width', squareSize)
+			.attr('height', squareSize)
+			.style('fill', d => color(d.properties.ev_majorit))
+			.style('stroke', 'none')
+			.style('stroke-width', 0.1)
+			.style('cursor', 'crosshair')
+			.attr('x', (d,i) => {
+				
+				row = i%heightSquares;
+				return (heightSquares*squareSize) - ((row*squareSize) + (row*gap)) + width/4
+				// above can probably be like half the width?
+			})
+			.attr('y', (d,i) => {
+				col = -Math.floor(i/heightSquares);
+				return (col*squareSize) + (col*gap) + height/1.9;
+				// 100 to center
+			})
+			.attr('rx', 2)
+			.attr('ry', 2)
+
+
+			// svg.on('mouseover', (event, d) => {
+			// 	console.log(event.x, event.y)
+
+			// })
+
+	// let line = svg.append('line')
+	// 		.style('stroke', 'black')
+	// 		.style('stroke-width', 2)
+	// 		// .style('opacity', 1)
+	// 		.attr("x1", 0)
+	// 	    .attr("y1", 0)
+	// 	    .attr("x2", 30)
+	// 	    .attr("y2", 0)
+
+
+
+	squares.on('mouseover', (event, d) => {
+			selGEOID = 'us' + d.properties.GEOID
+			selRace = d.properties.ev_majorit
+
+			let selected = d3.select(`.${selGEOID}`)
+			let selY = selected.attr('y')
+
+			if (selRace == '0No') {
+				selRace = 'noMajNo'
+			} else if (selRace == '0EV') {
+				selRace = 'noMajEV'
+			}
+
+			if (d.properties.ev_sum_dc > 0 || d.properties.ev_sum_l2 > 0) {
+
+				if (d.properties.ev_sum_dc > 0) {
+					var evCheck = d.properties.ev_sum_dc + ' DC Fast Chargers, and '+ d.properties.ev_sum_l2 + ' Level 2 Chargers'
+
+				} else if (d.properties.ev_sum_dc <= 0) {
+				var evCheck = 'no DC Fast Chargers, and '+ d.properties.ev_sum_l2 + ' Level 2 Chargers'
+				}
+			} else {
+				var evCheck = 'no'
+			}
+
+			
+			if (d.properties.majority == '0') {
+				var lang = 'In this tract with no racial majority, there are ' + evCheck + '  electric vehicle charging stations.' + ' The median income is ' + d3.format("($,.0f")(d.properties.median_inc) + ' and ' + d3.format(',')(d.properties.total) + ' people live here.'
+			} else {
+				if (d.properties.majority  == 'hispanic_latino') {
+					var maj = 'hispanic/latinx'
+				} else {
+					var maj = d.properties.majority
+				}
+				var lang = 'In this ' + maj + '-majority tract, there are ' + evCheck + '  electric vehicle charging stations.' + ' The median income is ' + d3.format("($,.0f")(d.properties.median_inc) + ' and ' + d3.format(',')(d.properties.total) + ' people live here.'
+		}
+
+			// eventually add total highlight functionality
+			d3.selectAll(`.${selRace}`)
+				.transition()
+				.duration(100)
+				// .style('fill', 'green')
+				// .style('stroke', 'black')
+				// .style('stroke-width', 2)
+
+			popup
+				.style('opacity',0.8)
+				.style('left', 1100 + 'px')
+				.style('top', d=> {
+					console.log( +selY + 1000 + 'px')
+					return +selY + 70 + 'px'})
+				.html(lang)
+
+			d3.select(`.${selGEOID}`)
+				.transition()
+				.style('fill', 'yellow')
+				.style('stroke', 'yellow')
+				.style('stroke-width', 2)
+
+			// line
+			// 	.style('opacity', 1)
+			// 	.attr('x1', event.x - 210 + 'px')
+			// 	.attr('x2', 890)
+			// 	.attr('y1', event.y - 110+ 'px')
+			// 	.attr('y2', event.y - 80+ 'px')
+			if (d.properties.ev_majorit == 'whiteEV') {
+				var percent = evWhite/totWhite
+			} else if (d.properties.ev_majorit == 'whiteNo') {
+				var percent = (totWhite-evWhite)/totWhite
+			} else if (d.properties.ev_majorit == 'blackEV') {
+				var percent = evBlack/totBlack
+			} else if (d.properties.ev_majorit == 'blackNo') {
+				var percent = (totBlack - evBlack)/totBlack
+			} else if (d.properties.ev_majorit == '0EV') {
+				var percent = evNoMaj/totNoMaj
+			}  else if (d.properties.ev_majorit == '0No') {
+				var percent = (totNoMaj - evNoMaj)/totNoMaj
+			} else if (d.properties.ev_majorit == 'hispaEV') {
+				var percent = evHisp/totHisp
+			} else if (d.properties.ev_majorit == 'hispaNo') {
+				var percent = (totHisp - evHisp)/totHisp
+			} else if (d.properties.majority == 'asianEV') {
+				var percent = 0.14
+			}  else if (d.properties.ev_majorit == 'asianNo') {
+				var percent = (totAsian - evAsian)/totAsian
+			}
+
+			popup
+				.style('opacity',0.8)
+				.style('left', 1100 + 'px')
+				.style('top', d=> {
+					console.log( +selY + 1000 + 'px')
+					return +selY + 70 + 'px'})
+				.html(lang)
+				.transition()
+
+			if (d.properties.ev_majorit.slice(d.properties.ev_majorit.length-1) == 'V') {
+				var percLang = ' have EV Charging.'
+			} else {
+				var percLang = ' do not have EV Charging.'
+			}
+
+			if (d.properties.majority == '0') {
+				var htmlMajo = 'no-majority'
+			} else if (d.properties.majority == 'hispanic_latino') {
+				var htmlMajo = 'hispanic/latinx'
+			} else {
+				var htmlMajo = d.properties.majority
+			}
+
+
+
+
+
+			percBox
+				.style('opacity',0.8)
+				.style('left', 300 + 'px')
+				.style('top', d=> {
+					console.log( +selY + 1000 + 'px')
+					return +selY + 80 + 'px'})
+				.html(d3.format(",.0%")(percent) + ' of all ' + htmlMajo + ' tracts' + percLang)
+				.transition()
+
+
+
+
+			// let perc = svg
+			// 	.data(tracts.features)
+			// 	// .data(tracts.features)
+			// 	.append('text')
+			// 	.attr('class', 'percent')
+			// 	.transition()
+			// 	.delay(200)
+			// 	.style('border', '3px solid red')
+			// 	.text(d=> {
+			// 		console.log(d)
+			// 		return (
+			// 			d3.format(",.0%")(percent) + ' of all ' + d.properties.majority + ' tracts.'
+			// 			)})
+			// 	.style('font-family', 'helvetica neue')
+			// 	.style('font-size', '30px')
+			// 	.style('fill', 'black')
+			// 	.attr('x', 100)
+			// 	.attr('y', selY)
+		})
+
+	
+
+		squares.on('mouseout', (event, d) => {
+			selGEOID = 'us' + d.properties.GEOID
+			selRace = d.properties.ev_majorit
+
+			if (selRace == '0No') {
+				selRace = 'noMajNo'
+			} else if (selRace == '0EV') {
+				selRace = 'noMajEV'
+			}
+
+
+
+
+			// can I make it center a datapoint?
+			d3.selectAll(`.${selRace}`)
+				.transition()
+				.style('fill', d => color(d.properties.ev_majorit))
+
+
+			d3.select(`.${selGEOID}`)
+				.transition()
+				.style('fill', color(d.properties.ev_majorit))
+				.style('stroke', 'none')
+				// .style('stroke-width', 8)
+
+			percBox
+				.transition()
+				.duration(100)
+				.style('opacity', 0)
+
+			popup
+				.style('opacity', 0)
+
+
+
+		})
+
+	// 	function transitionMap(){
+	// 	let isMap = false
+
+	// 	svg.append('g')
+	// 		.selectAll('.tracts')
+	// 		.data(tracts.features)
+	// 		.join('path')
+	// 		.attr('d',d=> {
+	// 			console.log(d)
+	// 			path
+	// 		})
+	// 		.attr('class', d => 'us' + d.properties.GEOID)
+	// 		.style('fill','#eee')
+	// 		.style('stroke', 'black')
+	// 		.style('stroke-width',1)
+	// 		.style('pointer-events', 'none')
+	// 		.transition()
+	// 		.duration(1000)
+
+		
+	// 	squares
+	// 		.transition()
+	// 		.duration(1200)
+	// 		.remove()			
+	// 		// d3
+	// 		// .selectAll('.tracts')
+	// 		// .selectAll('path')
+	// 		// .data(tracts.features)
+	// 		// .join('path')
+	// 		// .transition()
+	// 		// .duration(1500)
+	// 		// .attr('d',path)
+	// 		// .attr('class', d => {
+	// 		// 	return 'us' + d.properties.GEOID
+	// 		// })
+	// 		// .style('fill','#eee')
+	// 		// .style('stroke', 'none')
+	// 		// .style('stroke-width',0)
+	// 		// .style('pointer-events', 'none') // makes it so you can't hover-select anything and simplifies mouseover for the future
+
+
+
+	// 	}
+
+	// transitionMap()
+
+
+	}
+
+
+
+
+
+
+
+
+</script>
+</html>

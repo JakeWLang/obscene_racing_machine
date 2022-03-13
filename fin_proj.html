@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Data Viz '22 Final Project</title>
+	<style>
+		h1 {
+			font-family: 'Titillium Web';
+			display: flex;
+			justify-content: center;
+		}
+
+		.intro-text {
+			font-family: 'Museo Sans';
+			/*display: flex;*/
+			width: 70%;
+			margin: 0 auto;
+		}
+		.photo-holder{
+			margin: 0 auto;
+			display: grid;
+			justify-content: center;
+			/*flex-direction: column;*/
+		}
+		img {
+			max-width: 800px;
+			/*max-height:;*/
+		}
+		.label {
+			font-family: 'Helvetica Neue';
+			font-weight: 700;
+		}
+	</style>
+	<link href="https://fonts.googleapis.com/css2?family=Raleway&family=Titillium+Web&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.typekit.net/vzy2dov.css">
+
+</head>
+<body>
+	<h1>Data Visualization Final Project</h1>
+	<div class='intro-text'>
+		<p>This body is the culmination of a quarter's work on behalf of the Chicago Metropolitan Agency for Planning under the Harris School's Policy Labs program. Much of this work attempts to reflect the status quo in electric vehicle charging. Although relatively simple, I hope these graphics present a compelling narrative highlighting major disparities in charging access across the Chicago region.<br><br> I also include two D3 pieces at the end of this page. The first, a transitioning pie chart, highlights the disproportionate access of charging infrastructure in the region by comparing the percent of total charging stations in <a href='https://www.cmap.illinois.gov/updates/all/-/asset_publisher/UIMfSLnFfMB6/content/economically-disconnnected-area-clusters-in-the-cmap-region'>"economically disconnected areas"</a> to the total percent of population living in those areas. This piece was meant to be a major part of our team's final presentation, used to highlight charging access' disparities.<br><br> The final chart is a major work in progress I hoped to complete for the final project. Originally, I had intended to transition from chart to map, and vice-versa, as in <a href='https://observablehq.com/@floledermann/transitions-from-maps-to-diagrams-part-2'>this posting</a>. Of course, having run out of time, I'd still like to present the premise. This piece is <em>also</em> meant to outline major faults in broader charging accessibility while also pushing the narrative that charging infrastructure is nowhere near peak capacity in the region, as just 352 of 1983 tracts have access to charging infrastructure within them.
+		</p>
+		
+	</div>
+	<div class='photo-holder'>
+		<img src='/Final Project Images/fin_comp_update_size-01-01.png'>
+		<img src='/Final Project Images/evci_median_income_FINMAR7-01.png'>
+		<img src='/Final Project Images/Median Income Overlap w EVCI-01.png'>
+		<img src='Final Project Images/rent_own_edit_Mar6_126-01.png'>
+		<img src='Final Project Images/dwellingedit-03.png'>
+		<img src='Final Project Images/med_veh_own_redo_mar12-01.png'>
+		<div class='chart-container'>
+			<svg width='1050px'height='575px'></svg>
+		</div>
+		<a href='/Final Project/waffle.html'> WIP Waffle Chart</a>
+	</div>
+	
+</body>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script>
+
+
+	// let width = 500;
+	// let height = 500;
+	// let margin = 40;
+
+	const width = 600,
+	    height = 600,
+	    margin = 40;
+
+	const pie = d3.pie()
+	  .value(function(d) {return d[1]})
+
+
+	const radius = Math.min(width, height) / 2 - margin;
+
+
+
+	// let radius = Math.min(width, height)/2
+
+
+
+	let svg = d3.select('svg')
+		.attr('width', width)
+		.attr('class', 'pop')
+		.attr('height', height)
+		.append('g')
+		.attr('transform', `translate(${width/2}, ${height/2})`);
+
+
+	let popData = {'Other Population': 8483267-2718215, 'Population in EDAs':2718215}
+	let data = {'Other EVCI':749-90, 'EVCI in EDAs':90}
+
+	let arcGenerator = d3.arc()
+		.innerRadius(0)
+		.outerRadius(radius)
+
+	let color = d3.scaleOrdinal()
+		.range(['#6dad4f', '#008fd5'])
+
+
+	let dataReady = pie(Object.entries(popData))
+
+	
+
+////////// TRYING SMOOTH TRANSITIONS ///////////
+
+let readyData = pie(Object.entries(popData))
+
+let u = svg.selectAll('path')
+			.data(readyData)
+
+
+
+		u
+			.join('path')
+			.transition()
+			.duration(2000)
+			.attr('d',arcGenerator)
+			.attr('fill', d => color(d.data[0]))
+			.attr('stroke', 'white')
+			.style('stroke-width', '2px')
+			.style('opacity', 1)
+
+let uText = svg.selectAll('text')
+			.data(readyData)
+
+		uText
+			.join('text')
+			.transition()
+			.duration(2000)
+			.text(d => d.data[0])
+			.attr('transform', function(d) {
+
+
+			let translation = arcGenerator.centroid(d)
+			if (translation[1] < 0) {
+				// Pop in EDAs
+				translation[1] -= 45
+				translation[0] -= 30
+			} else {
+				// Pop all
+				translation[1] +=0
+			}
+
+			return `translate(${translation})`
+			// console.log(translation[1])
+			// console.log(translation[1])
+			// console.log(translation)
+
+		})
+			.attr('class', 'label')
+			.style('text-anchor', 'middle')
+			.style('font-size', 100)
+
+
+	function change() {
+			if (svg.classed('pop')) {
+			svg.classed('pop', false)
+			var state = data
+		} else {
+			svg.classed('pop', true)
+			var state = popData
+		}
+
+		let datadata = pie(Object.entries(state))
+
+		let u = svg.selectAll('path')
+			.data(datadata)
+
+		u = u.data(datadata);
+		// console.log(u)
+		u
+			.transition()
+			// .delay(2000)
+			.ease(d3.easeQuadInOut)
+			.duration(1500).attrTween('d', arcTween)
+
+
+		let uText = svg.selectAll('text')
+			.data(readyData)
+		
+
+		uText = uText.data(datadata)
+
+
+		uText
+			.transition()
+			// .delay(2000)
+			.ease(d3.easeQuadInOut)
+			.duration(1500)
+			.attrTween('transform',labelArcTween)
+			.text(d => d.data[0])
+
+	}
+
+	function arcTween(a) {
+	  var i = d3.interpolate(this._current, a);
+	  this._current = i(0);
+	  return function(t) {
+	    return arcGenerator(i(t));
+	  };
+	}
+
+	function labelArcTween(a) {
+		var i = d3.interpolate(this._current, a);
+		this._current = i(0);
+		return function(t){
+			let translation = arcGenerator.centroid(i(t))
+			// console.log(translation[1])
+
+			if (translation[1] < 0) {
+				// Pop in EDAs
+				translation[1] -= 45
+				translation[0] -= 30
+			} else {
+				// Pop all
+				translation[1] +=0
+			}
+
+			return `translate(${translation})`
+			// return `translate(${arcGenerator.centroid(i(t))})`
+		}
+	}
+	let timer = d3.interval(change, 3000)
+	// let btn = d3.select('button')
+
+	// btn.on('click', change)
+
+
+// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+// svg
+//   .selectAll('pie-pieces')
+//   .data(dataReady)
+//   .join('path')
+//   .attr('d', d3.arc()
+//     .innerRadius(0)
+//     .outerRadius(radius)
+//   )
+//   .attr('fill', function(d){ return(color(d.data[1])) })
+//   .attr("stroke", "black")
+//   .style("stroke-width", "2px")
+//   .style("opacity", 0.7)
+
+// update(popData)
+
+
+
+
+
+	</script>
+</html>
+
+
+
+
+
+
+
