@@ -13,22 +13,16 @@
 
 		.intro-text {
 			font-family: 'Museo Sans';
-			/*display: flex;*/
-			/*justify-content: center;*/
-			width: 70%;
 			margin: 0 auto;
+			width: 70%;
 		}
 
-		body {
-			display: flex;
-			justify-content: center;
-			flex-direction: column;
-		}
+	
 		.photo-holder{
-			margin: 0 auto;
+			/*margin: 0 auto;*/
 			display: flex;
-			justify-content: center;
 			flex-direction: column;
+			align-items: center;
 		}
 		img {
 			max-width: 800px;
@@ -41,7 +35,7 @@
 
 		.photo-holder a {
 			font-family: 'Titillium Web';
-			margin: 10%;
+			/*margin: 10%;*/
 			text-align: center;
 			font-weight: 700;
 			font-size: 170%;
@@ -49,37 +43,75 @@
 		}
 
 		img {
-			margin: 0 auto;
+			cursor: pointer;
+			/*margin: 0 auto;*/
 			width: 80%;
 			height: 80%;
+			padding: 3% 0% 3% 0%;
 			display: flex;
 			justify-content: center;
 		}
 	</style>
+	<link rel='stylesheet' href='style.css'>
 	<link href="https://fonts.googleapis.com/css2?family=Raleway&family=Titillium+Web&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.typekit.net/vzy2dov.css">
 
 </head>
 <body>
+
+	<header class='site-head'>
+	<ul class='head-list'>
+		<li class='hover-underline'><a href='index.html'>Home</a></li>
+		<li class='hover-underline'><a href='personal.html'>Personal</a></li>
+		<li class='hover-underline'><a href='professional.html'>Professional</a></li>
+		<li class='hover-underline'>Contact</li>
+	</ul>
+</header>
+
 	<h1>Data Visualization Final Project</h1>
 	<div class='intro-text'>
 		<p>This body is the culmination of a quarter's work on behalf of a regional planning organization under the Harris School's Policy Labs program. Much of this work attempts to reflect the status quo in electric vehicle charging. Although relatively simple, I hope these graphics present a compelling narrative highlighting major disparities in charging access across the Chicago region.<br><br> I also include two D3 pieces at the end of this page. The first, a transitioning pie chart, highlights the disproportionate access of charging infrastructure in the region by comparing the percent of total charging stations in <a href='https://www.cmap.illinois.gov/updates/all/-/asset_publisher/UIMfSLnFfMB6/content/economically-disconnnected-area-clusters-in-the-cmap-region'>"economically disconnected areas"</a> to the total percent of population living in those areas. This piece was meant to be a major part of our team's final presentation, used to highlight charging access' disparities.<br><br> The final chart is a major work in progress I hoped to complete for the final project. Originally, I had intended to transition from chart to map, and vice-versa, as in <a href='https://observablehq.com/@floledermann/transitions-from-maps-to-diagrams-part-2'>this posting</a>. Of course, having run out of time, I'd still like to present the premise. This piece is <em>also</em> meant to outline major faults in broader charging accessibility while also pushing the narrative that charging infrastructure is nowhere near peak capacity in the region, as just 352 of 1983 tracts have access to charging infrastructure within them. <br><br> A final note: EVCI means "Electric Vehicle Charging Infrastructure". In this context, EVCI is used interchangeably with "stations" and "chargers".</p>
 		
 	</div>
+
+	<div class='card-underline-center top-pad'></div>
 	<div class='photo-holder'>
-		<img src='/Final Project Images/fin_comp_update_size-01-01.png'>
-		<img src='/Final Project Images/evci_median_income_FINMAR7-01.png'>
-		<img src='/Final Project Images/Median Income Overlap w EVCI-01.png'>
-		<img src='Final Project Images/rent_own_edit_Mar6_126-01.png'>
-		<img src='Final Project Images/dwellingedit_mar13-03.png'>
-		<img src='Final Project Images/med_veh_own_redo-01.png'>
+		<img src='/Final Project Images/fin_comp_update_size-01-01.png' onclick='selImg(this)'
+		alt='National Comparison of Client Region'>
+
+		<img src='/Final Project Images/evci_median_income_FINMAR7-01.png' onclick='selImg(this)'
+		alt='Charging Access Variation by Median Income'>
+
+		<img src='/Final Project Images/Median Income Overlap w EVCI-01.png' onclick='selImg(this)'
+		alt='Charging Access Variation by Median Income'>
+
+		<img src='Final Project Images/rent_own_edit_Mar6_126-01.png' onclick='selImg(this)'
+		alt='Homeownership Variation by Community Area Type'>
+
+		<img src='Final Project Images/dwellingedit_mar13-03.png' onclick='selImg(this)'
+		alt='Housing Profile Variation by Community Area Type'>
+
+		<img src='Final Project Images/med_veh_own_redo-01.png' onclick='selImg(this)'
+		alt='Vehicle Ownership Variation by Community Area Type'>
+
 		<div class='chart-container'>
 			<svg width='1050px'height='575px'></svg>
 		</div>
 		<a href='/Final Project/waffle.html'> WIP Waffle Chart</a>
 	</div>
 	
+
+
+<div class='image-modal' id='photobox'>
+	<span class='close'>&times;</span>
+	<img class='modal-content' id='img01'>
+	<div id='img-caption'> </div>
+</div>
+
+<!-- Footer -->
+	<footer class ='index-foot'><a href='tester.html' target='_blank'>Design by Jake - 2022</a></footer>
 </body>
+<script src='modalScript.js'></script>
 <script src="https://d3js.org/d3.v6.min.js"></script>
 	<script>
 
