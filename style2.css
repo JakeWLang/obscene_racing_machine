@@ -1,0 +1,532 @@
+html body {
+	margin: auto 0;
+
+}
+
+div {
+	/*box-shadow: 5px 0px 10px orangered;*/
+}
+
+.section {
+	text-align: center;
+}
+/*.section:hover {
+	transform: translate(3px);
+}*/
+
+.title {
+	padding-top: 10%;
+}
+
+
+.title-card {
+	background: white;
+}
+
+.highlighter {
+	background: white;
+}
+
+
+.card-underline-right {
+	background: black;
+	margin-top: 2%;
+	margin-left: 8%;
+	width: 90%;
+	padding: 1%;
+
+}
+
+.card-underline-left {
+	background: black;
+	margin-bottom: 2%;
+	padding: 1%;
+	width: 90% ;
+}
+
+.card-underline-center {
+	background: black;
+	margin: auto;
+	margin-bottom: 6%;
+	padding: 1%;
+	width: 45%;
+	justify-content: center;
+}
+
+
+/*-----------------------*/
+/* Header */
+
+.site-head {
+	width: 100%;
+	background: slategray;
+	box-shadow: 0px 3px 4px #404040;
+	position: relative;
+}
+
+header ul {
+	list-style: none;
+	display: flex;
+	justify-content: center;
+}
+
+header ul li {
+	padding: 4px 15px 4px 15px;
+	font-family: "Titillium Web";
+	font-weight: 800;
+}
+
+
+.head-list {
+	margin: 0;
+}
+
+.head-list a {
+	text-decoration: none;
+	color: black;
+}
+
+/*add hover elements for head-list here*/
+
+
+.hover-underline {
+	display: inline-block;
+  position: relative;
+  color: black;
+}
+
+.hover-underline:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 4px;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  box-shadow: 0px 7px 20px 1px #ffffff;
+
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/*-----------------------*/
+/*Intro card*/
+/*Insert floating things right to left?*/
+.title-card {
+	display: flex;
+	flex-flow: column;
+	background-image: url("Portfolio_Images/arnold-francisca-f77Bh3inUpE-unsplash.jpg");
+/*Photo by <a href="https://unsplash.com/@clark_fransa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Arnold Francisca</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>*/
+  
+	background-size: cover;
+	color: #dadfdb;
+	font-family: 'Titillium Web';
+	padding-bottom: 14%;
+}
+
+
+#firstname {
+	font-size: 18vw;
+	padding-left: 50%;
+
+}
+
+#lastname {
+	font-size: 12vw;
+	padding-right: 0%;
+}
+
+
+
+
+
+
+footer {
+	background: royalblue;
+}
+
+
+
+
+/*-----------------------*/
+/*Highlighter/Personal/Professional*/
+.highlighter-title {
+	display: flex;
+	font-family: 'Titillium Web';
+	/*text-decoration: underline;*/
+	font-weight: 700;
+	padding-top: 10%;
+	font-size: 10vw;
+	padding-left: 5%;
+}
+
+
+
+.highlighter-flex {
+	display: flex;
+}
+
+.cards {
+	/*padding: 20% 0px 20% 0px;*/
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	position: relative;
+
+
+
+}
+
+.cards a {
+	display: grid;
+	text-decoration: none;
+	}
+
+
+.h-card {
+	/*border: 1px dashed firebrick;*/
+/*	padding: 40% 40% 40% 40%; */
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	background-color: black;
+}
+
+.h-card > img, .popup {
+	grid-row: 1 / 2;
+}
+
+
+
+.h-card >img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 20%;
+	grid-column: 1/2;
+}
+
+.h-card > img:hover {
+	opacity: 100%;
+}
+
+
+.popup {
+	color: black;
+	grid-column: 1 / 2;
+	align-self: end;
+	justify-self: right;
+
+	background-color: white;
+	padding: 3% 7.5% 3% 7.5%;
+	opacity: 100%;
+
+	font-family: 'museo-sans';
+	font-size: 2vw;
+
+/*	transition-property: all;
+	transition-duration: 2s;*/
+
+}
+
+.popup:hover ~ img {
+	opacity: 100%;
+}
+
+
+
+.popup:hover > .hide-on-hover {
+	display: none;
+}
+
+/* ENTER EXPANDED INFO HERE */
+.a:hover:after{
+	color: black;
+	content: "My work outside of work: Painting, building, and making fun tools to spice everyday life.";
+}
+
+
+
+.b:hover:after{
+	color: black;
+	content: "My work projects. From data visualization for municipal clients to statistical index creation for global equity analyses.";
+}
+
+
+
+
+/*----------------------*/
+/* ABOUT SECTION */
+
+.flex-container {
+	display: flex;
+}
+
+.about-title {
+	background: white;
+	display: flex;
+	font-family: 'Titillium Web';
+	/*text-decoration: underline;*/
+	font-weight: 700;
+	padding-top: 2%;
+	padding-bottom: 3%;
+	font-size: 8vw;
+	justify-content: center;
+	padding-right: 15%;
+
+}
+
+.about {
+	font-size: 1em;
+	background: white;
+}
+
+
+
+.about-me {
+	display: grid;
+	text-align: left;
+	font-size: 1.2em;
+	font-family: "museo sans";
+	font-weight: 300;
+	grid-template-columns: 2fr 1fr;
+	padding-bottom: 4%;
+}
+
+.about-me p {
+	margin: 0;
+	/*padding-right: 5%;*/
+}
+
+
+.flex-container img {
+	justify-self: left;
+	max-width: 70%;
+	max-height: 70%;
+	/*float: right;*/
+	margin-left: 20%;
+	margin-bottom: 2%;
+	margin-right: 10%;
+	border-radius: 50%;
+
+}
+
+
+
+@media screen and (min-width: 801px) {
+	.about-me {
+		font-size: 1.4em;
+	}
+	.about-me > p {
+		margin-left: 20%;
+	}
+}
+
+/*
+@media screen and (max-width: 800px) {
+	.about-me {
+		font-size: 0.9em;
+	}
+	.about-me > p {
+		margin-left: 30%;
+	}
+}*/
+
+/*-----------------------*/
+/*SKILL ICONS*/
+.skills {
+	background: white;
+	width: 100%;
+}
+
+.skill-container {
+	padding: 20px;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+	align-items: center;
+	justify-items: center;
+
+}
+
+
+.icon-container {
+	padding: 10px;
+	width: 25%;
+	heigh: 25%;
+}
+
+.icon-container > img {
+	width: 80%;
+}
+
+/*-----------------------*/
+/*SOCIAL*/
+
+.socials {
+	text-align: center;
+	background: white;
+	width: 100%;
+	font-family: 'Titillium Web';
+	font-weight: 1000;
+    font-size: 5vw;
+}
+
+.connect-text{
+	padding-top: 4%;
+}
+
+.connect-underline{
+	margin-top: 6%;
+	margin-bottom: 0%;
+}
+
+
+.social-container {
+	padding: 20px;
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+/*	justify-items: space-evenly;
+	align-items: space-evenly;*/
+
+	}
+
+.social-icon {
+	border-radius: 100px;
+	padding: 40px 0px 0px 0px
+}
+
+
+.social-icon img {
+	transition: all 0.3s ease-in-out;
+	width: 20%;
+	border-radius: 100px;
+}
+
+
+
+.social-icon img:hover{
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+	transform: scale(1);
+	animation: pulse 2s infinite;
+}
+
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
+/* COURTESY OF https://www.florin-pop.com/blog/2019/03/css-pulse-effect/ */
+
+
+
+/*************************/
+/* FOOTER */
+
+.temp-spacer{
+margin-bottom: 50vw;
+}
+
+
+.index-foot {
+padding: 1% 0% 1% 0%;
+background-color: black;
+width: 100%;
+}
+
+.index-foot a {
+	font-family: 'Titillium Web';
+	text-decoration: none;
+	color: white;
+	padding-left: 4%;
+}
+
+
+
+
+/*********************/
+/* POPUP FORM */
+
+.contact-form{
+	border: 1px solid red;
+	display: flex;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 35%;
+	background-color: ivory;
+	/*padding: 20% 2% 20% 2%;*/
+	/*display: none;*/
+}
+
+.contact-me {
+	/*align-content: flex-start;*/
+	border: 1px dashed pink;
+	padding: 20%;
+}
+
+
+.popup-head {
+	border: 3px dotted green;
+	color: red;
+}
+
+
+/****************** PROFESSIONAL PAGE *********************/
+
+.prof-intro {
+	font-family: 'Museo Sans';
+	padding-left: 2%;
+}
+.data-viz-hw {
+	font-family: 'Titillium Web';
+	font-weight: 1000;
+	color: black;
+	padding-left: 2%;
+}
+
+.d3hw {
+	font-family: 'Museo Sans';
+	padding-left: 8%;
+	margin-bottom: 29%;
+}
+
+
+
+
+/******************* PERSONAL PAGE **********************/
+/*.personal-filler {
+	margin-bottom: 41%;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
