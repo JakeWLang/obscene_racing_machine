@@ -1,5 +1,10 @@
 html body {
 	margin: auto 0;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
 
 }
 
@@ -44,6 +49,8 @@ div {
 	width: 90% ;
 }
 
+
+
 .card-underline-center {
 	background: black;
 	margin: auto;
@@ -52,6 +59,27 @@ div {
 	width: 45%;
 	justify-content: center;
 }
+
+.short {
+	width: 75%;
+}
+
+.shorter {
+	width: 50%;
+}
+
+.thinner{
+	padding: 0.5%;
+}
+
+.left-pad {
+	margin-left: 5%;
+}
+
+.bottom-pad {
+	margin-bottom: 4%;
+}
+
 
 .top-pad{
 	margin-top: 5%;
@@ -62,6 +90,8 @@ div {
 /* Header */
 
 .site-head {
+	display: flex;
+	justify-content: center;
 	width: 100%;
 	background: slategray;
 	box-shadow: 0px 3px 4px #404040;
@@ -308,7 +338,7 @@ footer {
 }
 
 
-.flex-container img {
+.about img {
 	justify-self: left;
 	max-width: 70%;
 	max-height: 70%;
@@ -498,9 +528,9 @@ width: 100%;
 
 /****************** PROFESSIONAL PAGE *********************/
 
-.prof-intro {
+.work-intro {
 	font-family: 'Museo Sans';
-	padding-left: 2%;
+	padding-left: 5%;
 }
 .data-viz-hw {
 	font-family: 'Titillium Web';
@@ -514,16 +544,6 @@ width: 100%;
 	padding-left: 8%;
 	margin-bottom: 29%;
 }
-
-
-
-
-/******************* PERSONAL PAGE **********************/
-/*.personal-filler {
-	margin-bottom: 41%;
-}*/
-
-
 
 
 
@@ -607,9 +627,65 @@ width: 100%;
 
 
 
+/*********************** PROJECT BOXES **********************/
+.project-container {
+	display: flex;
+	flex-direction: column;
+}
+.project-page-title {
+	display: flex;
+	font-family: 'Titillium Web';
+	/*text-decoration: underline;*/
+	font-weight: 700;
+	font-size: 5vw;
+	padding-left: 5%;
+}
+
+.project-box {
+	display: grid;
+	grid-template-columns: 1.5fr 1fr;
+	width: 100%;
+	max-height: 10%;
+	margin-bottom: 2%;
+}
+
+.project-img {
+	display: flex;
+	justify-content: right;
+	transition: all 0.3s linear;
+}
 
 
 
+.project-img:hover {
+    -webkit-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+    -moz-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+    -o-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+    box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+}
+
+
+
+.project-text {
+	display: flex;
+	flex-flow: row wrap;
+	color: pink;
+}
+
+.project-title {
+	font-family: 'Titillium Web';
+	font-weight: 800;
+	font-size: 2vw;
+}
+
+.project-desc {
+	font-family: 'Museo Sans';
+	font-weight: 300;
+	font-size: 1.5vw;
+	margin-left: 3%;
+	margin-right: 3%;
+	
+}
 
 
 
