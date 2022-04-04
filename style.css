@@ -12,6 +12,14 @@ div {
 	/*box-shadow: 5px 0px 10px orangered;*/
 }
 
+h1 {
+	font-family: 'Titillium Web';
+}
+
+h2 {
+	font-family: 'Titillium Web';
+}
+
 .section {
 	text-align: center;
 }
@@ -68,6 +76,10 @@ div {
 	width: 50%;
 }
 
+.shortest {
+	width: 20%;
+}
+
 .thinner{
 	padding: 0.5%;
 }
@@ -84,6 +96,20 @@ div {
 .top-pad{
 	margin-top: 5%;
 }
+
+.flex-container {
+	display: flex;
+}
+
+.flex-col {
+	flex-direction: column;
+}
+
+.med-img {
+	height: 40%;
+	width: 40%;
+}
+
 
 
 /*-----------------------*/
@@ -297,9 +323,7 @@ footer {
 /*----------------------*/
 /* ABOUT SECTION */
 
-.flex-container {
-	display: flex;
-}
+
 
 .about-title {
 	background: white;
@@ -532,6 +556,11 @@ width: 100%;
 	font-family: 'Museo Sans';
 	padding-left: 5%;
 }
+
+.centered-text {
+	text-align: center;
+	padding: 0 20% 0% 20%;
+}
 .data-viz-hw {
 	font-family: 'Titillium Web';
 	font-weight: 1000;
@@ -542,7 +571,7 @@ width: 100%;
 .d3hw {
 	font-family: 'Museo Sans';
 	padding-left: 8%;
-	margin-bottom: 29%;
+	margin-bottom: 10%;
 }
 
 
@@ -651,11 +680,14 @@ width: 100%;
 
 .project-img {
 	display: flex;
-	justify-content: right;
+	justify-content: center;
 	transition: all 0.3s linear;
 }
 
+.project-img img {
+	width: 70%;
 
+}
 
 .project-img:hover {
     -webkit-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
@@ -669,28 +701,41 @@ width: 100%;
 .project-text {
 	display: flex;
 	flex-flow: row wrap;
-	color: pink;
+	color: black;
 }
 
 .project-title {
 	font-family: 'Titillium Web';
 	font-weight: 800;
 	font-size: 2vw;
+	margin-left: 5%;
 }
 
 .project-desc {
 	font-family: 'Museo Sans';
 	font-weight: 300;
 	font-size: 1.5vw;
-	margin-left: 3%;
+	margin-left: 5%;
 	margin-right: 3%;
 	
 }
 
 
+.project-link {
+	text-decoration: underline;
+	color: black;
+}
 
+.code-block {
+	display: flex;
+	justify-content: center;
+}
 
-
+.index-imgs {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 
 
 
