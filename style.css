@@ -676,6 +676,7 @@ width: 100%;
 	grid-template-columns: 1.5fr 1fr;
 	width: 100%;
 	max-height: 10%;
+	height: 10%;
 	margin-bottom: 10%;
 }
 
@@ -686,12 +687,12 @@ width: 100%;
 	transition: all 0.3s linear;
 }
 
-@media screen and (max-width: 600px) {
+/*@media screen and (max-width: 600px) {
 	.project-img {
 		height: 20%;
 	}
 }
-
+*/
 .project-img img {
 	width: 95%;
 	height: 95%;
@@ -730,8 +731,9 @@ width: 100%;
 }
 
 @media screen and (max-width: 600px) {
-	.project-desc {
-		height: 20%;
+	.project-img img {
+		height: 50%;
+		width: 50%;
 	}
 }
 
