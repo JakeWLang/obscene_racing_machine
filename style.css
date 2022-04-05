@@ -711,6 +711,7 @@ width: 100%;
 	display: flex;
 	flex-flow: row wrap;
 	color: black;
+	height: 10%;
 }
 
 
@@ -738,7 +739,7 @@ width: 100%;
 
 	.project-desc {
 		height: 50%;
-		width: 50%;
+		width: 50;
 	}
 }
 
