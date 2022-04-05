@@ -686,9 +686,15 @@ width: 100%;
 	transition: all 0.3s linear;
 }
 
+@media screen and (max-width: 600px) {
+	.project-img {
+		height: 20%;
+	}
+}
+
 .project-img img {
-	width: 80%;
-	height: 80%;
+	width: 95%;
+	height: 95%;
 }
 
 .project-img:hover {
@@ -706,6 +712,7 @@ width: 100%;
 	color: black;
 }
 
+
 .project-title {
 	font-family: 'Titillium Web';
 	font-weight: 800;
@@ -720,6 +727,12 @@ width: 100%;
 	margin-left: 5%;
 	margin-right: 3%;
 	
+}
+
+@media screen and (max-width: 600px) {
+	.project-desc {
+		height: 20%;
+	}
 }
 
 
