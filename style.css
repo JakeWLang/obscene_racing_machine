@@ -729,7 +729,8 @@ width: 100%;
 
 @media screen and (max-width: 600px) {
 	.project-img img {
-		display: none;
+		height: 50%;
+		width: 50%;
 	}
 
 	.project-desc {
