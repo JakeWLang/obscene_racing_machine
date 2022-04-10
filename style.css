@@ -694,7 +694,6 @@ width: 100%;
 }
 */
 .project-img img {
-	display: flex;
 	width: 95%;
 	height: 95%;
 }
@@ -732,11 +731,6 @@ width: 100%;
 	.project-img img {
 		height: 50%;
 		width: 50%;
-	}
-
-	.project-desc {
-		height: 50%;
-		width: 50;
 	}
 }
 
