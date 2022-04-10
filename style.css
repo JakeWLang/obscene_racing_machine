@@ -699,9 +699,6 @@ width: 100%;
 }
 
 .project-img:hover {
-    -webkit-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
-    -moz-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
-    -o-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
     box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
 }
 
@@ -711,7 +708,6 @@ width: 100%;
 	display: flex;
 	flex-flow: row wrap;
 	color: black;
-	height: 10%;
 }
 
 
@@ -733,8 +729,7 @@ width: 100%;
 
 @media screen and (max-width: 600px) {
 	.project-img img {
-		height: 50%;
-		width: 50%;
+		display: none;
 	}
 
 	.project-desc {
