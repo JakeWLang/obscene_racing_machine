@@ -230,6 +230,7 @@ footer {
 
 .highlighter-flex {
 	display: flex;
+	margin: 0 4% 0 4%;
 }
 
 .cards {
