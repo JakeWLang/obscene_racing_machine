@@ -24,7 +24,7 @@
 
 	<div class='header-text'>
 		<h1 style='text-align:center'> How do we quantify social and economic empowerment?</h1>
-		<p class='work-intro centered-text'> This page highlights my work on a group project analyzing women's <em>economic empowerment</em> as a driver of <em>social empowerment</em>. Given empowerment an abstract concept, our team sought to index these values for ease of analysis. Following is the code used to define the project's indices for multiple hypothesis testing. Also included is the code to regress <em> economic empowerment </em> on <em> Social Empowerment</em>
+		<p class='work-intro centered-text'> This page highlights my work on a group project analyzing women's <em>economic empowerment</em> as a driver of <em>social empowerment</em>. Given empowerment an abstract concept, our team sought to index these values for ease of analysis. Following is the code used to define the project's indices for multiple hypothesis testing. Also included is the code to regress <em> economic empowerment </em> on <em> social empowerment</em>. <br><br>
 
 		Inspiration for variables stems from the <a href='https://journals.sagepub.com/doi/abs/10.1177/1536867X20976325?journalCode=stja'>UNDP's Gender Inequality Index</a>, data was collected using the World Bank's API using the <a href='https://pypi.org/project/wbgapi/'> WBGAPI library</a> for Python, and methodology follows from <a href='https://doi.org/10.1198/016214508000000841'>Anderson 2008</a> and <a href='https://journals.sagepub.com/doi/abs/10.1177/1536867X20976325?journalCode=stja'>Schwab et al 2021</a>.
 		</p>
@@ -37,14 +37,14 @@
 			# ### Creating indices
 
 	# Inverts signs for variables as needed such that a positive sign indicates a
-	# positive outcome
+	# positive outcome.
 	def invert_sign(df, vars_and_signs):
 	    for var in vars_and_signs:
 	        if vars_and_signs[var] == True:
 	            df[var] = df[var] * -1
 	    return(df)
 
-	# Standardizes to a std. deviation score for each var
+	# Standardizes to a std. deviation score for each var.
 	def standardize(df, variables):
 	    # Removes keys from dictionary in cases where dictionaries are used to define
 	    # variable sign
@@ -65,12 +65,12 @@
 	    
 
 	# Takes standardization and applies it across years so we get year-effects
-	# rather than a mess of near-unstandardized values
+	# rather than a mess of near-unstandardized values.
 	def standardize_by_year(df, variables, weighting, inc_weights):
 	    stack_df = pd.DataFrame()
 	    
 	    # Takes it BY year and standardizes each variable to that year to capture
-	    # by-year effects
+	    # by-year effects.
 	    for yr in list(df['year'].unique()):
 	        wdf = df[df['year'] == yr]
 	        
@@ -111,13 +111,13 @@
 	    return(df)
 	        
 	    # Weight the indicators by the weights for each group (which is each year)
-	    # sum the weighted averages
+	    # sum the weighted averages.
 	    
 	    # Variable weight based on order of variable entry, [var1, var2] will be
-	    # [entry1,entry2], respectively, in the sum of each row
+	    # [entry1,entry2], respectively, in the sum of each row.
 
-	# Pulls column names with the % weight by variable for validation
-	# - Optional but good to see how variables are weighted based on the inv. cov. matrix
+	# Pulls column names with the % weight by variable for validation.
+	# - Optional but good to see how variables are weighted based on the inv. cov. matrix.
 	def get_weighted_cols(df):
 	    w_vars = [col for col in list(df.columns) if 'Wgt' in col]
 	    weight_cols = []
@@ -132,7 +132,7 @@
 	    # https://stackoverflow.com/questions/32862316/negative-lookahead-with-capturing-groups
 	    
 	# Final index creation, inverting, weighting, standardizing, creating the index,
-	# re-standardizing, and outputting a 
+	# re-standardizing, and outputting.
 	def create_index(df, vars_and_signs, treatment_group, index_name,
 	                 inc_stdized=False, inc_weights=False):
 	    
@@ -219,7 +219,7 @@ def model_ols(df, dependent, independent,
         
         ols_df.loc[i] = [country_list[i], results.params[1], results.pvalues[1]]
     
-    # Creating an indicator for negativeness to count the inversions of expectation
+    # Creating an indicator for negativeness to count the inversions of expectation.
     ols_df['is_negative'] = ols_df['Coefficient'].apply(lambda x:
                                                         1 if (x <0) else 0)
     
@@ -233,7 +233,7 @@ def map_residuals(df, dependent, independent, year_override=2018,
                   return_df=False, multi_year=False, save_fig=False):
     # Following the process of ArcGIS' residual mapping procedures, we create a regression model that,
     # by year, can present model accuracy.
-    # Allows for multiple charts or a single, interactive cart depending on the context
+    # Allows for multiple charts or a single, interactive chart depending on the context.
     
     wdf = df
     if multi_year:
@@ -256,8 +256,8 @@ def map_residuals(df, dependent, independent, year_override=2018,
     wdf['residuals'] = model.fit().resid
     
     # Comparing residuals to our index, categorizing predicted against actual
-    # by std. deviations good news, our index is already in
-    # std. deviations so we can compare directly
+    # by std. deviations. Good news: our index is already in
+    # std. deviations so we can compare directly.
     
     wdf['dist_from_actual'] = wdf[dependent] - wdf['residuals']
     wdf['dist_cat'] = wdf['dist_from_actual'].apply(lambda x:
@@ -266,7 +266,7 @@ def map_residuals(df, dependent, independent, year_override=2018,
     if return_df:
         return(wdf)
     
-    # Merging the residual dataset with the world df and mapping
+    # Merging the residual dataset with the world df and mapping.
     world_indexes = world.merge(wdf, left_on = 'iso_a3', right_on = 'economy')
         
     if multi_year:
