@@ -358,15 +358,16 @@ footer {
 }
 
 .about-me p {
-	margin-left: 10%;
+	padding-left: 7.5%;
+/*	margin-left: 100%;*/
 	/*padding-right: 5%;*/
 }
 
 
 .about img {
 	justify-self: left;
-	max-width: 70%;
-	max-height: 70%;
+	max-width: 75%;
+	max-height: 75%;
 	/*float: right;*/
 	margin-left: 20%;
 	margin-bottom: 2%;
