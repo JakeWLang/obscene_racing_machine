@@ -61,7 +61,6 @@
 		}
 
 	</style>
-	<link rel='stylesheet' href='style.css'>
 	<link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
@@ -70,13 +69,14 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Raleway&family=Titillium+Web&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.typekit.net/vzy2dov.css">
+	<link rel='stylesheet' href='../style.css'>
 </head>
 <body>
 	<header class='site-head'>
 		<ul class='head-list'>
-			<li class='hover-underline'><a href='index.html'>Home</a></li>
-			<li class='hover-underline'><a href='personal.html'>Personal</a></li>
-			<li class='hover-underline'><a href='professional.html'>Professional</a></li>
+			<li class='hover-underline'><a href='../index.html'>Home</a></li>
+			<li class='hover-underline'><a href='../personal.html'>Personal</a></li>
+			<li class='hover-underline'><a href='../professional.html'>Professional</a></li>
 			<a href='mailto:jacobwlang@gmail.com'>
 			<li class='hover-underline'>Contact</li></a>
 		</ul>
@@ -267,7 +267,7 @@
 				var lang = 'In this tract with no racial majority, there are ' + evCheck + '  electric vehicle charging stations.' + ' The median income is ' + d3.format("($,.0f")(d.properties.median_inc) + ' and ' + d3.format(',')(d.properties.total) + ' people live here.'
 			} else {
 				if (d.properties.majority  == 'hispanic_latino') {
-					var maj = 'hispanic/latinx'
+					var maj = 'hispanic/latino'
 				} else {
 					var maj = d.properties.majority
 				}
@@ -342,7 +342,7 @@
 			if (d.properties.majority == '0') {
 				var htmlMajo = 'no-majority'
 			} else if (d.properties.majority == 'hispanic_latino') {
-				var htmlMajo = 'hispanic/latinx'
+				var htmlMajo = 'hispanic/latino'
 			} else {
 				var htmlMajo = d.properties.majority
 			}
