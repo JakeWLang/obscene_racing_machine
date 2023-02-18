@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Nutrition Information</title>
+	<link rel='stylesheet' href='style.css'>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Raleway&family=Titillium+Web&display=swap" rel="stylesheet">
+
+</head>
+<style>
+	
+/* step1 */
+body {
+	background: #ccc;
+}
+
+/* step1 */
+.dropdown {
+	text-align:left;
+  	color: #333;
+	user-select: none;
+	border-radius: 5px;
+	background: white;
+	cursor: pointer;
+	width: 200px;
+	height: 30px;
+	line-height: 30px;
+	display: inline-block;
+	position: relative;
+	font-size: 1.2em;
+	font-family: Arial;
+	background: white;
+	box-shadow: 2px 2px 2px #999;
+	border: 1px solid #aaa;
+}
+
+/* step1 */
+.dropdown_value {
+	display: inline-block;
+	padding-left: 5px;
+}
+
+/* step1 */
+.dropdown_arrow {
+	transition: all 0.2s ease;
+	position: absolute;
+	right: 5px;
+	top: 0px;
+	color: #ccc;
+	font-size: 25px;
+}
+
+/* step2 */
+.dropdown_panel {
+	position: absolute;
+	background: transparent;
+	width: calc(100% + 11px);
+	z-index: 9999;
+	height: 203px;
+	left: -1px;
+	top: 26px;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+/* step2 */
+.dropdown_items {
+	position: absolute;
+	pointer-events: all;
+	z-index: 9999;
+	top: 0px;
+	width: calc(100% - 11px);
+	max-height: 170px;
+	background: white;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	box-shadow: 2px 2px 2px #999;
+	transform: translate(0px, -200px);
+	transition: 0.3s all ease-out;
+	overflow-y: auto;
+	border: 1px solid #aaa;
+}
+
+/* step2 */
+.dropdown_item {
+	padding: 5px;
+}
+
+/* step2 */
+.dropdown_item:hover {
+	background: #eee;
+}
+
+/* step2 */
+.dropdown ::-webkit-scrollbar {
+	width: 8px;
+}
+
+/* step2 */
+.dropdown ::-webkit-scrollbar-thumb {
+	background-color: #999;
+}
+
+.chart-container {
+	display: flex;
+	flex-flow: column wrap;
+	/*grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr;*/
+	justify-items: center;
+	align-items: center;
+}
+
+</style>
+<body>
+
+	<header class='site-head'>
+		<ul class='head-list'>
+			<li class='hover-underline'><a href='index.html'>Home</a></li>
+			<li class='hover-underline'><a href='personal.html'>Personal</a></li>
+			<li class='hover-underline'><a href='professional.html'>Professional</a></li>
+			<a href='mailto:jacobwlang@gmail.com'>
+			<li class='hover-underline'>Contact</li></a>
+		</ul>
+	</header>
+<!-- <div id='dd2'></div> -->
+<!-- Body -->
+
+	<p>
+		Scraped in Python, visualized in D3. Welcome to the page with the data.
+	</p>
+
+	<div class='chart-container'>
+			<label for="nutrition">Select nutrition information:</label>
+			<div id='dd1'></div>
+			<div id='dd2'></div>
+			<div id='table-space'></div>
+		<!-- <div id='dd1'></div> -->
+		<svg width="50%" height="50%"></svg>
+	</div>
+
+<!-- Footer -->
+	<footer class ='index-foot'><a href='tester.html' target='_blank'>Design by Jake - 2023</a></footer>
+		
+</body>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src='nutrition.js'></script>
+</html>
