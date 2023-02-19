@@ -19,9 +19,18 @@ const radius = Math.min(width, height) / 2 - margin;
 const color = d3.scaleOrdinal(['#22B9F1', '#F4A53C', '#B0F323'])
 
 function genVisuals(res) {
+  let charPatt = new RegExp('^((?![A-Za-z]).)*$')
 
 	let raw = res[0]
   let columns = raw.columns
+  console.log(raw)
+  raw.forEach(d => {
+    for (var key in d) {
+      if (charPatt.test(d[key])) {
+        d[key] = +d[key]
+      }
+    }
+  });
 
   // Group and get group names for display
 	let groupedItems = d3.group(raw, d => d['Table Type'])
@@ -36,7 +45,7 @@ function genVisuals(res) {
     data: tableTypes,
     cb: function(newval) {
       let filtered = filterData(newval, raw)
-      genTable(filtered, columns)
+      genTable(filtered, ['Item', 'Serving Size', 'Fat', 'Carbs', 'Protein', 'Calories from Fat', 'Calories from Carbs', 'Calories from Protein'])
     }
   });
 
@@ -52,7 +61,9 @@ function filterData(newval, data) {
 
 
 function genTable(data, columns) {
-  let table = d3.select('#table-space').append('table')
+  let table = d3.select('#table-space').append('table').attr('class', 'sortable-theme-dark').attr('data-sortable', true)
+  // table.classList.add('sortable-theme-dark').setAttribute('data-sortable')
+
   let thead = table.append('thead')
   let tbody = table.append('tbody')
 
