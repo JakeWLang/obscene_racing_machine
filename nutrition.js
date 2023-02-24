@@ -46,7 +46,11 @@ function genVisuals(res) {
     data: tableTypes,
     cb: function(newval) {
       let filtered = filterData(newval, raw)
-      genTable(filtered, ['Item', 'Serving Size', 'Fat', 'Carbs', 'Protein', 'Calories from Fat', 'Calories from Carbs', 'Calories from Protein'])
+      genTable(filtered,
+        ['Item', 'Serving Size', 'Fat',
+          'Carbs', 'Protein', 'Calories from Fat',
+          'Calories from Carbs', 'Calories from Protein'],
+        )
     }
   });
 
@@ -66,7 +70,10 @@ function filterData(newval, data) {
 function genTable(data, columns) {
   let table = new Tabulator('#table-space', {
     data:data,
-    height:'250px',
+    maxHeight: '100%',
+    responsiveLayout:'collapse',
+    // pagination:pagination,
+    // paginationSize:10,
     columns:[
       {title:'Name', field:'Item', editor:'input'},
       {title:'Serving Size', field:'Serving Size'},
@@ -77,33 +84,6 @@ function genTable(data, columns) {
       {title:'Calories from Carbs', field:'Calories from Carbs'},
       {title:'Calories from Protein', field:'Calories from Protein'}]
   })
-  // let table = d3.select('#table-space').append('table')
-
-  // let thead = table.append('thead')
-  // let tbody = table.append('tbody')
-
-  // thead.append('tr')
-  //   .selectAll('th')
-  //   .data(columns).enter()
-  //   .append('th')
-  //     .text(column => column)
-
-  // let rows = tbody.selectAll('tr')
-  //   .data(data)
-  //   .enter()
-  //   .append('tr');
-
-  // let cells = rows.selectAll('td')
-  //   .data(function (row) {
-  //     return columns.map(function (column) {
-  //       return {column: column, value: row[column]}
-  //     })
-  //   })
-  //   .enter()
-  //   .append('td')
-  //     .text(function (d) { return d.value; })
-
-  //   return table
 };
 
 
