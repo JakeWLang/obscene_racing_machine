@@ -37,6 +37,7 @@ function genVisuals(res) {
   let tableTypes = []
   let groupArr = Array.from(groupedItems.entries())
   groupArr.forEach(function (k, i) { tableTypes[i] = k[0]} )
+  tableTypes.splice(0, 0, 'All')
   console.log('da table types', tableTypes)
 
   let dd2 = new Dropdown({
@@ -55,52 +56,55 @@ function genVisuals(res) {
 
 function filterData(newval, data) {
   console.log('You\'ve selected: ', newval)
-  return data.filter(d => d['Table Type'] == newval)
+  if (newval === 'All') { return data }
+    else { return data.filter(d => d['Table Type'] == newval)}
+  // return data.filter(d => d['Table Type'] == newval)
 }
 
 
 
 function genTable(data, columns) {
-  let table = d3.select('#table-space').append('table').attr('class', 'sortable-theme-dark').attr('data-sortable', true)
-  // table.classList.add('sortable-theme-dark').setAttribute('data-sortable')
+  let table = new Tabulator('#table-space', {
+    data:data,
+    height:'250px',
+    columns:[
+      {title:'Name', field:'Item', editor:'input'},
+      {title:'Serving Size', field:'Serving Size'},
+      {title:'Fat', field:'Fat'},
+      {title:'Carbs', field:'Carbs'},
+      {title:'Protein', field:'Protein'},
+      {title:'Calories from Fat', field:'Calories from Fat'},
+      {title:'Calories from Carbs', field:'Calories from Carbs'},
+      {title:'Calories from Protein', field:'Calories from Protein'}]
+  })
+  // let table = d3.select('#table-space').append('table')
 
-  let thead = table.append('thead')
-  let tbody = table.append('tbody')
+  // let thead = table.append('thead')
+  // let tbody = table.append('tbody')
 
-  thead.append('tr')
-    .selectAll('th')
-    .data(columns).enter()
-    .append('th')
-      .text(column => column)
+  // thead.append('tr')
+  //   .selectAll('th')
+  //   .data(columns).enter()
+  //   .append('th')
+  //     .text(column => column)
 
-  let rows = tbody.selectAll('tr')
-    .data(data)
-    .enter()
-    .append('tr');
+  // let rows = tbody.selectAll('tr')
+  //   .data(data)
+  //   .enter()
+  //   .append('tr');
 
-  let cells = rows.selectAll('td')
-    .data(function (row) {
-      return columns.map(function (column) {
-        return {column: column, value: row[column]}
-      })
-    })
-    .enter()
-    .append('td')
-      .text(function (d) { return d.value; })
+  // let cells = rows.selectAll('td')
+  //   .data(function (row) {
+  //     return columns.map(function (column) {
+  //       return {column: column, value: row[column]}
+  //     })
+  //   })
+  //   .enter()
+  //   .append('td')
+  //     .text(function (d) { return d.value; })
 
-    return table
+  //   return table
 };
-// -----------------------// -----------------------// -----------------------
-
-// render the tables
-// genTable(data, ['date', 'close']); // 2 column table
-// genTable(data, ['date']); // table with only date column
-// genTable(data, ['close']); // table with only close column
-
-
-
-
-// -----------------------// -----------------------// -----------------------
 
 
 
