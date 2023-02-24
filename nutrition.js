@@ -71,7 +71,7 @@ function genTable(data, columns) {
   let table = new Tabulator('#table-space', {
     data:data,
     maxHeight: '100%',
-    responsiveLayout:'collapse',
+    // responsiveLayout:'collapse',
     // pagination:pagination,
     // paginationSize:10,
     columns:[
