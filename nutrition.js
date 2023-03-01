@@ -2,22 +2,6 @@ let nutritionSelector = document.getElementById("nutrition-selector");
 
 let nutritionFile = 'nutrition_files/Dunkin Nutrition.csv'
 
-// nutritionSelector.addEventListener("change", function() {
-// 	nutritionFile = 'nutrition_files/' + nutritionSelector.value
-// 	console.log(nutritionFile)
-// 	genChart(nutritionFile)
-// });
-
-
-const width = 400,
-	height = 400,
-	margin = 40;
-
-const pie = d3.pie()
-
-const radius = Math.min(width, height) / 2 - margin;
-const color = d3.scaleOrdinal(['#22B9F1', '#F4A53C', '#B0F323'])
-
 function genVisuals(res) {
   let charPatt = new RegExp('^((?![A-Za-z]).)*$')
 
@@ -45,8 +29,7 @@ function genVisuals(res) {
     val: 'Select an Item Type',
     data: tableTypes,
     cb: function(newval) {
-      let filtered = filterData(newval, raw)
-      genTable(filtered,
+      genTable(raw, newval,
         ['Item', 'Serving Size', 'Fat',
           'Carbs', 'Protein', 'Calories from Fat',
           'Calories from Carbs', 'Calories from Protein'],
@@ -58,24 +41,28 @@ function genVisuals(res) {
 
 }
 
-function filterData(newval, data) {
+function filterData(newval, data, filterCol) {
   console.log('You\'ve selected: ', newval)
   if (newval === 'All') { return data }
-    else { return data.filter(d => d['Table Type'] == newval)}
+    else { return data.filter(d => d[filterCol] == newval)}
   // return data.filter(d => d['Table Type'] == newval)
 }
 
 
 
-function genTable(data, columns) {
+function genTable(data, itemTypeFilter, columns) {
+  tableTypeData = filterData(itemTypeFilter, data, 'Table Type')
+  console.log(tableTypeData)
   let table = new Tabulator('#table-space', {
-    data:data,
-    maxHeight: '100%',
+    data:tableTypeData,
+    // maxHeight: '100%',
     // responsiveLayout:'collapse',
     // pagination:pagination,
     // paginationSize:10,
     columns:[
-      {title:'Name', field:'Item', editor:'input'},
+      {title:'Name', field:'Item',
+      cellClick:function(e, cell){genChart(e, cell, tableTypeData)}
+      },
       {title:'Serving Size', field:'Serving Size'},
       {title:'Fat', field:'Fat'},
       {title:'Carbs', field:'Carbs'},
@@ -87,7 +74,58 @@ function genTable(data, columns) {
 };
 
 
+function genChart(e, cell, inData) {
+  let item = cell._cell.initialValue
+  // filter data to selected item
+  // need to edit filterData so you pull selected columns, too
+  let filtered = filterData(item, inData, 'Item')
+  
+  let wSelCols = filtered.map((d) => {
+   return {
+    FatCals: d['Calories from Fat'],
+    CarbCals: d['Calories from Carbs'],
+    ProtCals: d['Calories from Protein']}
+  })
 
+  var width = 450
+    height = 450
+    margin = 40
+
+  // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+  var radius = Math.min(width, height) / 2 - margin
+
+  // append the svg object to the div called 'my_dataviz'
+  var svg = d3.select("svg")
+      .attr("width", width)
+      .attr("height", height)
+    .append("g")
+      .attr('transform', `translate(${width/2}, ${height/2})`);
+
+  // set the color scale
+  var color = d3.scaleOrdinal()
+    .range(['#22B9F1', '#F4A53C', '#B0F323'])
+
+  var pie = d3.pie()
+    .value(function(d) {
+      console.log(d[1])
+      return d[1]; })
+
+  var data_ready = pie(Object.entries(wSelCols[0]))
+  console.log('made it here2')
+  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  svg
+    .selectAll('whatever')
+    .data(data_ready)
+    .join('path')
+    .attr('d', d3.arc()
+      .innerRadius(100)         // This is the size of the donut hole
+      .outerRadius(radius)
+    )
+    .attr('fill', function(d){ return(color(d.data[0])) })
+    .attr("stroke", "black")
+    .style("stroke-width", "2px")
+    .style("opacity", 0.7)
+}
 
 
 // step1
@@ -217,45 +255,3 @@ var dd = new Dropdown({
         })
   }
 });
-
-// var dd2 = new Dropdown({
-//   id: 'dd2',
-//   val: 'dog',
-//   data: ['cat', 'dog', 'mouse', 'horse', 'rabbit', 'lion', 'bear', 'tiger'],
-//   cb: function(newval) {
-//     //alert(newval);
-//   }
-// });
-
-
-// function selectTableType(data) {
-// 	return d3.group(data, d => d.table_type)
-// }
-
-// console.log(selectTableType(loadedJson))
-
-// let svg = d3.select('svg')
-// 	.attr('width', width)
-// 	.attr('class', 'nutrition')
-// 	.attr('height', height)
-	
-// let g = svg.append('g')
-// 	.attr('transform', `translate(${width/2}, ${height/2})`);
-
-// let arc = d3.arc()
-// 	.innerRadius(0)
-// 	.outerRadius(radius)
-
-// let arcs = g.selectAll('arc')
-// 	.data(pie(data))
-// 	.enter()
-// 	.append('g')
-// 	.attr('class', 'arc')
-
-// arcs.append('path')
-// 	.attr('fill', function(d, i) {
-// 		return color(i);
-// 	})
-// 	.attr('d', arc)
-
-
