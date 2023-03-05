@@ -75,6 +75,7 @@ function genTable(data, itemTypeFilter, columns) {
 
 
 function genChart(e, cell, inData) {
+  let colorVals = ['#22B9F1', '#F4A53C', '#B0F323']
   d3.select('svg')
     .remove()
   let item = cell._cell.initialValue
@@ -89,7 +90,7 @@ function genChart(e, cell, inData) {
     ProtCals: d['Calories from Protein']}
   })
 
-  var width = 450
+  var width = 900
     height = 450
     margin = 40
 
@@ -106,7 +107,7 @@ function genChart(e, cell, inData) {
 
   // set the color scale
   var color = d3.scaleOrdinal()
-    .range(['#22B9F1', '#F4A53C', '#B0F323'])
+    .range(colorVals)
 
   var pie = d3.pie()
     .value(function(d) { return d[1]; })
@@ -116,11 +117,6 @@ function genChart(e, cell, inData) {
   let arcGenerator = d3.arc()
     .innerRadius(100)         // This is the size of the donut hole
     .outerRadius(radius)
-  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-  // svg.append('defs')
-  //   .append('style')
-  //   .attr('type', 'text/css')
-  //   .text("@import url('https://fonts.googleapis.com/css2?family=Raleway&family=Titillium+Web&display=swap');");
 
   svg
     .selectAll('slices')
@@ -168,6 +164,34 @@ function genChart(e, cell, inData) {
   .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
   .style("text-anchor", "middle")
   .style("font-size", 17)
+
+  // Add the path using this helper function
+  function appendCircs(colorValues, textValues) {
+    if (colorValues.length === textValues.length) {
+
+      for (i = 0; i < colorValues.length; i++) {
+        let widthOffset = 3.75;
+        let heightOffset = 2.5;
+        svg.append('circle')
+          .attr('cx', width / widthOffset)
+          .attr('cy', (-height / heightOffset) + (30 * i))
+          .attr('r', 12)
+          .attr('stroke', 'black')
+          .attr('fill', colorValues[i]);
+
+        svg.append('text')
+          .attr('x', (width / widthOffset) + 20)
+          .attr('y', (-height / heightOffset) + (30 *  i) + 5)
+          .text(textValues[i])
+      }
+    }
+    else console.log('YOU MUST INSERT COLORS === LEN(TEXT)')
+  };
+
+  appendCircs(colorVals, ['Calories from Fat', 'Calories from Carbs', 'Calories from Protein'])
+
+
+
 }
 
 
