@@ -63,9 +63,9 @@ function genTable(data, itemTypeFilter, columns) {
       cellClick:function(e, cell){genChart(e, cell, tableTypeData)}
       },
       {title:'Serving Size', field:'Serving Size'},
-      {title:'Fat', field:'Fat'},
-      {title:'Carbs', field:'Carbs'},
-      {title:'Protein', field:'Protein'}
+      {title:'Fat (g)', field:'Fat'},
+      {title:'Carbs (g)', field:'Carbs'},
+      {title:'Protein (g)', field:'Protein'}
       // {title:'Calories from Fat', field:'Calories from Fat'},
       // {title:'Calories from Carbs', field:'Calories from Carbs'},
       // {title:'Calories from Protein', field:'Calories from Protein'}
@@ -183,6 +183,7 @@ function genChart(e, cell, inData) {
           .attr('x', (width / widthOffset) + 20)
           .attr('y', (-height / heightOffset) + (30 *  i) + 5)
           .text(textValues[i])
+          .style('font-family', 'Helvetica')
       }
     }
     else console.log('YOU MUST INSERT COLORS === LEN(TEXT)')
