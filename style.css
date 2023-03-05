@@ -24,6 +24,9 @@ p {
 	font-family: "Helvetica";
 }
 
+.other-text {
+	font-family: 'Helvetica';
+}
 .section {
 	text-align: center;
 }
@@ -568,7 +571,7 @@ width: 100%;
 
 .page-top-text {
 	font-family: 'Helvetica';
-	padding-left: 6%;
+	padding: 0% 0% 2% 6%;
 	width: 70%;
 }
 
