@@ -51,6 +51,7 @@ function filterData(newval, data, filterCol) {
 function genTable(data, itemTypeFilter, columns) {
   tableTypeData = filterData(itemTypeFilter, data, 'Table Type')
   let table = new Tabulator('#table-space', {
+    selectable: 1,
     responsiveLayout: "hide",
       layout: "fitDataFill",
     data:tableTypeData,
@@ -60,15 +61,13 @@ function genTable(data, itemTypeFilter, columns) {
     // paginationSize:10,
     columns:[
       {title:'Name', field:'Item',
-      cellClick:function(e, cell){genChart(e, cell, tableTypeData)}
+      cellClick: function(e, cell){
+        genChart(e, cell, tableTypeData)}
       },
       {title:'Serving Size', field:'Serving Size'},
       {title:'Fat (g)', field:'Fat'},
       {title:'Carbs (g)', field:'Carbs'},
       {title:'Protein (g)', field:'Protein'}
-      // {title:'Calories from Fat', field:'Calories from Fat'},
-      // {title:'Calories from Carbs', field:'Calories from Carbs'},
-      // {title:'Calories from Protein', field:'Calories from Protein'}
       ]
   })
 };
