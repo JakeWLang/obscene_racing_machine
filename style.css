@@ -20,6 +20,10 @@ h2 {
 	font-family: 'Titillium Web';
 }
 
+p {
+	font-family: "Helvetica";
+}
+
 .section {
 	text-align: center;
 }
@@ -282,7 +286,7 @@ footer {
 	padding: 3% 7.5% 3% 7.5%;
 	opacity: 100%;
 
-	font-family: 'museo-sans';
+	font-family: 'Helvetica';
 	font-size: 2vw;
 
 /*	transition-property: all;
@@ -346,7 +350,7 @@ footer {
 	display: grid;
 	text-align: left;
 	font-size: 1.2em;
-	font-family: "museo sans";
+	font-family: "Helvetica";
 	font-weight: 300;
 	grid-template-columns: 2fr 1fr;
 	padding-bottom: 4%;
@@ -550,7 +554,7 @@ width: 100%;
 /****************** PROFESSIONAL PAGE *********************/
 
 .work-intro {
-	font-family: 'Museo Sans';
+	font-family: 'Helvetica';
 	padding-left: 5%;
 }
 
@@ -566,7 +570,7 @@ width: 100%;
 }
 
 .d3hw {
-	font-family: 'Museo Sans';
+	font-family: 'Helvetica';
 	padding-left: 8%;
 	margin-bottom: 10%;
 }
@@ -714,7 +718,7 @@ width: 100%;
 }
 
 .project-desc {
-	font-family: 'Museo Sans';
+	font-family: 'Helvetica';
 	font-weight: 300;
 	font-size: 2vw;
 	margin-left: 5%;

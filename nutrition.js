@@ -7,7 +7,6 @@ function genVisuals(res) {
 
 	let raw = res[0]
   let columns = raw.columns
-  console.log(raw)
   raw.forEach(d => {
     for (var key in d) {
       if (charPatt.test(d[key])) {
@@ -22,7 +21,6 @@ function genVisuals(res) {
   let groupArr = Array.from(groupedItems.entries())
   groupArr.forEach(function (k, i) { tableTypes[i] = k[0]} )
   tableTypes.splice(0, 0, 'All')
-  console.log('da table types', tableTypes)
 
   let dd2 = new Dropdown({
     id: 'dd2',
@@ -52,8 +50,9 @@ function filterData(newval, data, filterCol) {
 
 function genTable(data, itemTypeFilter, columns) {
   tableTypeData = filterData(itemTypeFilter, data, 'Table Type')
-  console.log(tableTypeData)
   let table = new Tabulator('#table-space', {
+    responsiveLayout: "hide",
+      layout: "fitDataFill",
     data:tableTypeData,
     // maxHeight: '100%',
     // responsiveLayout:'collapse',
@@ -66,15 +65,18 @@ function genTable(data, itemTypeFilter, columns) {
       {title:'Serving Size', field:'Serving Size'},
       {title:'Fat', field:'Fat'},
       {title:'Carbs', field:'Carbs'},
-      {title:'Protein', field:'Protein'},
-      {title:'Calories from Fat', field:'Calories from Fat'},
-      {title:'Calories from Carbs', field:'Calories from Carbs'},
-      {title:'Calories from Protein', field:'Calories from Protein'}]
+      {title:'Protein', field:'Protein'}
+      // {title:'Calories from Fat', field:'Calories from Fat'},
+      // {title:'Calories from Carbs', field:'Calories from Carbs'},
+      // {title:'Calories from Protein', field:'Calories from Protein'}
+      ]
   })
 };
 
 
 function genChart(e, cell, inData) {
+  d3.select('svg')
+    .remove()
   let item = cell._cell.initialValue
   // filter data to selected item
   // need to edit filterData so you pull selected columns, too
@@ -94,8 +96,9 @@ function genChart(e, cell, inData) {
   // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
   var radius = Math.min(width, height) / 2 - margin
 
-  // append the svg object to the div called 'my_dataviz'
-  var svg = d3.select("svg")
+  var svg = d3.select("#svg-house")
+    .append('svg')
+    // .attr("viewBox", `0 0 300 600`)
       .attr("width", width)
       .attr("height", height)
     .append("g")
@@ -106,25 +109,65 @@ function genChart(e, cell, inData) {
     .range(['#22B9F1', '#F4A53C', '#B0F323'])
 
   var pie = d3.pie()
-    .value(function(d) {
-      console.log(d[1])
-      return d[1]; })
+    .value(function(d) { return d[1]; })
 
   var data_ready = pie(Object.entries(wSelCols[0]))
-  console.log('made it here2')
+
+  let arcGenerator = d3.arc()
+    .innerRadius(100)         // This is the size of the donut hole
+    .outerRadius(radius)
   // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  // svg.append('defs')
+  //   .append('style')
+  //   .attr('type', 'text/css')
+  //   .text("@import url('https://fonts.googleapis.com/css2?family=Raleway&family=Titillium+Web&display=swap');");
+
   svg
-    .selectAll('whatever')
+    .selectAll('slices')
     .data(data_ready)
     .join('path')
-    .attr('d', d3.arc()
-      .innerRadius(100)         // This is the size of the donut hole
-      .outerRadius(radius)
-    )
+    .attr('d', arcGenerator)
     .attr('fill', function(d){ return(color(d.data[0])) })
     .attr("stroke", "black")
     .style("stroke-width", "2px")
-    .style("opacity", 0.7)
+    // .style("opacity", 0.7)
+
+  d3.select('#item-name')
+    .text(filtered[0]['Item'])
+    .style('padding-top', '2%')
+    .style('font-family', 'Titillium Web')
+    .style('font-size', '1.4em')
+    .style('font-weight', 'bolder')
+
+  svg.append("text")
+   .attr("text-anchor", "middle")
+   .attr('dy', '-1em')
+   .style('font-family', 'Helvetica')
+   .style('font-weight', '1000')
+   .style('font-size', '1.15em')
+   .text('Total Calories:')
+
+  svg.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '1.1em')
+    .style('font-family', 'Helvetica')
+   .style('font-size', '1.15em')
+    .text(filtered[0]['calc_cals'])
+
+  svg
+  .selectAll('slices')
+  .data(data_ready)
+  .enter()
+  .append('text')
+  .style('font-family', 'Helvetica')
+  .text(function(d){
+    let data = d.data[1]
+    if (data != 0) return data
+      else return
+  })
+  .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+  .style("text-anchor", "middle")
+  .style("font-size", 17)
 }
 
 
