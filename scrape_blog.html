@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF Scraping</title>
+<link rel='stylesheet' href='style.css'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway&family=Titillium+Web&display=swap" rel="stylesheet">
+<link href="prism.css" rel="stylesheet" />
+
+</head>
+
+
+<body>
+
+<header class='site-head'>
+	<ul class='head-list'>
+		<li class='hover-underline'><a href='index.html'>Home</a></li>
+		<li class='hover-underline'><a href='personal.html'>Personal</a></li>
+		<li class='hover-underline'><a href='professional.html'>Professional</a></li>
+		<a href='mailto:jacobwlang@gmail.com'>
+		<li class='hover-underline'>Contact</li></a>
+	</ul>
+</header>
+
+<div class='blog-body'>
+	<h1 class='header-center'>Nutritional Information: Parsing PDFs in Python, Visualizing in D3</h1>
+<p>
+	<h2>Thinking about PDFs and the Project</h2><br>
+Nutrition PDFs are bad enough as they are. They’re often disparately formatted by publisher, harder to access on mobile, and oftentimes visually busy. When a user is looking for specific information, they can almost certainly find it, but static tables are cumbersome and, of course, static.
+</p>
+<p>
+In an attempt to make nutrition information more accessible and easily updated, I designed some charts and tables using handy JS packages <a href=”https://tabulator.info/”>Tabulator</a> and <a href=”https://d3js.org/”>D3</a> You can find the accompanying visualization <a href='nutrition.html'>here!</a><br><br> Of course, PDFs aren’t simply machine-readable like CSVs, although the folks who publish them treat them that way. In fact, PDFs are often more challenging to parse programmatically than simply reading the page – the data is right there! Thankfully, through classes and my own experimentation, I have experience parsing, and playing with, PDF data, converting it into something readable, aggregatable and, most importantly, meaningful.
+</p>
+<p>
+This blog aims to highlight procedure and product, illustrating some of my intentions as I went through the development process, the actual code used to create the tool, and the possible directions to take a piece of work like this.
+</p>
+<div class='card-underline-center top-pad shortest thinner'></div>
+<p>
+<h2>Approaching the Project</h2><br>
+I’m a recreational lifter. Five days at the gym with two days of cardio and, lately, yoga mixed in when I’m feeling a little stiff. To stay on track, I monitor my food intake using handy apps that help to check my macronutritional balance. While those apps often have more than enough information, the search process is a bit more work than simply reviewing a list of menu items. You have to know what you’re looking for <em>and</em> know what it’s made of (nutritionally). 
+</p>
+<p>
+Physical menus at restaurants have shifted to including calorie counts but don’t include much more detail; fast food restaurants have adapted and developed nutritional PDFs and, in some cases, more detailed views of the food in the product’s app or site. However, it isn’t always the case that a restaurant visualizes their nutritional information <em>alongside</em> the product. In my experience, Dunkin Donuts is the primary perpetrator, refusing visualization of product details in a meaningful, if not only slightly hidden, way, to complement the visuals of the product itself. It’s a whole meal that Dunkin’ only serves half of.
+</p>
+<p>
+In came my passion for accessible information. I took it upon myself to start working, spending a few hours a week for a month or so, to scrape data from Dunkin Donuts’ nutritional PDF and, once I got it working, it worked like a charm. Visualizing it in D3 on my site was another challenge but provided an excellent opportunity to cut my teeth on JavaScript again. What follows is a walkthrough of my code used, a link to the Colab files, and some final thoughts on where to go.
+</p>
+<div class='card-underline-center top-pad shortest thinner'></div>
+<p>
+<h2>Taking Action</h2><br>
+I’ve scraped some PDF tables in R but, given my daily work is in Python, I decided to hop right into it there. Originally, I planned to use PyPDF2, a simple enough package for scraping PDF contents. However, I quickly ran into what I thought was a problem. The Dunkin’ nutrition PDF lists its products by product type (Sandwiches, avocado toasts, donuts, beverages, and more), differentiated by color.
+</p>
+<p>
+Rather than simply trying to parse the PDF by table, I figured I would parse the text and treat rows as lines of text, handled programmatically in code written by me to get the proper information based on index or some similar, half-thought process. In terms of generalizability, that may have been the preferred method, as I’ll get into when I look at next steps, but it was not the route I took.
+</p>
+<p>
+After some searching, I discovered <a href=”https://github.com/jsvine/pdfplumber”>PDFPlumber</a>, a package that can read the attributes of text and select based on those attributes, similar, I believe, to HTML parsing. So I loaded up PDFPlumber and saw, “Oh, it has all the features of PyPDF2, why not give parsing the tables a shot to see what we get”, and that was the first key.
+<br><br>
+A look at the code shows I took a simple approach to the project:
+</p>
+<p>
+First, I generate some alternatives for column names and set the columns for macros, used later in the script.
+</p>
+<div class='code-block'>
+<pre class='language-python'>
+<code>
+COL_NAMES = {
+	'Fat': ['total fat', 'total fat'],
+	'Carbs': ['total carbs', 'total carbohydrates', 'carbohydrates', 'total carb'],
+	'Protein': ['total protein', 'protein'],
+'Sugar': []
+}
+MACRO_COLS = [key for key in list(COL_NAMES)[:3]]
+</code>
+</pre>
+</div>
+
+<div class='code-block'>
+	<pre class='language-python'>
+		<code>
+!pip install pdfplumber
+import re
+import pandas as pd
+import pdfplumber
+
+
+def find_part(pattern, string, get_start=True):
+	matches = re.finditer(pattern, string)
+	parts = [(m.end(), m.start()) for m in matches]
+	return [part[get_start] for part in parts]
+
+def grab_up_dates(string, date_len=10):
+	ends = find_part("updated on", string, False)
+	return [string[end:].split(" ")[1][:date_len] for end in ends]
+
+def gen_alternatives(cols):
+	replacements = {i_val: k for k, v in COL_NAMES.items() for i_val in COL_NAMES[k]}
+	stripped_cols = [re.sub('\([a-z]{1,3}\)', '', col).strip().lower() for col in cols]
+	return [replacements.get(stripped, stripped.title()) for stripped in stripped_cols]</code>
+</pre>
+</div>
+
+<p>
+Since these PDFs are updated semi-regularly, information on when the data was most recently refreshed is key. I create the <code>find_part()</code> and <code>grab_up_dates</code> functions to strip out the information by page. Not every page in the Dunkin nutrition PDF has a date so I treat the dates as true for each page until the next page that has a date. In the most recent parse, the PDF had the same dates on both pages, December 15, 2022, but keeping the option open to address products with freshly updated information against other, older data was important to me.
+</p>
+<p>
+I use the <code class='language-python'>gen_alternatives()</code> function to replace column names from a predetermined list of alternatives at the top of the previous code block. Essentially, the above function reverses the dictionary I’ve written and keys onto the appropriate column names. I’ve opted to take the solid, dictionary-based route, rather than trying to piece out or regex into different names because there are only so many alternatives to “Protein”, “Carbohydrates”, “Fat” that I’ll need to address. I entertained using a ML model but figured the fight to run something like that for a few columns wasn’t worth it either.
+</p>
+<p>
+Next came the fun part! Vertical columns read backwards and in chunks separated by newline characters when you parse tables using PDF readers. To be fair, I’m wholly against vertical columns to begin with, so I refused to tolerate backwards colnames. In response, I wrote:</p>
+<div class='code-block'>
+	<pre class='language-python'>
+<code class=”language-python”>def reverse_values(value_list):
+	split_vals = [[entry[::-1] for entry in value.split('\n')] for value in value_list if isinstance(value, str)]
+	for _list in split_vals:
+	_list.reverse()
+
+	joined_vals = [' '.join(val) for val in split_vals]
+	return joined_vals</code>
+</pre>
+</div>
+<p>
+Which parses those values, reversing the lists and their respective characters into human-readable names, exactly as they should! I’m a big fan of list comprehensions, which I find funny given I struggled so much to pick them up when I began learning Python. I’ve found those, and writing generators inside tuples to be super effective ways to chunk out variably-sized data based on inputs (tuples are especially helpful and easier to manage if you want to assign variables out of the box from a function, too).
+</p>
+<p>
+Table headers aren’t useful unless you’ve got table data to go along with it! Next, I wrote the functions to strip out each table by page, finally concatentating them into the super table the Dunkin’ nutritional PDF wishes it was.
+</p>
+<div class='code-block'>
+	<pre class='language-python'>
+<code class=”language-python”>def pull_table_data(page, table_offset=1):
+	read_tables = []
+	tables = page.extract_tables()
+	for table in tables:
+	header = table[0]
+	table_type = header[0]
+
+	headers = ['Item'] + reverse_values(header[1:]) + ['Table Type']
+	table_rows = [values + [table_type] for values in table[table_offset:]]
+	read_tables.append(pd.DataFrame(table_rows, columns=headers))
+	return read_tables
+
+
+def join_tables(table_list, up_dates):
+	as_of = up_dates.get(0, "N/A")
+
+	for i, page in enumerate(table_list):
+	as_of = up_dates.get(i, as_of)
+	table_list[i] = pd.concat(table_list[i][1])
+	table_list[i]['as_of'] = as_of[0]
+	return pd.concat(table_list)
+
+
+def generate_table(dunkin_pdf, joined, table_offset):
+	up_date_dict = {}
+	pdf = pdfplumber.open(dunkin_pdf)
+	tables_by_page = []
+
+
+	for i, page in enumerate(pdf.pages):
+	tables_by_page.append((i, pull_table_data(page, table_offset = table_offset)))
+	up_date = grab_up_dates(page.extract_text())
+	if up_date:
+	 up_date_dict[i] = up_date
+
+
+	if joined:
+	return join_tables(tables_by_page, up_date_dict)
+	return tables_by_page, up_date_dict</code>
+</pre>
+</div>
+
+<p>
+For each page, I extract the tables and then sort through those, assigning the headers, parsed using <code class='language-python'>reverse_values()</code>. In the Dunkin’ PDF, the first item of the main table header is the item type “Sandwich”, “Avocado Toast”, etc. To address that, I strip it from the headers, assign it to its own variable, and treat the first column of each table as the value “Item”, denoting a product name. I then sift through the table from the offset determined by the function. For Dunkin’, one, for other PDFs, who knows!
+</p>
+<p>
+<code class="language-python">pull_table_data()</code> runs as part of <code class="language-python">generate_table()</code> which is the main event. That function goes page by page, pulling the table data into a list and data on product refresh date (<code class="language-python">grab_up_dates()</code>) into a dictionary. <code class="language-python">join_tables()</code> takes all that parsed data and concats it into the final, parsed table, assigning “up_dates”, or refresh dates for nutritional data, based on index or, if not a new date, the prior-assigned refresh date. Simple, if a little clunky.
+</p>
+<p>
+(You can see here where I considered switching to parsing the pages by text and building the table that way, rather than using PDFPlumber’s <code class="language-python">extract_table()</code> <em>and</em> <code class="language-python">extract_text()</code>. While this would probably have been more efficient, saving the trouble of essentially extracting table data twice, these PDFs are small and even scaling to a PDF that’s hundreds of pages wouldn’t be too much longer. Essentially, nbd, so I’ve shrugged it off!)
+</p>
+<p>
+With the tables read, the data needed to be formatted. One of my greatest peeves with nutritional data is the rounding done to make these numbers more accessible. That is, 93 will be rounded to 90 or, in some cases, 95, depending on producer. There may be some standard but I’m unaware. In either case, I wanted to calculate the true calories, based on gram of macronutrient, and so created the following function:
+</p>
+<div class='code-block'>
+	<pre class='language-python'>
+<code class=”language-python”>def calc_cals(df, base_calories='Calories', match_thresh=10):
+	multipliers = [4 if re.search('carb|protein', col.lower()) else 9 for col in MACRO_COLS]
+	for multiplier, col in zip(multipliers, MACRO_COLS):
+	df[f'Calories from {col}'] = df[col] * multiplier
+
+
+	cal_cols = [col for col in df.columns if 'Calories from' in col]
+	df['calc_cals'] = df[cal_cols].sum(axis=1)
+
+
+	for col in MACRO_COLS:
+		df[f'{col}_pct'] = round(df[col] / df['calc_cals'] * 100, 2)
+
+
+	df['cals_match'] = df.apply(lambda row: True if abs(row['calc_cals'] - row[base_calories]) <= match_thresh else False, axis=1)
+	return df</code>
+</pre>
+</div>
+
+<p>
+It’s simple but gets the job done, sifting through the <code class="language-python">macro_cols</code> established at the beginning of this piece, and this script. For each macro, it takes the relevant calorie multiplier by gram (4 for carbs and protein, 9 for fat) and then applies that to the macronutrient count, generating a calculated calories variable and returning a few extra bits of information. This is the value I display on my site’s tool since, for me, it makes the most sense without rounding.
+<br><br>
+
+A few extra bits of work are done to finalize table format.
+</p>
+<div class='code-block'>
+	<pre class='language-python'>
+<code class=”language-python”>def augment_table(df):
+	num_cols = [col for col in df.columns if re.search('\(g|\(m', col)] + ['Calories']
+	for col in num_cols:
+	try:
+		df[col] = df[col].apply(lambda x: '0' if x == '' else x.replace(',', '')).astype(int)
+	except:
+		df[col] = df[col].apply(lambda x: '0' if x == '' else x.replace(',', '')).astype(float)
+	df.columns = gen_alternatives(df.columns)
+	df['Drink Type'] = df['Table Type'].apply(lambda x: 'hot' if 'hot' in x.lower() else ('iced' if re.search('iced|cold brew', x.lower()) else ''))
+	df['oz_int'] = df.apply(lambda row: SERVING_SIZES.get(row['Drink Type'], {}).get(row['Serving Size'].lower(), ''), axis=1)
+	df['Serving Size'] = df.apply(lambda row: str(row['oz_int']) + ' oz.' if row['Drink Type'] else row['Serving Size'], axis=1)
+	df['Item'] = df['Item'].replace({'\\n':' '}, regex=True)
+
+
+	df = calc_cals(df)
+	return df.reset_index()</code>
+</pre>
+</div>
+
+<p>
+I define the <code class="language-python">augment_table()</code> function to find columns likely needing conversion to numeric values from text. Anything mentioning grams, milligrams or micrograms gets stripped out by the regex and used to convert that column into numeric. Column names are finally shifted from the top dictionary, and I do a little extra cleaning to assert serving size in both integer (oz) and string formats. While I don’t use many of these variables in the web product, having access to this information is important!
+<br><br>
+
+And, with everything pulled, I get to run <bold>three</bold> lines of code to get the final product. Handy!
+</p>
+<div class='code-block'>
+	<pre class='language-python'>
+<code class=”language-python”>
+!wget https://www.dunkindonuts.com/content/dam/dd/pdf/nutrition.pdf
+full_table = generate_table(‘nutrition.pdf', True)
+final_table = augment_table(full_table)
+final_table.to_csv('Dunkin Nutrition.csv', index=False)
+</code>
+</pre>
+</div>
+<div class='card-underline-center top-pad short'></div>
+<p>
+<h1>Final Thoughts</h1><br>
+Visualizing this in JavaScript is an entirely separate beast and one I may tackle in another post, so I leave some parting thoughts and directions to take this project.
+</p>
+<p>
+	It was genuinely simpler than I expected, although every bit as fun. There's still a lot to do:
+	<ul>
+		<li>Tackling the JavaScript because, wow, it's not great</li>
+		<li>Expanding the Python to work semi-universally</li>
+			<ul>
+				<li>This is manageable, although certainly not my first priority. I've given McDonald's nutrition PDF a shot and I believe, with a bit more work, I can get things going!</li>
+				<li>The greatest challenge lies in addressing the different ways PDF publishers organize by item type. Thankfully, Dunkin's item type is included as the first column, but not every publisher works that way.</li>
+			</ul>
+		<li>Improving visualizations</li>
+			<ul>
+				<li>They work, and I'm not particularly one to care much for JavaScript, but they aren't truly the best. Spending more time here could really improve the visual flavor and make the tool better</li>
+				<li>Further, improving mobile capabilities of the table and visual would go a long way. While I'm likely to be the only one using this tool and I don't care much about the responseiveness of the site, I know I've broken one of the first rules of web development.</li>
+				<ul>
+					<li>The good news? I'm not a web developer 😎</li>
+				</ul>
+			</ul>
+		</ul>
+
+		We'll see what I get to. Overall, as a small side project, I'm satisfied. I'm happy I could share this work and make something that does something helpful. Maybe someone can take it a step further but, for now, I'm satisfied!
+
+	</p>
+<div class='bottom-pad'></div>
+
+
+</div>
+<!-- Footer -->
+<footer class ='index-foot'><a href='tester.html' target='_blank'>Design by Jake - 2023</a></footer>
+	
+</body>
+</html>
+<script src="prism.js"></script>
