@@ -24,6 +24,10 @@ p {
 	font-family: "Helvetica";
 }
 
+ul {
+	font-family: 'Helvetica';
+}
+
 .other-text {
 	font-family: 'Helvetica';
 }
@@ -33,6 +37,19 @@ p {
 /*.section:hover {
 	transform: translate(3px);
 }*/
+
+.blog-body {
+	font-family: 'Helvetica';
+	margin: 4% 10% 4% 4%;
+}
+
+.blog-body > p {
+}
+
+.header-center {
+	text-align: center;
+	font-weight: bolder;
+}
 
 .title {
 	padding-top: 10%;
@@ -93,6 +110,10 @@ p {
 
 .bottom-pad {
 	margin-bottom: 4%;
+}
+
+.bottom-pad-more {
+	margin-bottom: 10%;
 }
 
 .top-pad{
