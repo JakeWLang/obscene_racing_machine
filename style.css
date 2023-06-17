@@ -8,10 +8,6 @@ html body {
 
 }
 
-div {
-	/*box-shadow: 5px 0px 10px orangered;*/
-}
-
 h1 {
 	font-family: 'Titillium Web';
 }
@@ -462,7 +458,7 @@ footer {
 
 
 .social-container {
-	padding: 20px;
+	padding: 10px;
 	display: grid;
 	grid-gap: 10px;
 	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -472,15 +468,15 @@ footer {
 	}
 
 .social-icon {
-	border-radius: 100px;
-	padding: 40px 0px 0px 0px
+	/* border-radius: 0px; */
+	padding: 10px 0px 45px 0px
 }
 
 
 .social-icon img {
 	transition: all 0.3s ease-in-out;
-	width: 20%;
-	border-radius: 100px;
+	width: 30%;
+	/* border-radius: 100px; */
 }
 
 
