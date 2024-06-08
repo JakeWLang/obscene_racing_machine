@@ -1,10 +1,16 @@
+body {
+    height: 100%
+}
 
+.buffer-1 {
+    padding: 1%
+}
 #homepage {
     display: flex;
-    flex-flow: column;
-    justify-items: center;
+    flex-flow: column wrap;
 	align-items: center;
     font-family: "aktiv-grotesk", sans-serif;
+    color: #0179C2;
 }
 
 #homepage-logo {
@@ -13,36 +19,43 @@
 }
 
 #welcome {
-    font-size:3em;
+    font-size:3.2rem;
     font-weight: 700;
     font-style: normal;
-    color: #0179C2;
-    padding-bottom: 5%;
+    padding-bottom: 2%;
 }
 
 .trip-info {
-    font-size:2em;
+    font-size:180%;
     font-weight:550;
     font-style: normal;
-    color: #0179C2;
     border: 3.5px solid black;
     width: 45%;
     text-align:center;
     border-radius: 2%;
-    box-sizing: border-box;
-    padding: 0.75%
-    
+}
+
+.trip-info-text {
+    padding: 2%
 }
 
 .system-health {
-    font-size: 1.5em;
+    font-size: 180%;
     font-weight: 450;
     font-style: normal;
     border: 3.5px solid black;
-    width: 45%;
+    width: 45vw;
+    height: 20vh;
     text-align: center;
+    vertical-align: middle;
     border-radius: 2%;
-    box-sizing: border-box;
-    padding: 0.75%;
-    padding-top: 20%
+}
+
+.health-title {
+    font-weight: 650
+}
+
+.health-body {
+    display: flex;
+    align-items: center;
 }
