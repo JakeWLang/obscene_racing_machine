@@ -1,0 +1,20 @@
+
+#homepage {
+    display: flex;
+    flex-flow: column;
+    justify-items: center;
+	align-items: center;
+    font-family: "aktiv-grotesk", sans-serif;
+}
+
+#homepage-logo {
+    padding-top: 2.5%;
+    padding-bottom: 2.5%
+}
+
+#welcome {
+    font-size:3em;
+    font-weight: 700;
+    font-style: normal;
+    color: #0179C2;
+}
