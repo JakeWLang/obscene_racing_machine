@@ -17,4 +17,19 @@
     font-weight: 700;
     font-style: normal;
     color: #0179C2;
+    padding-bottom: 5%;
+}
+
+.trip-info {
+    font-size:2em;
+    font-weight:350;
+    font-style: normal;
+    color: #0179C2;
+    border: 2px solid black;
+    width: 45%;
+    text-align:center;
+    border-radius: 2%;
+    box-sizing: border-box;
+    padding: 0.75%
+    
 }
