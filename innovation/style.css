@@ -22,14 +22,27 @@
 
 .trip-info {
     font-size:2em;
-    font-weight:350;
+    font-weight:550;
     font-style: normal;
     color: #0179C2;
-    border: 2px solid black;
+    border: 3.5px solid black;
     width: 45%;
     text-align:center;
     border-radius: 2%;
     box-sizing: border-box;
     padding: 0.75%
     
+}
+
+.system-health {
+    font-size: 1.5em;
+    font-weight: 450;
+    font-style: normal;
+    border: 3.5px solid black;
+    width: 45%;
+    text-align: center;
+    border-radius: 2%;
+    box-sizing: border-box;
+    padding: 0.75%;
+    padding-top: 20%
 }
