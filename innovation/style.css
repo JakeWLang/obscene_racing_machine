@@ -8,7 +8,9 @@ body {
 #homepage {
     display: flex;
     flex-flow: column wrap;
-	align-items: center;
+    align-items:center;
+    justify-content: center;
+    gap: 1vh;
     font-family: "aktiv-grotesk", sans-serif;
     color: #0179C2;
 }
@@ -26,36 +28,43 @@ body {
 }
 
 .trip-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size:180%;
     font-weight:550;
     font-style: normal;
     border: 3.5px solid black;
     width: 45%;
-    text-align:center;
+    /* height: 20vh; */
     border-radius: 2%;
 }
 
 .trip-info-text {
-    padding: 2%
+    padding: 2%;
+    text-align: center;
 }
 
 .system-health {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 180%;
     font-weight: 450;
     font-style: normal;
     border: 3.5px solid black;
     width: 45vw;
-    height: 20vh;
     text-align: center;
-    vertical-align: middle;
     border-radius: 2%;
 }
 
 .health-title {
-    font-weight: 650
+    font-weight: 650;
 }
 
 .health-body {
-    display: flex;
-    align-items: center;
+    font-size: 80%;
+    /* align-self: center;
+    justify-self: center; */
+    width: 50%
 }
