@@ -129,7 +129,7 @@ body {
     height: 95%
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 900px) {
     #homepage-logo {
       width: 15%;
     }
@@ -143,12 +143,6 @@ body {
 
     .foot-img {
         width: 80%
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .footer-option {
-
     }
 }
 
