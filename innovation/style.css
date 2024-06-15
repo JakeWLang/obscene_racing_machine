@@ -21,39 +21,45 @@ body {
 }
 
 #welcome {
-    font-size:3.2rem;
+    font-size: 180%;
     font-weight: 700;
     font-style: normal;
     padding-bottom: 2%;
+    text-align: center;
 }
 
 .trip-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size:180%;
+    font-size:150%;
     font-weight:550;
     font-style: normal;
     border: 3.5px solid black;
-    width: 45%;
-    /* height: 20vh; */
+    width: 65%;
     border-radius: 2%;
 }
 
-.trip-info-text {
+.trip-info-header {
     padding: 2%;
     text-align: center;
+}
+
+#trip-detail {
+    font-size: 60%;
+    font-weight: 450;
+    color: black;
 }
 
 .system-health {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 180%;
+    font-size: 150%;
     font-weight: 450;
     font-style: normal;
     border: 3.5px solid black;
-    width: 45vw;
+    width: 65%;
     text-align: center;
     border-radius: 2%;
 }
@@ -63,8 +69,9 @@ body {
 }
 
 .health-body {
-    font-size: 80%;
+    font-size: 60%;
     /* align-self: center;
     justify-self: center; */
-    width: 50%
+    width: 85%;
+    padding-bottom: 3%
 }
