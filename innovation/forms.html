@@ -16,31 +16,68 @@
     
     
     </head>
-    <footer class="app-footer">
-        <div id="home" class="footer-option">
-            <a href='/innovation/index.html' class="foot-link">
-                <img class='foot-img' src="images/home.png">
-            </a>
+    <div id="homepage">
+        <img id='homepage-logo' src="images/cta.png">
+        <div class="page-header" id="points-count">
+            HEADER
         </div>
-        <div id="rewards" class="footer-option">
-            <a href="/innovation/rewards.html" class="foot-link">
-                <img class="foot-img" src="images/award.png">
-            </a>
-        </div>
-        <div id="forms" class="footer-option">
-            <a href="/innovation/forms.html" class="foot-link">
-                <img class="foot-img" src="images/security.png">
-            </a>
-        </div>
-        <div id="reviews" class="footer-option">
-            <a href="/innovation/reviews.html" class="foot-link">
-                <img class="foot-img" src="images/stars.png">
-            </a>
-        </div>
-        <div id="account" class="footer-option">
-            <a href="/innovation/user.html" class="foot-link">
-                <img class="foot-img" src="images/user.png">
-            </a>
-        </div>
-    </footer>
+        <div class="gappish"></div>
+
+        <form class="issue-req">
+            <label for="location">Location*:</label>
+            <input type="text" name="location">
+            <div class="form-group">
+                <label for="date">Day</label>
+                <label for="time">Time</label>
+            </div>
+            <div class="form-group">
+                <input type="date">
+                <input type="time">
+            </div>
+            <label for="issue">Issue Type:</label>
+            <select name="issue" id="issues">
+                <option value="safety-security">Safety/Security</option>
+                <option value="cleanliness">Cleanliness</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="police-needed">Do you need police assistance?</label>
+            <div class="form-group">
+                <label for="police-needed">Yes</label>
+                <input type="radio" name="police-needed" value="Yes">
+                <label for="police-needed">No</label>
+                <input type="radio" name="police-needed" value="No">
+            </div>
+            <label for="description">Describe your situation</label>
+            <textarea name="description" id="form-description">
+            </textarea>
+            <input type="submit">
+        </form>
+        <footer class="app-footer">
+            <div id="home" class="footer-option">
+                <a href='/innovation/index.html' class="foot-link">
+                    <img class='foot-img' src="images/home.png">
+                </a>
+            </div>
+            <div id="rewards" class="footer-option">
+                <a href="/innovation/rewards.html" class="foot-link">
+                    <img class="foot-img" src="images/award.png">
+                </a>
+            </div>
+            <div id="forms" class="footer-option">
+                <a href="/innovation/forms.html" class="foot-link">
+                    <img class="foot-img" src="images/security.png">
+                </a>
+            </div>
+            <div id="reviews" class="footer-option">
+                <a href="/innovation/reviews.html" class="foot-link">
+                    <img class="foot-img" src="images/stars.png">
+                </a>
+            </div>
+            <div id="account" class="footer-option">
+                <a href="/innovation/user.html" class="foot-link">
+                    <img class="foot-img" src="images/user.png">
+                </a>
+            </div>
+        </footer>
+    </div>
 </body>

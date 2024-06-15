@@ -161,6 +161,22 @@ body {
     text-align: right;
 }
 
+.issue-req {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#form-description {
+    /* resize: both; */
+    /* max-height: 55%; */
+}
+
 .app-footer {
     display: flex;
     flex-direction: row;
