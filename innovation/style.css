@@ -74,6 +74,10 @@ body {
     border-radius: 2%;
 }
 
+.centered {
+    justify-content: center;
+}
+
 .health-body {
     font-size: 60%;
     /* align-self: center;
@@ -114,6 +118,14 @@ body {
 
 .cat-img {
     width: 100%
+}
+
+.points-header {
+    padding: 2% 0% 5% 0%;
+}
+
+.taller {
+    padding-bottom: 7%;
 }
 
 .app-footer {
