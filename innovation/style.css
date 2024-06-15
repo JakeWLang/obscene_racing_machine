@@ -1,5 +1,6 @@
 body {
-    height: 100%
+    height: 100%;
+    overflow: hidden;
 }
 
 .buffer-1 {
@@ -33,12 +34,16 @@ body {
     text-align: center;
 }
 
+.box-header {
+    font-weight: 550;
+}
+
 .trip-info {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size:150%;
-    font-weight:550;
+    /* font-weight:550; */
     font-style: normal;
     border: 3.5px solid black;
     width: 65%;
@@ -56,21 +61,17 @@ body {
     color: black;
 }
 
-.system-health {
+.box-center {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 150%;
+    font-size: 140%;
     font-weight: 450;
     font-style: normal;
     border: 3.5px solid black;
     width: 65%;
     text-align: center;
     border-radius: 2%;
-}
-
-.health-title {
-    font-weight: 650;
 }
 
 .health-body {
@@ -81,12 +82,41 @@ body {
     padding-bottom: 3%
 }
 
+.sub-boxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 85%;
+}
+
+.sub-box {
+    border: 1.5px solid black;
+    color: black;
+    width: 45%;
+    text-decoration: none;
+}
+
+.yes {
+    background-color: #B0E58F;
+}
+
+.no {
+    background-color: #E5928F
+}
+
+.x {
+    font-size: 45%;
+    align-self: flex-end;
+    padding: 2% 2% 0% 0%;
+}
+
 .app-footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border: 3px solid black;
+    border-top: 3px solid black;
     position: fixed;
     height: 12%;
     bottom: 0px;
@@ -106,19 +136,11 @@ body {
     height: 80%
 }
 
-.footer-link { 
-    position:absolute; 
-    width:100%;
-    height:100%;
-    top:0;
-    left: 0;
-  
-    z-index: 1;
-  
-    /* fixes overlap error in IE7/8, 
-       make sure you have an empty gif */
-    background-image: url('empty.gif');
-  }  
+.foot-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .foot-img {
     width: 50%
@@ -145,13 +167,3 @@ body {
         width: 80%
     }
 }
-
-/* display: flex;
-flex-direction: column;
-align-items: center;
-font-size:150%;
-font-weight:550;
-font-style: normal;
-border: 3.5px solid black;
-width: 65%;
-border-radius: 2%; */
