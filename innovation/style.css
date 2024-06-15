@@ -1,6 +1,6 @@
 body {
     height: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .buffer-1 {
@@ -124,8 +124,41 @@ body {
     padding: 2% 0% 5% 0%;
 }
 
-.taller {
-    padding-bottom: 7%;
+.points-note {
+    text-align: center;
+    padding-top: 1.5%;
+    width: 85%;
+    font-size: 90%
+}
+
+.reward-join {
+    border: 1px solid black;
+    padding: 2%;
+    background-color: #B0E58F;
+    text-align: center;
+}
+
+.reward-item {
+    font-size: 90%;
+    display: flex;
+    padding: 2%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid black;
+    width: 90%
+}
+
+
+.vb {
+    border-left: 6px solid black;
+    width: 20%;
+    background-color: green;
+}
+
+.reward-item-cost {
+    width: 25%;
+    text-align: right;
 }
 
 .app-footer {
@@ -134,13 +167,13 @@ body {
     justify-content: space-between;
     align-items: center;
     border-top: 3px solid black;
+    background-color: white;
     position: fixed;
-    height: 12%;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    margin-bottom: 0px;
-    gap: 3%
+    gap: 3%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* height: 15%; */
 }
 
 .footer-option {
@@ -150,7 +183,6 @@ body {
     border: 2.25px solid black;
     border-radius: 100%;
     width: 17%;
-    height: 80%
 }
 
 .foot-link {
@@ -160,12 +192,15 @@ body {
 }
 
 .foot-img {
-    width: 50%
+    width: 80%;
 }
 
 #forms {
     width: 25%;
-    height: 95%
+}
+
+.bottom {
+    padding-bottom: 20%
 }
 
 @media only screen and (max-width: 900px) {
@@ -184,3 +219,11 @@ body {
         width: 80%
     }
 }
+
+@media only screen and (min-width: 901px) {
+    .footer-option {
+        width: 8%;
+    }
+    #forms {
+        width: 10%
+    }
