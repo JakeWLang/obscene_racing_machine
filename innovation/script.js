@@ -86,13 +86,35 @@ function genPoints() {
     let points = randSel(_range)
     let points_str = 'You have ' + points.toString() + ' Points!'
     changeText('points-count', points_str)
+    return points
 }
 
-if (title === 'TAP - Transit & Perks') {
+// Github verson (1 file .html): https://github.com/Soooda/progress_bar_lite/blob/master/index.html
+
+function increase(span_input) {
+    console.log('calling increase')
+    changeText('pct-span', span_input)
+    // Change the variable to modify the speed of the number increasing from 0 to (ms)
+    let SPEED = 40;
+    // Retrieve the percentage value
+    let limit = parseInt(document.getElementById("pct-span").innerHTML, 10);
+
+    for(let i = 0; i <= limit; i++) {
+        setTimeout(function () {
+            document.getElementById("pct-span").innerHTML = i + "%";
+        }, SPEED * i);
+    }
+}
+
+
+if (title === 'TAP - Transit &amp; Perks') {
+    console.log('we tweakin')
     intro()
     lastTrip()
 }
 
 if (title === 'TAP - Rewards') {
-    genPoints()
+    let pts = genPoints()
+    let pct = (pts / 1000) * 100
+    increase(pct);
 }
