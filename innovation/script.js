@@ -1,8 +1,9 @@
 var intros = ['Hi there,', 'Welcome', 'Hi', 'Howdy', 'Good morning,', 'Good afternoon,']
 var names = ['Jake', 'Sowmya', 'Feliciti', 'Matthew', 'Cameron', 'Brad', 'Natalie']
 var stops = ['!', '.']
-
 var locations = ['95th Red Line', 'Clinton Blue Line', 'Clinton Pink Line', 'Wilson/Sheridan', 'Broadway/Belmont']
+
+var title = document.getElementsByTagName("title")[0].innerHTML;
 
 function randSel(arr) {
     const idx = Math.floor(Math.random() * arr.length)
@@ -80,5 +81,18 @@ function lastTrip() {
     changeText('trip-detail', lastTripNote)
 }
 
-intro()
-lastTrip()
+function genPoints() {
+    let _range = range([0, 1000])
+    let points = randSel(_range)
+    let points_str = 'You have ' + points.toString() + ' Points!'
+    changeText('points-count', points_str)
+}
+
+if (title === 'TAP - Transit & Perks') {
+    intro()
+    lastTrip()
+}
+
+if (title === 'TAP - Rewards') {
+    genPoints()
+}

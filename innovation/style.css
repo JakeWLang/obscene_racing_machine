@@ -16,7 +16,7 @@ body {
     flex-flow: column wrap;
     align-items:center;
     justify-content: center;
-    gap: 1vh;
+    gap: 2vh;
     font-family: "aktiv-grotesk", sans-serif;
     color: #0179C2;
 }
@@ -26,7 +26,7 @@ body {
     padding-bottom: 2.5%
 }
 
-#welcome {
+.page-header {
     font-size: 180%;
     font-weight: 700;
     font-style: normal;
@@ -88,6 +88,7 @@ body {
     justify-content: space-around;
     align-items: center;
     width: 85%;
+    padding-bottom: 2%
 }
 
 .sub-box {
@@ -109,6 +110,10 @@ body {
     font-size: 45%;
     align-self: flex-end;
     padding: 2% 2% 0% 0%;
+}
+
+.cat-img {
+    width: 100%
 }
 
 .app-footer {
