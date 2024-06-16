@@ -23,10 +23,16 @@ body {
     width: 5%
 }
 
+.blurry {
+    background-color: rgba(255, 255, 255, 0.61);
+    backdrop-filter: blur(5px);
+
+}
+
 #homepage {
     display: flex;
     flex-flow: column wrap;
-    align-items:center;
+    align-items: center;
     justify-content: center;
     gap: 2vh;
     font-family: "aktiv-grotesk", sans-serif;
@@ -248,6 +254,11 @@ body {
     width: 50%
 }
 
+.above-subinfo {
+    width: 50%;
+    text-align: center;
+}
+
 .subinfo {
     font-size: 60%;
     text-align: center;
@@ -275,6 +286,10 @@ body {
         text-decoration: none;
 }
 
+.smaller {
+    width: 50%
+}
+
 .review-button:after {
     content: '»';
     position: relative;
@@ -294,6 +309,40 @@ body {
     opacity: 1;
     left: 30%;
   }
+
+.star-border {
+    width:50%;
+    border: 3px solid black;
+    border-radius: 4px;
+    padding: 2%;
+}
+
+.stars-rating {
+    display: flex;
+    margin: auto;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.25vw;
+    width: 20%;
+    text-align: center;
+}
+
+.thoughtbox {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.review-desc {
+    /* display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    text-align: left; */
+    width: 50vw;
+    height: 12vh;
+    color: black;
+}
 
 .app-footer {
     display: flex;
@@ -432,6 +481,14 @@ body {
         top: 12%
     }
 
+    .review-button {
+        padding: 1%
+    }
+
+    .smaller {
+        width: 25%
+    }
+
     @keyframes fadeInLeft {
         0% {
             opacity: 0;
@@ -457,6 +514,18 @@ body {
             transform: translateX(0%);
         }
     }
+
+    .stars-rating {
+        width: 20%;
+    }
+
+    .star-border {
+        width:20%;
+        border: 3px solid black;
+        border-radius: 4px;
+        padding: 2%;
+    
+      }
 }
 
 .nbp {
