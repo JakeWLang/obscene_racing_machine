@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Behind Flexbox Div with Text</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    height: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ensure SVG doesn't overflow on smaller screens */
+  }
+
+  .background-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: -1; /* Place the SVG behind the text */
+  }
+
+  .content {
+    text-align: center;
+    padding: 20px;
+    z-index: 1; /* Ensure the text div is above the SVG */
+  }
+
+  h2, p {
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <svg class="background-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <circle cx="50" cy="50" r="50" fill="#3498db" />
+  </svg>
+  <div class="content">
+    <h2>Text in front of SVG</h2>
+    <p>Here is some text in the div that is placed on top of the SVG.</p>
+  </div>
+</div>
+
+</body>
+</html>

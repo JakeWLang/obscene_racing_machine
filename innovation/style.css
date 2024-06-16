@@ -19,6 +19,10 @@ body {
     padding: 1% 0% 1% 0%;
 }
 
+#already-small-logo {
+    width: 5%
+}
+
 #homepage {
     display: flex;
     flex-flow: column wrap;
@@ -35,6 +39,41 @@ body {
     font-style: normal;
     padding-bottom: 2%;
     text-align: center;
+}
+
+.ph-text {
+    position: relative;
+    z-index: 1
+}
+
+.bg-bus {
+    position: absolute;
+    z-index: -1;
+    width: 25%;
+    left: 19%;
+    top: 12%
+}
+
+.bg-train {
+    position: absolute;
+    z-index: -1;
+    width: 25%;
+    right: 19%;
+    top: 12%
+}
+
+.fade-in-left {
+    animation: fadeInLeft 5s;
+}
+
+.fade-in-right {
+    animation: fadeInRight 5s;
+}
+
+.header-bg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .box-header {
@@ -233,6 +272,7 @@ body {
         cursor: pointer;
         /* margin: 36px; */
         box-shadow: 0 10px 20px -8px rgba(0, 0, 0,.7);
+        text-decoration: none;
 }
 
 .review-button:after {
@@ -252,7 +292,7 @@ body {
   
 .review-button:hover:after {
     opacity: 1;
-    left: 35%;
+    left: 30%;
   }
 
 .app-footer {
@@ -325,6 +365,34 @@ body {
             width: 10%;
         }
     }
+    #already-small-logo {
+        width: 10%
+    }
+    @keyframes fadeInLeft {
+        0% {
+            opacity: 0;
+        }
+        10% {
+            transform: translateX(20%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
+    
+    @keyframes fadeInRight {
+        0% {
+            opacity: 0;
+        }
+        10% {
+            transform: translateX(-20%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
 }
 
 @media only screen and (min-width: 901px) {
@@ -344,6 +412,51 @@ body {
             width: 5%;
         }
     }
+    #already-small-logo {
+        width: 5%
+    }
+
+    .bg-bus {
+        position: absolute;
+        z-index: -1;
+        width: 10%;
+        left: 37.5%;
+        top: 12%
+    }
+    
+    .bg-train {
+        position: absolute;
+        z-index: -1;
+        width: 10%;
+        right: 37.5%;
+        top: 12%
+    }
+
+    @keyframes fadeInLeft {
+        0% {
+            opacity: 0;
+        }
+        10% {
+            transform: translateX(20%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
+    
+    @keyframes fadeInRight {
+        0% {
+            opacity: 0;
+        }
+        10% {
+            transform: translateX(-20%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
 }
 
 .nbp {
@@ -353,4 +466,3 @@ body {
 .ntp {
     padding-top: 0%;
 }
-
