@@ -9,6 +9,14 @@ body {
 
 #homepage-logo {
     width: 10%;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%
+}
+
+#small-logo {
+    animation: load 3s normal forwards;
+    width: 5%;
+    padding: 1% 0% 1% 0%;
 }
 
 #homepage {
@@ -19,11 +27,6 @@ body {
     gap: 2vh;
     font-family: "aktiv-grotesk", sans-serif;
     color: #0179C2;
-}
-
-#homepage-logo {
-    padding-top: 2.5%;
-    padding-bottom: 2.5%
 }
 
 .page-header {
@@ -172,10 +175,85 @@ body {
     justify-content: space-between;
 }
 
-#form-description {
-    /* resize: both; */
-    /* max-height: 55%; */
+.form-secondary {
+    font-size: 70%
 }
+
+.review-form {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3vh;
+}
+
+.split-sect {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.review-input {
+    width: 70%;
+}
+
+.review-dd {
+    text-align: right;
+}
+
+.product-desc {
+    font-weight: 400;
+    text-align: center;
+    width: 50%
+}
+
+.subinfo {
+    font-size: 60%;
+    text-align: center;
+}
+
+.black-line {
+    width: 100%;
+    height: 0.15vh;
+    background-color: blue
+}
+
+.review-button {
+        border-radius: 4px;
+        background-color: #5ca1e1;
+        border: none;
+        color: #fff;
+        text-align: center;
+        font-size: 75%;
+        padding: 5%;
+        width: 75%;
+        transition: all 0.5s;
+        cursor: pointer;
+        /* margin: 36px; */
+        box-shadow: 0 10px 20px -8px rgba(0, 0, 0,.7);
+}
+
+.review-button:after {
+    content: '»';
+    position: relative;
+    opacity: 0;  
+    top: 0%;
+    right: 0%;
+    transition: 0.5s;
+    color: white
+  }
+  
+.review-button:hover {
+    padding-right: 24px;
+    padding-left:8px;
+  }
+  
+.review-button:hover:after {
+    opacity: 1;
+    left: 35%;
+  }
 
 .app-footer {
     display: flex;
@@ -234,6 +312,19 @@ body {
     .foot-img {
         width: 80%
     }
+    .product-desc {
+        width: 80%
+    }
+
+    @keyframes load {
+        0% {
+            width: 15%
+        }
+        100% {
+            /* You need to change the percentage below to match the value in the corresponding <span> */
+            width: 10%;
+        }
+    }
 }
 
 @media only screen and (min-width: 901px) {
@@ -243,3 +334,23 @@ body {
     #forms {
         width: 10%
     }
+
+    @keyframes load {
+        0% {
+            width: 10%
+        }
+        100% {
+            /* You need to change the percentage below to match the value in the corresponding <span> */
+            width: 5%;
+        }
+    }
+}
+
+.nbp {
+    padding-bottom: 0%
+}
+
+.ntp {
+    padding-top: 0%;
+}
+

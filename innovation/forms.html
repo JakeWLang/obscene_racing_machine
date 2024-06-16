@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>TAP - Transit & Perks</title>
+        <title>TAP - Safety/Cleanliness Reporting</title>
         <link rel='stylesheet' href='style.css'>
         <link rel="stylesheet" href="https://use.typekit.net/gmx3hjo.css">
         <!-- <link
@@ -17,15 +17,30 @@
     
     </head>
     <div id="homepage">
-        <img id='homepage-logo' src="images/cta.png">
-        <div class="page-header" id="points-count">
+        <img id='small-logo' class="nbp" src="images/cta.png">
+        <div class="page-header nbp" id="points-count">
             HEADER
         </div>
         <div class="gappish"></div>
 
         <form class="issue-req">
-            <label for="location">Location*:</label>
+            <label for="name">Name</label>
+            <div class="form-group">
+                <label for="firstName" class="form-secondary">First</label>
+                <label for="lastName" class="form-secondary">Last</label>
+            </div>
+            <div class="form-group">
+                <input type="text" name="firstName">
+                <input type="text" name="lastName">
+            </div>
+            <label for="email">Email</label>
+            <input type="text" name="email">
+            <label for="phone">Phone</label>
+            <input type="text" name="phone">
+            <label for="location">Location*</label>
             <input type="text" name="location">
+            <label for="vehNum">Vehicle #</label>
+            <input type="text" name="vehNum">
             <div class="form-group">
                 <label for="date">Day</label>
                 <label for="time">Time</label>
@@ -40,13 +55,13 @@
                 <option value="cleanliness">Cleanliness</option>
                 <option value="other">Other</option>
             </select>
-            <label for="police-needed">Do you need police assistance?</label>
-            <div class="form-group">
+            <!-- <label for="police-needed">Do you need police assistance?</label> -->
+            <!-- <div class="form-group">
                 <label for="police-needed">Yes</label>
                 <input type="radio" name="police-needed" value="Yes">
                 <label for="police-needed">No</label>
                 <input type="radio" name="police-needed" value="No">
-            </div>
+            </div> -->
             <label for="description">Describe your situation</label>
             <textarea name="description" id="form-description">
             </textarea>

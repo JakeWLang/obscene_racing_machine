@@ -3,7 +3,7 @@
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>TAP - Transit & Perks</title>
+            <title>TAP - Reviews</title>
             <link rel='stylesheet' href='style.css'>
             <link rel="stylesheet" href="https://use.typekit.net/gmx3hjo.css">
             <!-- <link
@@ -17,33 +17,81 @@
         
         
         </head>
+        <div id="homepage">
+            <img id='small-logo' class="nbp" src="images/cta.png">
+            <div class="page-header">
+                <div>Rate</div>
+                <div>My</div>
+                <div>Ride</div>
+            </div>
+            <div class="product-desc">
+                <b>CTA's premier service</b> for customer input and
+                experience tracking. Provide a few details
+                about your most recent ride and we’ll get
+                you to your review
+            </div>
 
-        <footer class="app-footer">
-            <div id="home" class="footer-option">
-                <a href='/innovation/index.html' class="foot-link">
-                    <img class='foot-img' src="images/home.png">
-                </a>
-            </div>
-            <div id="rewards" class="footer-option">
-                <a href="/innovation/rewards.html" class="foot-link">
-                    <img class="foot-img" src="images/award.png">
-                </a>
-            </div>
-            <div id="forms" class="footer-option">
-                <a href="/innovation/forms.html" class="foot-link">
-                    <img class="foot-img" src="images/security.png">
-                </a>
-            </div>
-            <div id="reviews" class="footer-option">
-                <a href="/innovation/reviews.html" class="foot-link">
-                    <img class="foot-img" src="images/stars.png">
-                </a>
-            </div>
-            <div id="account" class="footer-option">
-                <a href="/innovation/user.html" class="foot-link">
-                    <img class="foot-img" src="images/user.png">
-                </a>
-            </div>
-        </footer>
+            <form class="review-form">
+                <div class="split-sect">
+                    <label for="date">Date</label>
+                    <input type="date" name="date" class="review-input">
+                </div>
+                <div class="split-sect">
+                    <label for="time">Time</label>
+                    <input type="time" name="time" class="review-input">
+                </div>
+                <div class="split-sect">
+                    <label for="route">Route</label>
+                    <select name="route" id="route" class="review-input review-dd">
+                        <option value="151">151</option>
+                        <option value="147">147</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="split-sect">
+                    <label for="stop">Stop Boarded</label>
+                    <select name="stop" id="stop" class="review-input review-dd">
+                        <option value="wlsshr">Wilson/Sheridan</option>
+                        <option value="monshr">Montrose/Sheridan</option>
+                        <option value="bwyshr">Broadway/Sheridan</option>
+                    </select>
+                </div>
+                <div class="subinfo">
+                    Have more specific information?<br>
+                    (Run/Vehicle #/Operator Badge)<br>
+                    Click here<br>
+                    <div class="black-line"></div>
+                </div>
+                <button class="review-button">Continue to Review</button>
+            </form>
+
+            <footer class="app-footer">
+                <div id="home" class="footer-option">
+                    <a href='/innovation/index.html' class="foot-link">
+                        <img class='foot-img' src="images/home.png">
+                    </a>
+                </div>
+                <div id="rewards" class="footer-option">
+                    <a href="/innovation/rewards.html" class="foot-link">
+                        <img class="foot-img" src="images/award.png">
+                    </a>
+                </div>
+                <div id="forms" class="footer-option">
+                    <a href="/innovation/forms.html" class="foot-link">
+                        <img class="foot-img" src="images/security.png">
+                    </a>
+                </div>
+                <div id="reviews" class="footer-option">
+                    <a href="/innovation/reviews.html" class="foot-link">
+                        <img class="foot-img" src="images/stars.png">
+                    </a>
+                </div>
+                <div id="account" class="footer-option">
+                    <a href="/innovation/user.html" class="foot-link">
+                        <img class="foot-img" src="images/user.png">
+                    </a>
+                </div>
+            </footer>
+        </div>
     </body>
 </html>
