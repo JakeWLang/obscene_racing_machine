@@ -330,8 +330,25 @@ body {
     text-align: center;
 }
 
+.stars-rating-smaller {
+    display: flex;
+    margin: auto;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.25vw;
+    width: 10%;
+    padding: 2.5% 0% 5% 0%;
+    /* height: 10%; */
+    text-align: center;
+}
+
 .stars-rating object {
-    width: 100%
+    width: 100%;
+    height: 50%;
+}
+
+svg:hover {
+    fill: green
 }
 
 .thoughtbox {
@@ -424,6 +441,12 @@ body {
     #already-small-logo {
         width: 10%
     }
+
+    .above-subinfo {
+        font-size: 85%;
+        width: 75%
+    }
+
     @keyframes fadeInLeft {
         0% {
             opacity: 0;
@@ -550,5 +573,5 @@ body {
 }
 
 .flexbox object {
-    width: 10%
+    width: 5%
 }
