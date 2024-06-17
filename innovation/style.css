@@ -326,7 +326,7 @@ body {
     justify-content: center;
     gap: 0.25vw;
     width: 20%;
-    /* height: 10%; */
+    height: 10%;
     text-align: center;
 }
 
@@ -338,7 +338,7 @@ body {
     gap: 0.25vw;
     width: 10%;
     padding: 2.5% 0% 5% 0%;
-    /* height: 10%; */
+    height: 10%;
     text-align: center;
 }
 
