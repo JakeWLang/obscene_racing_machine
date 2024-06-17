@@ -326,8 +326,12 @@ body {
     justify-content: center;
     gap: 0.25vw;
     width: 20%;
-    height: 10%;
+    /* height: 10%; */
     text-align: center;
+}
+
+.stars-rating object {
+    width: 100%
 }
 
 .thoughtbox {
@@ -538,3 +542,12 @@ body {
 .ntp {
     padding-top: 0%;
 }
+
+/* .flexbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexbox object {
+    width: 20%
+} */
