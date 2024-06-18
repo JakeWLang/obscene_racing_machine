@@ -448,12 +448,8 @@ svg:hover {
 .modal-content {
 	margin: auto;
 	display: block;
-	max-width: 70%;
-	/* max-width: 700px; */
-}
-
-.modal-content{
-	animation-name: zoom;
+	max-width: 50%;
+    animation-name: zoom;
 	animation-duration: 1s;
 }
 
@@ -525,6 +521,10 @@ svg:hover {
     .above-subinfo {
         font-size: 85%;
         width: 75%
+    }
+
+    .modal-content {
+        max-width: 90%;
     }
 
     @keyframes fadeInLeft {
