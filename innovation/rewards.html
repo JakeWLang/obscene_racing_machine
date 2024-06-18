@@ -42,8 +42,8 @@
                 <div class="reward-item-name reward-subitem">1 Free CTA Day Pass</div>
                 <div class="reward-item-cost reward-subitem">20 Points</div>
             </div>
-            <div class="reward-item">
-                <div class="reward-item-name reward-subitem">Local business discount </div>
+            <div class="reward-item" onclick='selImg(this)'>
+                <div class="reward-item-name reward-subitem" >Local business discount </div>
                 <div class="reward-item-cost reward-subitem">150 Points</div>
             </div>
             <div class='box-header points-header'>
@@ -56,7 +56,11 @@
             </div>
             <div class="bottom"></div>
         </div>
-
+        <div class='image-modal' id='photobox'>
+            <span class='close'>&times;</span>
+            <img class='modal-content' id='img01'>
+            <div id='img-caption'> </div>
+        </div>
         <footer class="app-footer">
             <div id="home" class="footer-option">
                 <a href='/innovation/index.html' class="foot-link">
@@ -86,4 +90,5 @@
         </footer>
     </body>
     <script src='script.js'></script>
+    <script src="..\modalScript.js"></script>
 </html>
