@@ -599,6 +599,7 @@ width: 100%;
 .image-modal{
 	cursor: default;
 	display: none;
+	flex-direction: column;
 	position: fixed;
 	z-index: 1;
 	padding-top: 1%;
