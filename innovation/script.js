@@ -1,9 +1,21 @@
 var intros = ['Hi there,', 'Welcome', 'Hi', 'Howdy', 'Good morning,', 'Good afternoon,']
-var names = ['Jake', 'Sowmya', 'Feliciti', 'Matthew', 'Cameron', 'Brad', 'Natalie']
+var names = {
+    'Jake': 'Lang',
+    'Sowmya': 'Monroe',
+    'Feliciti': 'Crowder',
+    'Matthew': 'Almendras',
+    'Cameron': 'Rozek',
+    'Brad': 'Skiniotes',
+    'Natalie': 'Kindred'
+}
+var emailEnds = ['@gmail.com', '@yahoo.com', '@xyz.zyx']
 var stops = ['!', '.']
 var locations = ['95th Red Line', 'Clinton Blue Line', 'Clinton Pink Line', 'Wilson/Sheridan', 'Broadway/Belmont']
 
 var title = document.getElementsByTagName("title")[0].innerHTML;
+var isForms = title == 'TAP - Safety/Cleanliness Reporting'
+var isReview = title == 'TAP - Reviews'
+
 
 function randSel(arr) {
     const idx = Math.floor(Math.random() * arr.length)
@@ -101,7 +113,8 @@ function getNowTime(time24=false, returnTod=false) {
 }
 
 function intro() {
-    let welcome = randSel(intros) + ' ' + randSel(names) + randSel(stops)
+    let firstNames = Object.keys(names)
+    let welcome = randSel(intros) + ' ' + randSel(firstNames) + randSel(stops)
     changeText('welcome', welcome)
 }
 
@@ -170,13 +183,38 @@ function closeBlock(e) {
     papa.remove()
 }
 
-function setReviewDefaults() {
+function genEmail(firstName, lastName=null) {
+    let emailEnd = randSel(emailEnds)
+    let email = firstName
+    if (lastName) {
+        email += lastName
+    }
+    email += emailEnd
+    return email
+}
+
+function setReviewDefaults(forms) {
     let today = getTodayDate()
     let now = getNowTime()
     var adjustValues = {
-        'review-date': today,
-        'review-time': now
+        'form-date': today,
+        'form-time': now
         // 'review-route': randSel(routes)
+    }
+    if (forms) {
+        let firstNames = Object.keys(names)
+        let firstName = randSel(firstNames)
+        let lastName = names[firstName]
+        if (randSel([0,1]) == 1) {
+            var emailLast = lastName
+        } else {
+            var emailLast = ''
+        }
+        let email = genEmail(firstName, emailLast)
+        console.log('this is the email: ', email)
+        adjustValues['form-first-name'] = firstName
+        adjustValues['form-last-name'] = lastName
+        adjustValues['form-email'] = email
     }
     var keys = Object.keys(adjustValues)
     for (let i = 0; i < keys.length; i++) {
@@ -199,6 +237,6 @@ if (title === 'TAP - Rewards') {
     progBar(pct)
 }
 
-if (title === 'TAP - Reviews') {
-    setReviewDefaults()
+if (isReview || isForms) {
+    setReviewDefaults(forms=isForms)
 }
