@@ -46,9 +46,15 @@ function genTime() {
     return clockTime
 }
 
-function formatDate(dateObj) {
+function formatDate(dateObj, fmt='m') {
     let day = dateObj.getDate(), month = dateObj.getMonth() + 1, year = dateObj.getFullYear()
-    return padNum(month) + '/' + padNum(day) + '/' + year.toString()
+    let monthFmt = padNum(month), dayFmt = padNum(day)
+    if (fmt == 'm' || fmt === null) {
+        var val = monthFmt + '/' + dayFmt + '/' + year.toString()
+    } else {
+        var val = year.toString() + '-' + monthFmt + '-' + dayFmt
+    }
+    return val
 }
 
 function randomDate(start, end) {
@@ -59,6 +65,39 @@ function randomDate(start, end) {
     }
     var date = new Date(+start + Math.random() * (end - start));
     return date;
+}
+
+function getTodayDate(fmt='y') {
+    let date = new Date()
+    return formatDate(date, fmt)
+}
+
+function adjust24hTime(hour) {
+    if (hour > 12) {
+        var hour = hour - 12
+        var tod = 'PM'
+    } else {
+        var hour = hour
+        var tod = 'AM'
+    }
+    return [hour, tod]
+}
+
+function getNowTime(time24=false, returnTod=false) {
+    let date = new Date()
+    if (time24) {
+        var hour_info = adjust24hTime(date.getHours())
+    } else {
+        hour_info = [padNum(date.getHours())]
+    }
+    
+    let hour = hour_info[0], tod = hour_info[hour_info.length - 1]
+    let minutes = date.getMinutes()
+    let value =  hour.toString() + ':' + minutes.toString()
+    if (returnTod) {
+        value += ' ' + tod
+    }
+    return value
 }
 
 function intro() {
@@ -113,6 +152,42 @@ function progBar(pct) {
 }
 
 
+function lightStar(star) {
+    for (let i = 0; i < 5; i++) {
+        document.getElementById('star' + i).setAttribute('fill', 'none')
+    }
+    let id = star.id
+    let priorStars = Math.abs(0 - id[id.length - 1])
+    let starsToLight = range([0, priorStars + 1])
+    for (let i = 0; i < starsToLight.length; i++) {
+        let thisStar = document.getElementById('star' + i)
+        thisStar.setAttribute('fill', 'green')
+    }
+}
+
+function closeBlock(e) {
+    let papa = e.parentNode
+    papa.remove()
+}
+
+function setReviewDefaults() {
+    let today = getTodayDate()
+    let now = getNowTime()
+    var adjustValues = {
+        'review-date': today,
+        'review-time': now
+        // 'review-route': randSel(routes)
+    }
+    var keys = Object.keys(adjustValues)
+    for (let i = 0; i < keys.length; i++) {
+        var key = keys[i]
+        var theValue = adjustValues[key]
+        var obj = document.getElementById(key)
+        obj.value = theValue
+    }
+}
+
+
 if (title === 'TAP - Transit &amp; Perks') {
     intro()
     lastTrip()
@@ -124,43 +199,6 @@ if (title === 'TAP - Rewards') {
     progBar(pct)
 }
 
-
-function lightStar(star) {
-    for (let i = 0; i < 5; i++) {
-        document.getElementById('star' + i).setAttribute('fill', 'none')
-    }
-    let id = star.id
-    let priorStars = Math.abs(0 - id[id.length - 1])
-    let starsToLight = range([0, priorStars + 1])
-    for (let i = 0; i < starsToLight.length; i++) {
-        let thisStar = document.getElementById('star' + i)
-        console.log(thisStar)
-        thisStar.setAttribute('fill', 'green')
-    }
+if (title === 'TAP - Reviews') {
+    setReviewDefaults()
 }
-
-
-// let modal = document.getElementById('photobox');
-// let modalImg = document.getElementById('img01');
-// let closeSpan = document.getElementsByClassName('close')[0];
-// let captionText = document.getElementById('img-caption')
-
-// console.log(modalImg)
-// function selImg(d){
-// 	// console.log(d)
-// 	console.log(d.getAttribute('src'));
-// 	modal.style.display = 'flex';
-
-// 	if (d.getAttribute('src') == null) {
-// 		modalImg.src = '/innovation/images/fake-discount.png'
-// 	} else {
-// 		modalImg.src = d.getAttribute('src');
-// 	}
-// 	modalImg.style.backgroundColor = 'white'
-// 	captionText.innerHTML = d.getAttribute('alt')
-// }
-
-// closeSpan.onclick = function() {
-// 	modal.style.display = 'none';
-// }
-

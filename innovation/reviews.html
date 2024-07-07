@@ -34,15 +34,15 @@
             <form class="review-form">
                 <div class="split-sect">
                     <label for="date">Date</label>
-                    <input type="date" name="date" class="review-input">
+                    <input type="date" name="date" id="review-date" class="review-input">
                 </div>
                 <div class="split-sect">
                     <label for="time">Time</label>
-                    <input type="time" name="time" class="review-input">
+                    <input type="time" name="time" id="review-time" class="review-input">
                 </div>
                 <div class="split-sect">
                     <label for="route">Route</label>
-                    <select name="route" id="route" class="review-input review-dd">
+                    <select name="route" id="route" id='review-route' class="review-input review-dd">
                         <option value="151">151</option>
                         <option value="147">147</option>
                         <option value="8">8</option>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="split-sect">
                     <label for="stop">Stop Boarded</label>
-                    <select name="stop" id="stop" class="review-input review-dd">
+                    <select name="stop" id="stop" id='review-stop' class="review-input review-dd">
                         <option value="wlsshr">Wilson/Sheridan</option>
                         <option value="monshr">Montrose/Sheridan</option>
                         <option value="bwyshr">Broadway/Sheridan</option>
@@ -94,4 +94,5 @@
             </footer>
         </div>
     </body>
+    <script src='script.js'></script>
 </html>
