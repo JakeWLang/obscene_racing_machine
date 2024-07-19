@@ -6,7 +6,8 @@ var names = {
     'Matthew': 'Almendras',
     'Cameron': 'Rozek',
     'Brad': 'Skiniotes',
-    'Natalie': 'Kindred'
+    'Natalie': 'Kindred',
+    'Bryan': 'Robinson'
 }
 var emailEnds = ['@gmail.com', '@yahoo.com', '@xyz.zyx']
 var stops = ['!', '.']
