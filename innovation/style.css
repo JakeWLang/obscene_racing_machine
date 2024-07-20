@@ -486,6 +486,55 @@ svg:hover {
 	height: 150px;
 }
 
+.thanks {
+    text-align: center;
+    font-size: 200%;
+    font-weight: 1000;
+}
+
+.thanks img {
+    width: 10%
+}
+
+.thanks:first-of-type {
+    animation: showup 7s infinite;
+}
+
+.thanks:last-of-type {
+    width: 0px;
+    animation: reveal 7s infinite;
+}
+
+.thanks:last-of-type span {
+    margin-left: 100%;
+    animation: slidein 7s infinite
+}
+
+@keyframes showup {
+    0% {opacity:0;}
+    20% {opacity:1;}
+    80% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@keyframes slidein {
+    0% { margin-left:-10000px; }
+    10% { margin-left:-2500px; }
+    25% { margin-left:-1250px; }
+    30% { margin-left: -625px; }
+    40% { margin-left: 0px; }
+    100% { margin-left:0px; }
+}
+
+@keyframes reveal {
+    0% {opacity:0;width:0px;}
+    20% {opacity:1;width:0px;}
+    30% {width:100%;}
+    50% {opacity:1;}
+    100% {opacity:0;width:100%;}
+}
+
+
 @media only screen and (max-width: 900px) {
     #homepage-logo {
       width: 15%;
@@ -552,6 +601,11 @@ svg:hover {
             transform: translateX(0%);
         }
     }
+
+    .thanks:last-of-type {
+        font-size: 120%
+    }
+
 }
 
 @media only screen and (min-width: 901px) {
@@ -633,6 +687,10 @@ svg:hover {
         padding: 2%;
     
       }
+
+    .thanks img {
+        width: 5%;
+    }
 }
 
 .nbp {
