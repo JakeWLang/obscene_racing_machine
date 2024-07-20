@@ -9,6 +9,14 @@ var names = {
     'Natalie': 'Kindred',
     'Bryan': 'Robinson'
 }
+var rewards = {
+    '1 Day CTA Pass': 25,
+    'Monthly Raffle': 50,
+    'CTA Merch Gift Card': 100,
+    'Local Business Discount': 150,
+    'Field Museum Ticket': 250,
+    '1 CTA 30-Day Pass': 450
+}
 var emailEnds = ['@gmail.com', '@yahoo.com', '@xyz.zyx']
 var stops = ['!', '.']
 var locations = ['95th Red Line', 'Clinton Blue Line', 'Clinton Pink Line', 'Wilson/Sheridan', 'Broadway/Belmont']
@@ -134,10 +142,12 @@ function lastTrip() {
     changeText('trip-detail', lastTripNote)
 }
 
-function genPoints() {
-    let _range = range([0, 1000])
+function genPoints(max, product) {
+    let _range = range([0, max])
     let points = randSel(_range)
+    let diff = max - points
     let points_str = 'You have ' + points.toString() + ' Points!'
+    points_str += '<br>You\'re now ' + diff.toString() + ' Points Toward Earning ' + '"' + product + '"'
     changeText('points-count', points_str)
     return points
 }
@@ -300,8 +310,10 @@ if (title === 'TAP - Transit &amp; Perks') {
 }
 
 if (title === 'TAP - Rewards') {
-    let pts = genPoints()
-    let pct = (pts / 1000) * 100
+    let selProduct = randSel(Object.keys(rewards))
+    let selCost = rewards[selProduct]
+    let pts = genPoints(selCost, selProduct)
+    let pct = (pts / selCost) * 100
     progBar(pct)
 }
 
