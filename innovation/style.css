@@ -164,6 +164,7 @@ body {
     font-size: 45%;
     align-self: flex-end;
     padding: 2% 2% 0% 0%;
+    cursor: pointer;
 }
 
 .cat-img {
