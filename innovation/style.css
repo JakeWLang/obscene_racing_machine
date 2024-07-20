@@ -152,11 +152,11 @@ body {
     text-decoration: none;
 }
 
-.yes {
+.yes:hover{
     background-color: #B0E58F;
 }
 
-.no {
+.no:hover {
     background-color: #E5928F
 }
 
@@ -198,6 +198,32 @@ body {
     align-items: center;
     border: 2px solid black;
     width: 90%
+}
+
+.button-friends {
+    display: flex;
+    
+    width: 50%;
+    justify-content: space-around;
+}
+
+.user {
+    border: 2px solid black;
+    border-radius: 100%;
+    width: 5%;
+    padding: 0.5%
+}
+
+.so-button {
+    width: 40%;
+    padding: 2%
+}
+
+.user-box {
+    font-size: 120%;
+    border-width: 1px;
+    padding: 2%;
+    width: 50%
 }
 
 
@@ -534,6 +560,26 @@ svg:hover {
     50% {opacity:1;}
     100% {opacity:0;width:100%;}
 }
+
+.moving-choochoo {
+    position: absolute;
+    -webkit-animation: linear infinite;
+    -webkit-animation-name: run;
+    -webkit-animation-duration: 5s;
+}
+
+@-webkit-keyframes run {
+  0% {
+    right: 0;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    right: 0;    
+  }
+}
+
 
 
 @media only screen and (max-width: 900px) {
