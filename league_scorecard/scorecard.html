@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>AoS Hobby League</title>
+        <link rel='stylesheet' href='style.css'>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway&family=Titillium+Web&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.typekit.net/vzy2dov.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Titillium+Web&display=swap" rel="stylesheet">
+        
+
+        <script src='https://cdn.plot.ly/plotly-2.35.2.min.js'></script>
+    </head>
+
+
+    <body>
+        <div id="page-header">
+            <span>Dice Dojo AoS Hobby League - {SEASON NAME}</span>
+        </div>
+        <div id="button-buddy">
+            <a class="form-button" href="https://forms.gle/TTmeYvXNkqviWZQx8" target="_blank">
+                Submit a Unit
+            </a>
+        </div>
+        </div>
+        <div class="chart-header top-buffer">Current League Standings</div>
+        <div id='chart-div'><!-- Plotly chart will be drawn inside this DIV --></div>
+        <div id="table-div"></div>
+        <div class="chart-note">In current season</div>
+
+        <div class="chart-header" id="challenges-header">Seasonal Challenges</div>
+        <div id="challenges-div"></div>
+        <div class="chart-note chart-note-bg small-top-pad">
+            Challenge progress is determined by the count of submissions that marked a specific point category.<br>
+            Click a star to define the point category. Click anywhere else on the page to dismiss the description.
+        </div>
+        <div id="gallery-div" class="chart-header top-buffer">
+            Seasonal Gallery
+            <div id="gallery-container">
+                <span id="img-back"><</span>
+                <img id="gallery-img">
+                <span id="img-fwd">></span>
+            </div>
+            <div id="gallery-img-desc"></div>
+        </div>
+        <div id="contact-info">Issues with the site? Contact Jake on Discord (jake_got_cake)</div>
+        <div id="star-modal"></div>
+    </body>
+    <script src='script.js'></script>
+    <link href="tabulator/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="tabulator/js/tabulator.min.js"></script>
+</html>

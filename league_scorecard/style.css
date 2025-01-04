@@ -1,0 +1,236 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+#page-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: bisque;
+    position: sticky;
+    z-index: 9;
+    top: 0;
+    padding: 1%;
+    box-shadow: 0px 3px 4px #fbeae0;
+    font-family: 'Titillium Web';
+    font-weight: 750
+}
+
+#page-header span {
+}
+
+#button-buddy {
+    padding-top: 3%
+}
+
+.form-button {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+.form-button:disabled {
+  pointer-events: none;
+}
+
+.form-button:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.form-button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+
+.chart-header {
+    display: flex;
+    justify-content: center;
+    color: black;
+    font-family: 'Titillium Web';
+    font-size: 135%;
+    font-weight: 1000
+}
+
+.top-buffer {
+    padding-top: 5%
+}
+
+.chart-note {
+    font-family: 'Titillium Web';
+    font-style: italic;
+    font-size: 100%;
+    text-align: center;
+}
+
+.chart-note-bg {
+    padding: 1%;
+    background: #fff3ed;
+    border-bottom: 3px solid #796b64;
+    /* border-top: 1px solid #796b64 */
+}
+
+
+#challenges-header {
+    padding: 5% 0% 1% 0%
+}
+
+#challenges-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    padding: 2.5% 0% 5% 0%
+}
+
+.challenge {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 20%;
+    padding: 0% 0.5% 0% 0.5%;
+    font-family: "Roboto"
+}
+
+.star-div {
+    width: 35%;
+    padding: 3% 0% 3% 0%
+}
+
+.star-div svg {
+    fill: none;
+    stroke: black;
+    stroke-width: 2px;
+}
+
+svg:hover {
+    fill: #f9d419;
+    cursor:pointer
+}
+
+#star-modal {
+    display: none;
+    background: #fbf6dc;
+    border: 1px solid #b0afaa;
+    width:100%;
+    padding: 7.5% 0% 7.5% 0%;
+    position: sticky;
+    bottom: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#star-modal span {
+    width: 80%;
+    font-family: 'Titillium Web';
+    font-size: 85%;
+    text-align: center;
+}
+
+#gallery-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 15%
+
+}
+
+#gallery-container {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    max-width: 90%;
+}
+
+#gallery-img {
+    max-width: 80%;
+}
+
+#gallery-container span {
+    height: 100%;
+    padding: 0 10% 0 10%
+}
+
+#gallery-img-desc {
+    text-align: center;
+}
+
+.tabulator {
+    font-family: 'Roboto';
+}
+
+#contact-info {
+    font-family: Roboto
+}
+
+
+
+@media only screen and (max-width: 550px) {
+    #page-header {
+        padding: 5%
+    }
+    .chart-note-bg {
+        font-size: 90%
+    }
+    #challenges-div {
+        flex-direction: column;
+    }
+    .challenge {
+        padding: 4% 0.5% 4% 0.5%;
+    }
+    .star-div {
+        width: 80%
+    }
+    #star-modal span {
+        width: 95%;
+    }
+
+}
+
+@media only screen and (min-width: 551px) {
+    #star-modal {
+        padding: 2.5% 0% 2.5% 0%
+    }
+    #star-modal span {
+        font-size: 95%;
+    }
+    .chart-note-bg {
+        font-size: 100%
+    }
+
+}
