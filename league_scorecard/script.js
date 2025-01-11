@@ -54,9 +54,11 @@ const catDescMap = {
     "Unit Finisher": "Completed all required steps of a unit."
 }
 // Replaced names may include: mis-entered names and extraneous parts of names (e.g. pronouns)
+// Keep it lowercase
 const namesToRepl = {
     'jake_got_cake': 'Jake L',
-    '(they/them)': ''
+    '(they/them)': '',
+    'nick perron': 'Nick P'
 }
 const genNums = []
 const genImgs = []
@@ -90,6 +92,10 @@ function parseCSV(csv, splitter) {
             if (fmtColName !== undefined) {
                 colName = fmtColName
             }
+            if (fmtColName === 'total_points') {
+                val = val.match('[0-9]*')[0]
+                val = Number(val)
+            }
             if (fmtColName === 'username' | colName === 'username') {
                 val = cleanUserName(val)
             }
@@ -117,9 +123,11 @@ function toTitleCase(str) {
 
 
 function replNames(curUser) {
+    console.log('this is curUser: ', curUser)
     checks = Object.keys(namesToRepl)
     for (let i = 0; i < checks.length; i++) {
         let curCheck = checks[i], curRepl = namesToRepl[checks[i]]
+        console.log('checking: ', checks[i])
         curUser = curUser.replace(curCheck, curRepl)
     }
     return curUser
@@ -166,8 +174,7 @@ function handleResponse(fileText) {
       })
       .then(data => {
         let parsedImgs = parseCSV(data, ',')
-        let randPicks = getRandFromCol(parsedImgs, 'img_filename', 5)
-        console.log(randPicks)
+        let randPicks = getRandFromCol(parsedImgs, 'img_filename', 10)
         setGalleryImg(randPicks, parsedImgs, sheetObjects)
       })
       .catch(error => {
@@ -182,8 +189,6 @@ function gatherTotalPoints(csv) {
     for (let i = 0; i < csv.length; i++) {
         let row = csv[i]
         let rowUser = row['username'], rowPoints = row['total_points'];
-        rowPoints = rowPoints.match('[0-9]*')[0]
-        rowPoints = Number(rowPoints)
 
 
         let currUsers = Object.keys(totalPoints)
@@ -487,7 +492,7 @@ function gatherTopN(data, n) {
 
 function podiumSort(data) {
     // Find the user with 2, then 1, then 3
-    let sortOrder = [2, 1, 3]
+    let sortOrder = [1, 2, 3]
     let sortedUsers = [], sortedValues = []
     let users = Object.keys(data)
     for (let i = 0; i < sortOrder.length; i++) {
@@ -580,7 +585,8 @@ function makePodium(xVal, yVal, names) {
     }
     var config = {
         displayModeBar: false,
-        responsive: true
+        responsive: true,
+        staticPlot: true
     }
 
     const animationConfig = {
@@ -651,20 +657,10 @@ function genTotalData(totalPoints, baseData) {
 
 function genTable(data) {
     let table = new Tabulator('#table-div', {
-    //   selectable: 1,
       responsiveLayout: "hide",
-        // layout: "fitDataFill",
       data:data,
-    //   renderHorizontal:'virtual',
-      // maxHeight: '100%',
-    //   responsiveLayout:'collapse',
-      // pagination:pagination,
-      // paginationSize:10,
       columns:[
-        {title:'Name', field:'username', minWidth: 80
-        // cellClick: function(e, cell){
-        //   genChart(e, cell, d)}
-        },
+        {title:'Name', field:'username', minWidth: 80},
         {title:'Total Points', field:'total_points', sorter:'number', minWidth: 120},
         {title:'First Model', field:'first_submission', maxWidth:200},
         {title:'Last Model', field:'last_submission', maxWidth: 200},
