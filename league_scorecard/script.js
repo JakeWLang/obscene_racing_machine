@@ -605,8 +605,7 @@ function makePodium(xVal, yVal, names) {
 }
 
 
-function findTopBottomSubmission(user, baseData) {
-    // Filter base data for user, sort base data by datetime submission; find nth (1st or last) submission
+function filterWhereUser(user, baseData) {
     let userRows = []
     for (let i = 0; i < baseData.length; i++) {
         let curRow = baseData[i]
@@ -614,7 +613,14 @@ function findTopBottomSubmission(user, baseData) {
             userRows.push(curRow)
         }
     }
+    return userRows
+}
 
+
+function findTopBottomSubmission(user, baseData) {
+    // Filter base data for user, sort base data by datetime submission; find nth (1st or last) submission
+    
+    userRows = filterWhereUser(user, baseData)
     userRows.sort((a, b) => (
         a.time > b.time ? 1 : b.time > a.time ? -1: 0))
 
@@ -638,12 +644,15 @@ function genTotalData(totalPoints, baseData) {
     let users = Object.keys(totalPoints), points = Object.values(totalPoints);
     let newDF = []
     for (let i = 0; i < users.length; i++) {
+        let curUser = users[i]
+        let filtBase = filterWhereUser(curUser, baseData)
         userDF = {}
-        userDF['username'] = users[i]
+        userDF['username'] = curUser
         userDF['total_points'] = points[i]
+        userDF['total_submissions'] = filtBase.length
         newDF.push(userDF)
 
-        let topBottom = findTopBottomSubmission(users[i], baseData)
+        let topBottom = findTopBottomSubmission(curUser, baseData)
         let bottom = topBottom[0], top = topBottom[1]
         let firstSub = makePrettyUnitSubmission(bottom), lastSub = makePrettyUnitSubmission(top)
         userDF['first_submission'] = firstSub
@@ -662,6 +671,7 @@ function genTable(data) {
       columns:[
         {title:'Name', field:'username', minWidth: 80},
         {title:'Total Points', field:'total_points', sorter:'number', minWidth: 120},
+        {title:'Total Submissions', field:'total_submissions', sorter:'number'},
         {title:'First Model', field:'first_submission', maxWidth:200},
         {title:'Last Model', field:'last_submission', maxWidth: 200},
         ],
