@@ -209,6 +209,7 @@ svg:hover {
 }
 
 #contact-info {
+    text-align: center;
     font-family: Roboto
 }
 
@@ -234,8 +235,11 @@ svg:hover {
         width: 95%;
     }
     #gallery-img {
-        max-width: 65%;
-        max-height: 65%;
+        max-width: 80%;
+        max-height: 80%;
+    }
+    #gallery-img-desc {
+        font-size: 65%;
     }
 
 }

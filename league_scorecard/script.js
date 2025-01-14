@@ -296,7 +296,7 @@ function inArray(array, el) {
     let unit = parentRow['units_completed']
     let compDate = okDate(parentRow['time'])
 
-    imgDesc.innerHTML = `${user}: ${unit} completed on ${compDate}`
+    imgDesc.innerHTML = `${user}: ${unit} submitted on ${compDate}`
  }
 
  function chgImg(imgs, fwd, data, parentData) {
