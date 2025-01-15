@@ -73,7 +73,7 @@ body {
 }
 
 #chart-div {
-    width: 85%;
+    width: 55%;
 }
 
 #table-div {
@@ -218,6 +218,9 @@ svg:hover {
 @media only screen and (max-width: 550px) {
     #page-header {
         padding: 5%
+    }
+    #chart-div {
+        width: 85%;
     }
     .chart-note-bg {
         font-size: 90%
