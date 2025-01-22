@@ -99,15 +99,26 @@ function parseCSV(csv, splitter) {
             if (fmtColName === 'username' | colName === 'username') {
                 val = cleanUserName(val)
             }
+
             if (fmtColName === "point_cats") {
                 let catMapKeys = Object.keys(catMap)
+                let catPoint = 0
                 for (k = 0; k < catMapKeys.length; k++) {
                     let activeKey = catMapKeys[k], activeVal = catMap[catMapKeys[k]]
                     val = val.replace(activeKey, activeVal)
+                    let catInVal = val.includes(activeVal)
+                    if (catInVal === true) {
+                        catPoint = 1
+                    } else {
+                        catPoint = 0
+                    }
+                    thisObject[activeVal] = catPoint
                 }
             }
+
             thisObject[colName] = val
         }
+        
         objects.push(thisObject);
     }
     return objects;
@@ -123,11 +134,9 @@ function toTitleCase(str) {
 
 
 function replNames(curUser) {
-    console.log('this is curUser: ', curUser)
     checks = Object.keys(namesToRepl)
     for (let i = 0; i < checks.length; i++) {
         let curCheck = checks[i], curRepl = namesToRepl[checks[i]]
-        console.log('checking: ', checks[i])
         curUser = curUser.replace(curCheck, curRepl)
     }
     return curUser
@@ -150,6 +159,7 @@ function cleanUserName(baseName) {
 function handleResponse(fileText) {
     fileText = fileText.replaceAll('","', ';').replaceAll('"', '')
     let sheetObjects = parseCSV(fileText, ';');
+    console.log(sheetObjects)
     let totalPoints = gatherTotalPoints(sheetObjects)
     let top3 = gatherTopN(totalPoints, 3)
     let podiumSorted = podiumSort(top3)
@@ -207,23 +217,21 @@ function gatherUserPointsByCat(data) {
     // for each row, create an entry in users if not users[entry]
     // then, within that row, create a count for each category for that user {'user': {'cat1': count1}}
     let users = {}
+    let catKeys = Object.keys(catDescMap)
+
     for (let i = 0; i < data.length; i++) {
-        let activeRow = data[i]
-        let activeUser = activeRow['username']
+        let activeRow = data[i], activeUser = activeRow['username']
         if (users[activeUser] == undefined) {
             users[activeUser] = {}
         }
-        let userCategories = activeRow['point_cats'].split(', ')
-        for (let j = 0; j < userCategories.length; j++) {
-            let activeCat = userCategories[j]
-            let isRealCat = Object.values(catMap).includes(activeCat)
-            if (isRealCat) {
-                if (users[activeUser][activeCat] == undefined) {
-                    users[activeUser][activeCat] = 0
-                }
-                users[activeUser][activeCat] += 1
+        for (let j = 0; j < catKeys.length; j++) {
+            let activeCat = catKeys[j]
+            if (users[activeUser][activeCat] == undefined) {
+                users[activeUser][activeCat] = 0
             }
+            users[activeUser][activeCat] += activeRow[activeCat]
         }
+        
     }
     return users
 }
