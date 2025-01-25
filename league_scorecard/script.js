@@ -7,10 +7,6 @@
         * adapt sheetId, sheetName and colNameMap, catMap, catDescMap, namesToRepl, CDN from constants.json
         * Write a func that pulls all the values of a dataframe column into an array
 */
-const sheetIds = [
-    '1Sk1PrhvWS9oj2FSHgQnlfu-zd74C_EknYfA2cIo9ANU',
-    '1V-6PG_FM5aaD7xQBieN0WoaKEB2YhVReE5u5lkQzzYk'
-]
 const sheetName = encodeURIComponent('Form Responses 1')
 const CDN = 'https://assets.jakewlang.com'
 const imgDiv = 'gallery-img'
@@ -81,9 +77,6 @@ const genImgs = []
 var imgI = 0
 
 const defaultSeason = 'Season 2 Scorecard'
-const sheetId = dataSources[defaultSeason]['google_sheet']
-const defaultURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`
-const defaultDateRange = dataSources[defaultSeason]['cutoffs']
 
 let sources = Object.keys(dataSources)
 let buttonDiv = document.getElementById('header-buttons')
@@ -95,13 +88,33 @@ for (let i = 0; i < sources.length; i++) {
     button.addEventListener('click', function() {genSite(this.innerHTML)})
     buttonDiv.appendChild(button)
 }
-genVisuals(defaultURL, defaultDateRange)
+genSite(defaultSeason)
+
+function makeChartTitle(seasonTitle) {
+    let chartTitleText = 'Current League Standings'
+    if (seasonTitle.includes('Recap')) {
+        chartTitleText = 'End of Season Summary'
+    }
+    let chartTitle = document.getElementById('chart-title')
+    chartTitle.innerHTML = chartTitleText
+}
 
 function genSite(e) {
-    let selSheetId = dataSources[e]['google_sheet']
-    let selDateRange = dataSources[e]['cutoffs']
-    let selURL = `https://docs.google.com/spreadsheets/d/${selSheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`
-    genVisuals(selURL, selDateRange)
+    newTitle = `AOS Hobby League - ${e}`
+    let headerSpan = document.getElementById('page-header-season-title')
+
+    if (newTitle != headerSpan.innerHTML) {
+        headerSpan.innerHTML = newTitle
+        let selSheetId = dataSources[e]['google_sheet']
+        let selDateRange = dataSources[e]['cutoffs']
+        let selURL = `https://docs.google.com/spreadsheets/d/${selSheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`
+
+        
+        makeChartTitle(e)
+
+
+        genVisuals(selURL, selDateRange)
+    }
 }
 
 function genVisuals(url, dateRange) {
@@ -201,7 +214,6 @@ function cleanUserName(baseName) {
 function handleResponse(fileText, dateRange) {
     fileText = fileText.replaceAll('","', ';').replaceAll('"', '')
     let sheetObjects = parseCSV(fileText, ';');
-    console.log(sheetObjects)
     let totalPoints = gatherTotalPoints(sheetObjects)
     let top3 = gatherTopN(totalPoints, 3)
     let podiumSorted = podiumSort(top3)
@@ -226,9 +238,7 @@ function handleResponse(fileText, dateRange) {
       })
       .then(data => {
         let parsedImgs = parseCSV(data, ',')
-        let filtParsedImgs = filterDates(parsedImgs, dateRange)
-        console.log(filtParsedImgs)
-        parsedImgs = filtParsedImgs
+        parsedImgs = filterDates(parsedImgs, dateRange)
         let randPicks = getRandFromCol(parsedImgs, 'img_filename', 10)
         setGalleryImg(randPicks, parsedImgs, sheetObjects)
       })
@@ -317,11 +327,17 @@ function inArray(array, el) {
     if (df.length < n - 1) {
         n = df.length
     }
+    const selImgs = []
     // get all the values of a column from a dataframe and make random choices of them
     colVals = gatherColVals(df, col)
     selVals = []
     for (let i = 0; i < n; i++) {
-        selVals.push(getRand(colVals, genImgs, true))
+        try {
+            selVals.push(getRand(colVals, selImgs, true, true))
+        }
+        catch (error) {
+            console.log('damn, we got an issue here\n\n', error)
+        }
     }
     return selVals
  }
@@ -342,18 +358,29 @@ function inArray(array, el) {
 
  function setGalleryImg(selImgs, imgData, allData) {
     let firstImg = selImgs[0][0]
-    let imgElem = document.getElementById(imgDiv)
-    let firstImgLink = CDN + '/' + firstImg
-    imgElem.src = firstImgLink
+    // let imgElem = document.getElementById(imgDiv)
+    // let firstImgLink = CDN + '/' + firstImg
+    // imgElem.src = firstImgLink
+    let gallery = document.getElementById('gallery-container')
+    gallery.innerHTML = ''
+    let galleryLeft = document.createElement('span'), galleryRight = document.createElement('span')
+    galleryLeft.innerHTML = '<', galleryLeft.id = 'img-back', galleryRight.innerHTML = '>', galleryRight.id = 'img-fwd'
+    galleryLeft.addEventListener('click', function() {chgImg(selImgs, false, imgData, allData)})
+    galleryRight.addEventListener('click', function() {chgImg(selImgs, true, imgData, allData)})
+    let galleryImg = document.createElement('img')
+    galleryImg.id = imgDiv
+    galleryImg.src = CDN + '/' + firstImg
+
+    gallery.appendChild(galleryLeft), gallery.appendChild(galleryImg), gallery.appendChild(galleryRight)
 
 
     makeImgDesc(imgData, selImgs[0][1], allData)
 
-    let backButton = document.getElementById('img-back')
-    let fwdButton = document.getElementById('img-fwd')
+    // let backButton = document.getElementById('img-back')
+    // let fwdButton = document.getElementById('img-fwd')
 
-    backButton.addEventListener('click', function() {chgImg(selImgs, false, imgData, allData)})
-    fwdButton.addEventListener('click', function() {chgImg(selImgs, true, imgData, allData)})
+    // backButton.addEventListener('click', function() {chgImg(selImgs, false, imgData, allData)})
+    // fwdButton.addEventListener('click', function() {chgImg(selImgs, true, imgData, allData)})
  }
 
 
@@ -387,7 +414,7 @@ function inArray(array, el) {
             imgI = nImgs - 1
         }
     }
-
+    console.log(`this is imgs: ${imgs}\n and we are selecting for imgI ${imgI}\n\n\n`)
     let selImgName = imgs[imgI][0]
     let selImgIndex = imgs[imgI][1]
     let imgElem = document.getElementById(imgDiv)
