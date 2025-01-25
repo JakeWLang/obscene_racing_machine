@@ -7,17 +7,22 @@
         * adapt sheetId, sheetName and colNameMap, catMap, catDescMap, namesToRepl, CDN from constants.json
         * Write a func that pulls all the values of a dataframe column into an array
 */
-const sheetId = '1Sk1PrhvWS9oj2FSHgQnlfu-zd74C_EknYfA2cIo9ANU'
+const sheetIds = [
+    '1Sk1PrhvWS9oj2FSHgQnlfu-zd74C_EknYfA2cIo9ANU',
+    '1V-6PG_FM5aaD7xQBieN0WoaKEB2YhVReE5u5lkQzzYk'
+]
 const sheetName = encodeURIComponent('Form Responses 1')
-const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`
 const CDN = 'https://assets.jakewlang.com'
 const imgDiv = 'gallery-img'
 const dateColName = 'Timestamp'
 const colNameMap = {
     'Link to discord message that includes picture': 'img_link',
+    "Please include a link to the discord message that includes a picture of your models.": "img_link",
     'Please mark every point you scored.': 'point_cats',
+    'Please mark every point you scored. In the Other section, please include any bonus points you have earned.': "point_cats",
     'Timestamp': 'time',
     'Total point worth': 'total_points',
+    "How many points in total is your submission worth?": "total_points",
     'What is your username as it appears in the discord?': 'username',
     'What unit(s) have you completed?': 'units_completed'
 }
@@ -53,6 +58,17 @@ const catDescMap = {
     "Advanced Baser": "For units that are based in an advanced manner, including tufting, utilizing cork or similar materials for varied height, special basing effects like water or lava, and otherwise more involved basing effort.",
     "Unit Finisher": "Completed all required steps of a unit."
 }
+const dataSources = {
+    "Season 1 Recap": {
+        'google_sheet': '1Sk1PrhvWS9oj2FSHgQnlfu-zd74C_EknYfA2cIo9ANU',
+        'cutoffs': [new Date('2024/07/07'), new Date('2024/12/31')],
+    },
+    "Season 2 Scorecard": {
+        'google_sheet': '1V-6PG_FM5aaD7xQBieN0WoaKEB2YhVReE5u5lkQzzYk',
+        'cutoffs': [new Date('2025/01/20'), new Date('2025/12/31')]
+    }
+}
+
 // Replaced names may include: mis-entered names and extraneous parts of names (e.g. pronouns)
 // Keep it lowercase
 const namesToRepl = {
@@ -64,9 +80,35 @@ const genNums = []
 const genImgs = []
 var imgI = 0
 
-fetch(sheetURL)
-    .then((response) => response.text())
-    .then((fileText) => handleResponse(fileText));
+const defaultSeason = 'Season 2 Scorecard'
+const sheetId = dataSources[defaultSeason]['google_sheet']
+const defaultURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`
+const defaultDateRange = dataSources[defaultSeason]['cutoffs']
+
+let sources = Object.keys(dataSources)
+let buttonDiv = document.getElementById('header-buttons')
+for (let i = 0; i < sources.length; i++) {
+    let button = document.createElement('button')
+    button.className = 'form-button'
+    button.innerHTML = sources[i]
+
+    button.addEventListener('click', function() {genSite(this.innerHTML)})
+    buttonDiv.appendChild(button)
+}
+genVisuals(defaultURL, defaultDateRange)
+
+function genSite(e) {
+    let selSheetId = dataSources[e]['google_sheet']
+    let selDateRange = dataSources[e]['cutoffs']
+    let selURL = `https://docs.google.com/spreadsheets/d/${selSheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`
+    genVisuals(selURL, selDateRange)
+}
+
+function genVisuals(url, dateRange) {
+    fetch(url)
+        .then((response) => response.text())
+        .then((fileText) => handleResponse(fileText, dateRange));
+}
 
 
 function csvSplit(row, splitter) {
@@ -156,7 +198,7 @@ function cleanUserName(baseName) {
 }
 
 
-function handleResponse(fileText) {
+function handleResponse(fileText, dateRange) {
     fileText = fileText.replaceAll('","', ';').replaceAll('"', '')
     let sheetObjects = parseCSV(fileText, ';');
     console.log(sheetObjects)
@@ -184,6 +226,9 @@ function handleResponse(fileText) {
       })
       .then(data => {
         let parsedImgs = parseCSV(data, ',')
+        let filtParsedImgs = filterDates(parsedImgs, dateRange)
+        console.log(filtParsedImgs)
+        parsedImgs = filtParsedImgs
         let randPicks = getRandFromCol(parsedImgs, 'img_filename', 10)
         setGalleryImg(randPicks, parsedImgs, sheetObjects)
       })
@@ -269,6 +314,9 @@ function inArray(array, el) {
 
 
  function getRandFromCol(df, col, n) {
+    if (df.length < n - 1) {
+        n = df.length
+    }
     // get all the values of a column from a dataframe and make random choices of them
     colVals = gatherColVals(df, col)
     selVals = []
@@ -276,6 +324,19 @@ function inArray(array, el) {
         selVals.push(getRand(colVals, genImgs, true))
     }
     return selVals
+ }
+
+
+ function filterDates(data, dateRange) {
+    filtData = []
+    for (let i = 0; i < data.length; i++) {
+        let row = data[i]
+        let rowAsTime = new Date(row['time'])
+        if (rowAsTime > dateRange[0] & rowAsTime < dateRange[1]) {
+            filtData.push(row)
+        }
+    }
+    return filtData
  }
 
 
@@ -298,13 +359,19 @@ function inArray(array, el) {
 
  function makeImgDesc(data, rowIndex, allData) {
     let parentRow = getParentRowFromFormLink(data[rowIndex]['form_link'], allData)
-
     let imgDesc = document.getElementById('gallery-img-desc')
-    let user = parentRow['username']
-    let unit = parentRow['units_completed']
-    let compDate = okDate(parentRow['time'])
+    let descStr = ''
+    if (parentRow != undefined) {
+        let user = parentRow['username']
+        let unit = parentRow['units_completed']
+        let compDate = okDate(parentRow['time'])
+        descStr = `${user}: ${unit} submitted on ${compDate}`
+    }
+    else {
+        descStr = 'Error: No description found for unit.'
+    }
 
-    imgDesc.innerHTML = `${user}: ${unit} submitted on ${compDate}`
+    imgDesc.innerHTML = descStr
  }
 
  function chgImg(imgs, fwd, data, parentData) {
@@ -336,13 +403,14 @@ function getParentRowFromFormLink(formLink, parentData) {
         if (selRow['img_link'] == formLink) {
             break
         }
+        else selRow = undefined
     }
     return selRow
 }
 
 
- function selectCats(nCats) {
-    let cats = Object.values(catMap)
+ function selectCats(nCats, catsToPickFrom) {
+    let cats = Object.keys(catsToPickFrom)
     let catsInMap = cats.length
     let catIdx = []
     for (let i = 0; i < catsInMap; i++) {
@@ -358,7 +426,6 @@ function getParentRowFromFormLink(formLink, parentData) {
 
 
 function gatherCatPoints(userCatPoints, nCats=3) {
-    let selCats = selectCats(nCats)
     let catPoints = {}
     let users = Object.keys(userCatPoints)
 
@@ -367,16 +434,29 @@ function gatherCatPoints(userCatPoints, nCats=3) {
         let activeUserCatPoints = userCatPoints[activeUser]
         let catsInUserCatPoints = Object.keys(activeUserCatPoints)
         for (let j = 0; j < catsInUserCatPoints.length; j++) {
-            let activeCat = catsInUserCatPoints[j]
-            if (selCats.includes(activeCat)) {
+            var activeCat = catsInUserCatPoints[j]
+            // if (selCats.includes(activeCat)) {
                 if (catPoints[activeCat] == undefined) {
                     catPoints[activeCat] = {}
                 }
-                catPoints[activeCat][activeUser] = activeUserCatPoints[activeCat]
-            }
+                let activeUserCatPointsForActiveCat = activeUserCatPoints[activeCat]
+                if (activeUserCatPointsForActiveCat > 0) {
+                    catPoints[activeCat][activeUser] = activeUserCatPoints[activeCat]
+                }
+            // }
         }
     }
-    
+
+    let cats = Object.keys(catDescMap)
+    for (let i = 0; i < cats.length; i++) {
+        let activeCat = cats[i]
+        if (Object.keys(catPoints[activeCat]).length == 0) {
+            delete catPoints[activeCat]
+        }        
+    }
+    let selCats = selectCats(nCats, catPoints)
+
+
     let topByCat = {}
     // Push each individual object within a cat into an array of objects to be sorted
     for (let x = 0; x < selCats.length; x ++) {
@@ -392,7 +472,7 @@ function gatherCatPoints(userCatPoints, nCats=3) {
             a.points < b.points ? 1 : b.points < a.points ? -1: 0
         ))
         let topUser = pointArr[0]
-        topByCat[activeCat] = topUser
+            topByCat[activeCat] = topUser
     }
     return topByCat
 }
@@ -403,6 +483,7 @@ function insertCatPoints(topCatPoints) {
     // for each cat
     let cats = Object.keys(topCatPoints), vals = Object.values(topCatPoints)
     let challengeDiv = document.getElementById('challenges-div')
+    challengeDiv.innerHTML = ''
     for (let i = 0; i < cats.length; i++) {
         let activeCat = cats[i], activeUser = vals[i]['user'], activePoints = vals[i]['points']
         let tempCatDiv = document.createElement('div')
@@ -638,7 +719,7 @@ function findTopBottomSubmission(user, baseData) {
 
 function okDate(dateObj) {
     let day = dateObj.getDay(), month = dateObj.getMonth(), year = dateObj.getFullYear()
-    return month +'/' + (day + 1) + '/' + String(year).slice(2, 4)
+    return (month + 1) +'/' + (day + 1) + '/' + String(year).slice(2, 4)
 }
 
 
@@ -680,8 +761,8 @@ function genTable(data) {
         {title:'Name', field:'username', minWidth: 80},
         {title:'Total Points', field:'total_points', sorter:'number', minWidth: 120},
         {title:'Total Submissions', field:'total_submissions', sorter:'number'},
-        {title:'First Model', field:'first_submission', maxWidth:200},
-        {title:'Last Model', field:'last_submission', maxWidth: 200},
+        {title:'First Submission', field:'first_submission', maxWidth:200},
+        {title:'Last Submission', field:'last_submission', maxWidth: 200},
         ],
         sorter:'number',
         initialSort:[
