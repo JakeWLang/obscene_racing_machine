@@ -3,14 +3,21 @@ body {
     flex-direction: column;
     align-items: center;
     margin: 0;
+    max-width: 100%;
     overflow-x: hidden;
 }
 
+.naked-link {
+    text-decoration: none;
+    color: black
+}
+
 #page-header {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
+    text-align: center;
     width: 100%;
     background-color: bisque;
     position: sticky;
@@ -185,7 +192,7 @@ svg:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-bottom: 15%
+    padding-bottom: 5%
 
 }
 
@@ -221,7 +228,12 @@ svg:hover {
 
 #contact-info {
     text-align: center;
-    font-family: Roboto
+    font-family: Roboto;
+    padding-bottom: 4%;
+}
+
+#data-button {
+    padding-bottom: 5%
 }
 
 

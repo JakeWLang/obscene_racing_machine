@@ -4,51 +4,36 @@
 <meta charset="utf-8">
 <title>Untitled Document</title>
 <style>
-	table {
-		border-colapse: collapse;
-		text-align: center;
+	.center-div {
+		width: 100%;
+		display: flex;
+		
 	}
-	th {
-		border: 1px solid black;
-		padding: 10px;
-		font-size: 1em;
-	}
-	td {
-		border: 1px solid black;
-		padding: 10px;
-		border-bottom: 2px solid black;
-	}
-p{margin:0 0 1em}
-.wrap {display:flex}
-.box {
-	flex:1;
-	border:1px solid #000;
-	padding:10px;
-}
-.box2{flex:2 0 0}
-.box img{float:left;
-	margin:0 10px 10px 0;
-	max-width:60%;
-	height:auto;}
+	ul {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 
+	}
+	li {
+		display: flex;
+	}
 </style>
 </head>
 
 <body>
-<div class="wrap">
-		<div class="box">flex item</div>
-		<div class="box box2">
-			<img src="http://placehold.it/350x150">
-				<p>Lorem ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem  ipsum dolor sit amet lorem </p>
-		</div>
-		<div class="box">flex item</div>
-		<div class='box'>
-			<table>
-				<th>Hello</th><th>I am</th><th>a table header</th>
-				<tr><td>And this</td><td>is a </td><td>table row</td></tr>
-				<tr><td>As you can see</td><td>table rows</td><td>are varying widths</td></tr>
-			</table>
-		</div>
+<div class="center-div">
+	<ul>
+		<li>This</li>
+		<li>Is</li>
+		<li>An</li>
+		<li>Item</li>
+		<li>In</li>
+		<li>A</li>
+		<li>List</li>
+	</ul>
 </div>
 </body>
 </html>

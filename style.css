@@ -1,10 +1,6 @@
 html body {
-	margin: auto 0;
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  padding: 0px;
-  overflow-x: hidden;
+	margin: 0 auto;
+	overflow-x: hidden;
 
 }
 
@@ -145,21 +141,27 @@ header ul {
 	list-style: none;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 
 header ul li {
 	padding: 4px 15px 4px 15px;
+	font-size: 100%;
 	font-family: "Titillium Web";
 	font-weight: 800;
+	text-align: center;
 }
 
 
 .head-list {
 	margin: 0;
+	width: 100%;
+	padding: 0;
 }
 
 .head-list a {
 	text-decoration: none;
+	text-align: center;
 	color: black;
 }
 
@@ -745,6 +747,16 @@ width: 100%;
 }
 
 @media screen and (max-width: 600px) {
+	.head-list {
+		flex-direction: column;
+	}
+	.head-list li {
+		width: 100%;
+	}
+	/* .hover-underline:after {
+		width: 85%;
+	} */
+
 	.project-desc {
 		font-size: 3vw;
 	}

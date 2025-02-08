@@ -99,20 +99,24 @@ function makeChartTitle(seasonTitle) {
     chartTitle.innerHTML = chartTitleText
 }
 
+function genDataButton(link) {
+    let button = document.getElementById('data-button')
+    button.innerHTML = `<a class="form-button" target="_blank" href=${link}>Access the Data</a>`
+}
+
 function genSite(e) {
     newTitle = `AOS Hobby League - ${e}`
     let headerSpan = document.getElementById('page-header-season-title')
 
     if (newTitle != headerSpan.innerHTML) {
-        headerSpan.innerHTML = newTitle
         let selSheetId = dataSources[e]['google_sheet']
         let selDateRange = dataSources[e]['cutoffs']
         let selURL = `https://docs.google.com/spreadsheets/d/${selSheetId}/gviz/tq?tqx=out:csv&sheet=${sheetName}`
-
+        headerSpan.innerHTML = newTitle
         
         makeChartTitle(e)
 
-
+        genDataButton(`https://docs.google.com/spreadsheets/d/${selSheetId}`)
         genVisuals(selURL, selDateRange)
     }
 }
