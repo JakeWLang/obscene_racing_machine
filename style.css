@@ -750,13 +750,6 @@ width: 100%;
 	.head-list {
 		flex-direction: column;
 	}
-	.head-list li {
-		width: 100%;
-	}
-	/* .hover-underline:after {
-		width: 85%;
-	} */
-
 	.project-desc {
 		font-size: 3vw;
 	}
