@@ -244,7 +244,7 @@ function handleResponse(fileText, dateRange) {
         let parsedImgs = parseCSV(data, ',')
         parsedImgs = filterDates(parsedImgs, dateRange)
         let randPicks = getRandFromCol(parsedImgs, 'img_filename', 10)
-        setGalleryImg(randPicks, parsedImgs, sheetObjects)
+        setGalleryImg(randPicks, parsedImgs, sheetObjects, 'gallery-container')
       })
       .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
@@ -360,9 +360,9 @@ function inArray(array, el) {
  }
 
 
- function setGalleryImg(selImgs, imgData, allData) {
+ function setGalleryImg(selImgs, imgData, allData, divToFill) {
     let firstImg = selImgs[0][0]
-    let gallery = document.getElementById('gallery-container')
+    let gallery = document.getElementById(divToFill)
     gallery.innerHTML = ''
     let galleryLeft = document.createElement('span'), galleryRight = document.createElement('span')
     galleryLeft.innerHTML = '<', galleryLeft.id = 'img-back'
@@ -778,12 +778,29 @@ function genTotalData(totalPoints, baseData) {
     return newDF
 }
 
+function genUserGallery(e, cell) {
+    let galleryModalBG = document.getElementById('gallery-modal-bg')
+    let user = cell._cell.initialValue
+    console.log('you clicked: ', user)
+    galleryModalBG.style.display = 'flex'
+    galleryModalBG.innerHTML = '<div class="hmmm">BOW CHICKA BOW WOW</div>'
+    galleryModalBG.addEventListener("click", function(e){
+        console.log(e)
+        e.target.style.display = "None"
+    })
+    
+}
+
 function genTable(data) {
     let table = new Tabulator('#table-div', {
       responsiveLayout: "hide",
       data:data,
       columns:[
-        {title:'Name', field:'username', minWidth: 80},
+        {title:'Name', field:'username', minWidth: 80,
+            cellClick: function(e, cell) {
+                genUserGallery(e, cell)
+            }
+        },
         {title:'Total Points', field:'total_points', sorter:'number', minWidth: 120},
         {title:'Total Submissions', field:'total_submissions', sorter:'number'},
         {title:'First Submission', field:'first_submission', maxWidth:200},

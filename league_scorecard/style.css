@@ -20,7 +20,7 @@ body {
     text-align: center;
     width: 100%;
     background-color: bisque;
-    position: sticky;
+    /* position: sticky; */
     z-index: 9;
     top: 0;
     padding: 1%;
@@ -228,6 +228,27 @@ svg:hover {
     width: 65%;
     text-align: center;
     font-size: 80%
+}
+
+#gallery-modal-bg {
+	cursor: default;
+	display: none;
+	flex-direction: column;
+	position: fixed;
+	z-index: 1;
+	padding-top: 1%;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0,0.9);
+    justify-content:center;
+    align-items: center;
+}
+
+.hmmm {
+    color: white;
 }
 
 .tabulator {
