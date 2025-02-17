@@ -362,29 +362,24 @@ function inArray(array, el) {
 
  function setGalleryImg(selImgs, imgData, allData) {
     let firstImg = selImgs[0][0]
-    // let imgElem = document.getElementById(imgDiv)
-    // let firstImgLink = CDN + '/' + firstImg
-    // imgElem.src = firstImgLink
     let gallery = document.getElementById('gallery-container')
     gallery.innerHTML = ''
     let galleryLeft = document.createElement('span'), galleryRight = document.createElement('span')
-    galleryLeft.innerHTML = '<', galleryLeft.id = 'img-back', galleryRight.innerHTML = '>', galleryRight.id = 'img-fwd'
+    galleryLeft.innerHTML = '<', galleryLeft.id = 'img-back'
+    galleryRight.innerHTML = '>', galleryRight.id = 'img-fwd'
     galleryLeft.addEventListener('click', function() {chgImg(selImgs, false, imgData, allData)})
     galleryRight.addEventListener('click', function() {chgImg(selImgs, true, imgData, allData)})
     let galleryImg = document.createElement('img')
     galleryImg.id = imgDiv
     galleryImg.src = CDN + '/' + firstImg
 
-    gallery.appendChild(galleryLeft), gallery.appendChild(galleryImg), gallery.appendChild(galleryRight)
+    gallery.appendChild(galleryLeft)
+    gallery.appendChild(galleryImg)
+    gallery.appendChild(galleryRight)
 
 
     makeImgDesc(imgData, selImgs[0][1], allData)
 
-    // let backButton = document.getElementById('img-back')
-    // let fwdButton = document.getElementById('img-fwd')
-
-    // backButton.addEventListener('click', function() {chgImg(selImgs, false, imgData, allData)})
-    // fwdButton.addEventListener('click', function() {chgImg(selImgs, true, imgData, allData)})
  }
 
 
@@ -719,7 +714,6 @@ function makePodium(xVal, yVal, names) {
         }
       };
 
-    // Plotly.newPlot('chart-div', data, layout, config);
     Plotly.newPlot('chart-div', data, layout, config);    
 
 }

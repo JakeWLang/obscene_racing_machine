@@ -211,7 +211,15 @@ svg:hover {
 
 #gallery-container span {
     height: 100%;
-    padding: 0 10% 0 10%
+    /* padding: 0 10% 0 10% */
+}
+
+#img-back {
+    padding-right: 10%;
+}
+
+#img-fwd {
+    padding-left: 10%;
 }
 
 #gallery-img-desc {
@@ -240,7 +248,7 @@ svg:hover {
 
 @media only screen and (max-width: 550px) {
     #page-header {
-        padding: 5%
+        padding: 5% 0% 5% 0%
     }
     .button-buddy {
         flex-direction: column;
