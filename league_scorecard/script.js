@@ -417,6 +417,7 @@ function inArray(array, el) {
     let selImgName = imgs[imgI][0]
     let selImgIndex = imgs[imgI][1]
     let imgElem = document.getElementById(imgDiv)
+    imgElem.src = ''
     let selImgLink = `${CDN}/${selImgName}`
     imgElem.src = selImgLink
     makeImgDesc(data, selImgIndex, parentData)
