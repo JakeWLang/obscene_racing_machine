@@ -9,6 +9,6 @@
     "compatibility_date": "2026-01-17",
     "preview_urls": false,
     "assets": {
-        "directory": "./docs"
+        "directory": "./"
     }
 }
